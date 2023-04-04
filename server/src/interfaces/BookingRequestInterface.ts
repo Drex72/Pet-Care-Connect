@@ -4,5 +4,9 @@ export interface BookingRequestInterface {
   service_type_id: string;
   date: string;
   time: String;
-  status: "rejected" | "confirmed" | "pending";
+  status: BookingStatus;
 }
+
+export type BookingStatus = {
+  status: "REJECTED" | "CONFIRMED" | "PENDING";
+};

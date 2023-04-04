@@ -25,19 +25,10 @@ class PetProviderService {
         where: { id },
         include: [
           {
-            model: models.UserAddresses,
-            on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_provider.address_id"),
-              },
-            },
-            attributes: ["street", "city", "postal_code", "region"],
-          },
-          {
             model: models.ProviderServiceType,
             on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_provider.service_type"),
+              pet_provider_id: {
+                [Op.eq]: Sequelize.col("pet_provider.id"),
               },
             },
             attributes: [
@@ -56,6 +47,10 @@ class PetProviderService {
           "email",
           "user_verified",
           "user_type",
+          "street",
+          "city",
+          "postal_code",
+          "region",
         ],
       });
       if (!currentPetProvider) {
@@ -81,19 +76,10 @@ class PetProviderService {
       const allPetProviders = await this.petProviderModel.findAll({
         include: [
           {
-            model: models.UserAddresses,
-            on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_provider.address_id"),
-              },
-            },
-            attributes: ["street", "city", "postal_code", "region"],
-          },
-          {
             model: models.ProviderServiceType,
             on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_provider.service_type"),
+              pet_provider_id: {
+                [Op.eq]: Sequelize.col("pet_provider.id"),
               },
             },
             attributes: [
@@ -112,9 +98,12 @@ class PetProviderService {
           "email",
           "user_verified",
           "user_type",
+          "street",
+          "city",
+          "postal_code",
+          "region",
         ],
       });
-
       return responseHandler.responseSuccess(
         200,
         "Pet Providers Fetched Successfully",
@@ -163,6 +152,8 @@ class PetProviderService {
       if (!selectedPetProvider) {
         return this.petProviderNotFound();
       }
+
+      await models.ProviderServiceType.destroy({ where: { id } });
 
       const deletePetProvider = await this.petProviderModel.destroy({
         where: { id },

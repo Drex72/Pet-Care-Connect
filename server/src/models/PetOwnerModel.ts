@@ -1,17 +1,13 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { UserInterface } from "../interfaces/BasicUserInterface";
+import { UserType } from "../interfaces/UserTypeInterface";
 interface PetOwnerAttributes extends UserInterface {
   id?: string;
   user_verified?: boolean;
-  address_id: string;
-  pet_id: string;
-  user_type?: string;
+  user_type?: UserType;
 }
 
-export class PetOwner
-  extends Model<PetOwnerAttributes>
-  implements PetOwnerAttributes
-{
+export class PetOwner extends Model<PetOwnerAttributes> implements PetOwnerAttributes {
   public id?: string;
   public email!: string;
   public password!: string;
@@ -19,9 +15,11 @@ export class PetOwner
   public first_name!: string;
   public last_name!: string;
   public phone_number!: string;
-  public address_id!: string;
-  public pet_id!: string;
-  public user_type!: string;
+  public street!: string;
+  public city!: string;
+  public postal_code!: number;
+  public region!: string;
+  public user_type!: UserType;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -67,19 +65,21 @@ export const PetOwnerModel = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      address_id: {
-        type: DataTypes.UUID,
-        references: {
-          model: "user_addresses",
-          key: "id",
-        },
+      street: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
-      pet_id: {
-        type: DataTypes.UUID,
-        references: {
-          model: "pet",
-          key: "id",
-        },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      postal_code: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      region: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {

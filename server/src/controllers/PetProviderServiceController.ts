@@ -17,7 +17,8 @@ class PetProviderServiceController {
     try {
       const createdService =
         await this.petProviderServiceTypeService.createPetProviderServiceType(
-          providerServiceTypeInformation
+          providerServiceTypeInformation,
+          req.body.pet_provider_id
         );
       return res
         .status(createdService.statusCode)
@@ -55,15 +56,17 @@ class PetProviderServiceController {
    * @param res
    */
   getAllPetProviderservices = async (req: Request, res: Response) => {
-    // try {
-    //   const allPetProviders =
-    //     await this.petProviderService.getAllPetProviders();
-    //   return res
-    //     .status(allPetProviders.statusCode)
-    //     .send(allPetProviders.response);
-    // } catch (e) {
-    //   return res.status(500).send(`Error while fetching Users, ${e}`);
-    // }
+    try {
+      const allProviderServices =
+        await this.petProviderServiceTypeService.getAllPetProviderServiceType();
+      return res
+        .status(allProviderServices.statusCode)
+        .send(allProviderServices.response);
+    } catch (e) {
+      return res
+        .status(500)
+        .send(`Error while Creating Pet Provider Service, ${e}`);
+    }
   };
 
   /**
@@ -79,16 +82,19 @@ class PetProviderServiceController {
    * @param res
    */
   deletePetProvider = async (req: Request, res: Response) => {
-    // const { id } = req.query;
-    // try {
-    //   const deletedPetProvider =
-    //     await this.petProviderService.deletePetProvider(id as string);
-    //   res
-    //     .status(deletedPetProvider.statusCode)
-    //     .send(deletedPetProvider.response);
-    // } catch (e) {
-    //   res.status(500).send(`Error while fetching Users, ${e}`);
-    // }
+    try {
+      const deletedService =
+        await this.petProviderServiceTypeService.deletePetProviderServiceType(
+          req.query.id as string
+        );
+      return res
+        .status(deletedService.statusCode)
+        .send(deletedService.response);
+    } catch (e) {
+      return res
+        .status(500)
+        .send(`Error while Deleting Pet Provider Service, ${e}`);
+    }
   };
 }
 

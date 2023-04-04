@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import ApiErrorException from "../exceptions/ApiErrorException";
-import { joiErrorFormatter, schemaOptions } from "./schemaOptions";
+import {
+  bookingStatusValidationSchema,
+  joiErrorFormatter,
+  schemaOptions,
+} from "./schemaOptions";
 
 class BookingValidation {
   async createNewBookingValidation(
@@ -16,9 +20,11 @@ class BookingValidation {
       pet_owner_id: Joi.string().length(36).required(),
       pet_provider_id: Joi.string().length(36).required(),
       service_type_id: Joi.string().length(36).required(),
-      date: Joi.date().required().min(10).max(30),
-      time: Joi.string().required().min(10).max(30),
-      status: Joi.string().required(),
+      date: Joi.date().required(),
+      time: Joi.string().required(),
+      status: bookingStatusValidationSchema
+        .bookingStatusValidation()
+        .required(),
     });
 
     const { error, value } = createNewBookingValidationSchema.validate(
@@ -32,12 +38,12 @@ class BookingValidation {
       return next(new ApiErrorException(joiErrorFormatter(error), 400));
     }
 
-    req.body = value;
+    req.body = { ...value, status: body?.status };
     return next();
   }
 
   async getBookingValidation(req: Request, _: Response, next: NextFunction) {
-    const { params } = req;
+    const { query } = req;
 
     // Create User Schema
     const getBookingValidationSchema: Joi.ObjectSchema = Joi.object({
@@ -45,7 +51,7 @@ class BookingValidation {
     });
 
     const { error, value } = getBookingValidationSchema.validate(
-      params,
+      query,
       schemaOptions
     );
 
@@ -59,11 +65,7 @@ class BookingValidation {
     return next();
   }
 
-  async updateBookingValidation(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {}
+
 
   async deleteBookingValidation(req: Request, _: Response, next: NextFunction) {
     const { query } = req;

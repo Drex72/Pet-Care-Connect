@@ -38,11 +38,10 @@ class AuthService {
    * @param petOwnerInformation
    */
   async registerPetOwner(
-    userAddressInformation: UserAddressesInformationInterface,
     petInformation: PetInformationInterface,
     petOwnerInformation: UserInterface
   ) {
-    const { UserAddresses, Pets, PetOwner } = models;
+    const { Pets, PetOwner } = models;
 
     // First Check if a user does not exist
     const { email, password } = petOwnerInformation;
@@ -54,16 +53,14 @@ class AuthService {
     // Hash the Password and Store it in DB
     const hashedPassword = await bcrypt.hash(password, 10);
     try {
-      const createdAddress = await UserAddresses.create({
-        ...userAddressInformation,
+      const createdUser = await PetOwner.create({
+        ...petOwnerInformation,
+        password: hashedPassword,
       });
 
-      const createdPetInformation = await Pets.create({ ...petInformation });
-      await PetOwner.create({
-        ...petOwnerInformation,
-        address_id: createdAddress.dataValues.id!,
-        pet_id: createdPetInformation.dataValues.id,
-        password: hashedPassword,
+      await Pets.create({
+        ...petInformation,
+        pet_owner_id: createdUser.dataValues.id!,
       });
 
       return responseHandler.responseSuccess(
@@ -86,16 +83,10 @@ class AuthService {
    * @param {PetProviderInformationInterface} petProviderInformation
    */
   async registerPetProvider(
-    userAddressInformation: UserAddressesInformationInterface,
     providerServiceTypeInformation: PetProviderServiceInterface,
     petProviderInformation: UserInterface
   ) {
-    const { UserAddresses, ProviderServiceType, PetProvider } = models;
-    console.log(
-      userAddressInformation,
-      providerServiceTypeInformation,
-      petProviderInformation
-    );
+    const { ProviderServiceType, PetProvider } = models;
 
     // First Check if a user does not exist
     const { email, password } = petProviderInformation;
@@ -108,19 +99,16 @@ class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
     // Store the Information in DB
     try {
-      const createdAddress = await UserAddresses.create({
-        ...userAddressInformation,
-      });
-
-      const createdServiceType = await ProviderServiceType.create({
-        ...providerServiceTypeInformation,
-      });
-      await PetProvider.create({
+      const createdPetProvider = await PetProvider.create({
         ...petProviderInformation,
-        address_id: createdAddress.dataValues.id!,
-        service_type: createdServiceType.dataValues.id!,
         password: hashedPassword,
       });
+
+      await ProviderServiceType.create({
+        ...providerServiceTypeInformation,
+        pet_provider_id: createdPetProvider.dataValues.id!,
+      });
+
       return responseHandler.responseSuccess(
         201,
         "Pet Provider Created Successfully"

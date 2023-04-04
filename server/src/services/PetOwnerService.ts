@@ -22,19 +22,10 @@ class PetOwnerService {
         where: { id },
         include: [
           {
-            model: models.UserAddresses,
-            on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_owner.address_id"),
-              },
-            },
-            attributes: ["street", "city", "postal_code", "region"],
-          },
-          {
             model: models.Pets,
             on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_owner.pet_id"),
+              pet_owner_id: {
+                [Op.eq]: Sequelize.col("pet_owner.id"),
               },
             },
             attributes: [
@@ -55,6 +46,10 @@ class PetOwnerService {
           "email",
           "user_verified",
           "user_type",
+          "street",
+          "city",
+          "postal_code",
+          "region",
         ],
       });
 
@@ -77,24 +72,14 @@ class PetOwnerService {
   }
 
   async getAllPetOwners() {
-    // const allPetOwners = await this.petOwnerModel.findAll();
     try {
       const allPetOwners = await this.petOwnerModel.findAll({
         include: [
           {
-            model: models.UserAddresses,
-            on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_owner.address_id"),
-              },
-            },
-            attributes: ["street", "city", "postal_code", "region"],
-          },
-          {
             model: models.Pets,
             on: {
-              id: {
-                [Op.eq]: Sequelize.col("pet_owner.pet_id"),
+              pet_owner_id: {
+                [Op.eq]: Sequelize.col("pet_owner.id"),
               },
             },
             attributes: [
@@ -115,6 +100,10 @@ class PetOwnerService {
           "email",
           "user_verified",
           "user_type",
+          "street",
+          "city",
+          "postal_code",
+          "region",
         ],
       });
 

@@ -34,9 +34,8 @@ router
   );
 
 // Booking Routes
-
 router
-  .route("/bookings")
+  .route("/bookings/book-provider")
   .post(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.createNewBookingValidation,
@@ -44,12 +43,8 @@ router
   )
   .get(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingsController.getAllBookings
-  )
-  .put(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.updateBookingValidation,
-    bookingsController.updateABooking
+    bookingValidation.getBookingValidation,
+    bookingsController.getAllBookingsForAUser
   )
   .delete(
     tokenHandler.validateAccessTokenMiddleware,
@@ -57,13 +52,13 @@ router
     bookingsController.deleteABooking
   );
 
-router
-  .route("/bookings/:id")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.getBookingValidation,
-    bookingsController.getABooking
-  );
+// router
+//   .route("/bookings/:id")
+//   .get(
+//     tokenHandler.validateAccessTokenMiddleware,
+//     bookingValidation.getBookingValidation,
+//     bookingsController.getABooking
+//   );
 
 router
   .route("/review-pet-provider")
@@ -73,14 +68,14 @@ router
     bookingsController.bookNewPetProvider
   )
   .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingsController.getAllBookings
+    tokenHandler.validateAccessTokenMiddleware
+    // bookingsController.getAllBookings
   )
-  .put(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.updateBookingValidation,
-    bookingsController.updateABooking
-  )
+  // .put(
+  //   tokenHandler.validateAccessTokenMiddleware,
+  //   bookingValidation.updateBookingValidation,
+  //   bookingsController.updateABooking
+  // )
   .delete(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.deleteBookingValidation,

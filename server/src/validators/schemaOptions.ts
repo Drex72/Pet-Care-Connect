@@ -36,3 +36,25 @@ export const userTypeValidationSchema = Joi.extend((joi) => {
     },
   };
 });
+
+export const bookingStatusValidationSchema = Joi.extend((joi) => {
+  return {
+    type: "bookingStatusValidation",
+    base: joi.string(),
+    messages: {
+      "bookingStatusValidation.invalid":
+        "{{#label}} must be a either type REJECTED, CONFIRMED or type PENDING",
+    },
+
+    validate(value, helpers) {
+      const allowedTypes = ["REJECTED", "CONFIRMED", "PENDING"];
+      if (!allowedTypes.includes(value)) {
+        return {
+          value,
+          errors: helpers.error("bookingStatusValidation.invalid"),
+        };
+      }
+      return value;
+    },
+  };
+});

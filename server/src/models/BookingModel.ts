@@ -1,8 +1,24 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
+import { BookingRequestInterface, BookingStatus } from "../interfaces/BookingRequestInterface";
+interface BookingAttributes extends BookingRequestInterface {
+  id?: string;
+}
+
+export class Booking extends Model<BookingAttributes> implements BookingAttributes {
+  public id?: string;
+  public pet_owner_id!: string;
+  public pet_provider_id!: string;
+  public service_type_id!: string;
+  public date!: string;
+  public time!: string;
+  public status!: BookingStatus
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 
 export const BookingModel = (sequelize: Sequelize) => {
-  return sequelize.define(
-    "booking",
+  Booking.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -40,13 +56,16 @@ export const BookingModel = (sequelize: Sequelize) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM("rejected", "confirmed", "pending"),
+        type: DataTypes.ENUM("REJECTED", "CONFIRMED", "PENDING"),
         allowNull: true,
         defaultValue: "pending",
       },
     },
     {
+      sequelize,
       freezeTableName: true,
+      modelName: "booking",
     }
   );
+  return Booking;
 };

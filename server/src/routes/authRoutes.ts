@@ -43,7 +43,6 @@ router.post(
 
 router.post(
   "/verify-email/validate",
-  tokenHandler.validateAccessTokenMiddleware,
   authValidation.verifyEmailValidation,
   authController.validateSentOtp
 );

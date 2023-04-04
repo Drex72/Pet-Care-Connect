@@ -10,12 +10,6 @@ class AuthController {
   }
 
   registerPetOwner = async (req: Request, res: Response) => {
-    const userAddressInformation = {
-      street: req.body.street,
-      city: req.body.city,
-      postal_code: req.body.postal_code,
-      region: req.body.region,
-    };
     const petInformation = {
       pet_name: req.body.pet_name,
       pet_breed: req.body.pet_breed,
@@ -29,9 +23,12 @@ class AuthController {
       phone_number: req.body.phone_number,
       email: req.body.email,
       password: req.body.password,
+      street: req.body.street,
+      city: req.body.city,
+      postal_code: req.body.postal_code,
+      region: req.body.region,
     };
     const newPetOwner = await this.authService.registerPetOwner(
-      userAddressInformation,
       petInformation,
       petOwnerInformation
     );
@@ -39,13 +36,6 @@ class AuthController {
   };
 
   registerPetProvider = async (req: Request, res: Response) => {
-    console.log(req.body);
-    const userAddressInformation = {
-      street: req.body.street,
-      city: req.body.city,
-      postal_code: req.body.postal_code,
-      region: req.body.region,
-    };
     const providerServiceTypeInformation = {
       service_name: req.body.service_name,
       service_description: req.body.service_description,
@@ -57,9 +47,12 @@ class AuthController {
       phone_number: req.body.phone_number,
       email: req.body.email,
       password: req.body.password,
+      street: req.body.street,
+      city: req.body.city,
+      postal_code: req.body.postal_code,
+      region: req.body.region,
     };
     const newPetProvider = await this.authService.registerPetProvider(
-      userAddressInformation,
       providerServiceTypeInformation,
       petProviderInformation
     );

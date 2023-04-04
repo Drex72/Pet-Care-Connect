@@ -1,8 +1,10 @@
 import express from "express";
 import bookingsController from "../controllers/BookingsController";
 import petProviderController from "../controllers/PetProviderController";
+import petProviderServiceController from "../controllers/PetProviderServiceController";
 import tokenHandler from "../handlers/TokenHandlers";
 import bookingValidation from "../validators/BookingValidation";
+import petProviderServiceValidation from "../validators/PetProviderServiceValidation";
 import petProviderValidation from "../validators/PetProviderValidation";
 
 const router = express.Router();
@@ -33,34 +35,33 @@ router
     petProviderController.getAPetProvider
   );
 router
-  .route("/services")
+  .route("/service/service-types")
   .get(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.getBookingValidation,
-    bookingsController.getAllBookings
-  )
-  .put(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.updateBookingValidation,
-    bookingsController.updateABooking
+    petProviderServiceController.getAllPetProviderservices
   )
   .post(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.updateBookingValidation,
-    bookingsController.updateABooking
+    petProviderServiceValidation.createPetProviderServiceValidation,
+    petProviderServiceController.createPetProviderService
+  )
+  .delete(
+    tokenHandler.validateAccessTokenMiddleware,
+    petProviderServiceValidation.deletePetProviderValidation,
+    petProviderServiceController.deletePetProvider
   );
 router
   .route("/bookings")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.getBookingValidation,
-    bookingsController.getAllBookings
-  )
-  .put(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.updateBookingValidation,
-    bookingsController.updateABooking
-  );
+  // .get(
+  //   tokenHandler.validateAccessTokenMiddleware,
+  //   bookingValidation.getBookingValidation,
+  //   bookingsController.getAllBookings
+  // )
+  // .put(
+  //   tokenHandler.validateAccessTokenMiddleware,
+  //   bookingValidation.updateBookingValidation,
+  //   bookingsController.updateABooking
+  // );
 
 router
   .route("/bookings/:id")
