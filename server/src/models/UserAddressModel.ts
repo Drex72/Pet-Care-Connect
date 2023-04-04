@@ -1,21 +1,30 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes, Sequelize, Model } from "sequelize";
+import { UserAddressesInformationInterface } from "../interfaces/UserAddressesInformationInterface";
+interface UserAddressesModelAttributes
+  extends UserAddressesInformationInterface {
+  id?: string;
+}
+export class UserAddresses
+  extends Model<UserAddressesModelAttributes>
+  implements UserAddressesModelAttributes
+{
+  public id!: string;
+  public street!: string;
+  public city!: string;
+  public postal_code!: number;
+  public region!: string;
 
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 export const UserAddressesModel = (sequelize: Sequelize) => {
-  return sequelize.define(
-    "user_addresses",
+  UserAddresses.init(
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV1,
         allowNull: false,
         primaryKey: true,
-      },
-      user_id: {
-        type: DataTypes.UUID,
-        references: {
-          model: "user",
-          key: "id",
-        },
       },
       street: {
         type: DataTypes.STRING,
@@ -26,7 +35,7 @@ export const UserAddressesModel = (sequelize: Sequelize) => {
         allowNull: false,
       },
       postal_code: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       region: {
@@ -35,7 +44,10 @@ export const UserAddressesModel = (sequelize: Sequelize) => {
       },
     },
     {
+      sequelize,
       freezeTableName: true,
+      modelName: "user_addresses",
     }
   );
+  return UserAddresses;
 };

@@ -16,6 +16,9 @@ import PetOwnerService from "./PetOwnerService";
 import PetProviderService from "./PetProviderService";
 import { PetProviderServiceInterface } from "../interfaces/ProviderServiceTypeInformation";
 import { PetProviderInformationInterface } from "../interfaces/PetProviderInformationInterface";
+import { UserType } from "../interfaces/UserTypeInterface";
+import { PetOwner } from "../models/PetOwnerModel";
+import { PetProvider } from "../models/PetProviderModel";
 
 class AuthService {
   mailingService: MailingService;
@@ -35,45 +38,38 @@ class AuthService {
    * @param petOwnerInformation
    */
   async registerPetOwner(
-    userInformation: UserInterface,
     userAddressInformation: UserAddressesInformationInterface,
     petInformation: PetInformationInterface,
-    petOwnerInformation: PetOwnerInformationInterface
+    petOwnerInformation: UserInterface
   ) {
-    const { User, UserAddresses, Pets, PetOwner } = models;
+    const { UserAddresses, Pets, PetOwner } = models;
 
     // First Check if a user does not exist
-    const { email, password } = userInformation;
-    const result = await User.findAll({ where: { email } });
-
+    const { email, password } = petOwnerInformation;
+    const result = await PetOwner.findAll({ where: { email } });
     if (result.length) {
-      return responseHandler.responseError(400, "User Exists Already");
+      return responseHandler.responseError(400, "Pet Owner Exists Already");
     }
-    // Hash the Password
+
+    // Hash the Password and Store it in DB
     const hashedPassword = await bcrypt.hash(password, 10);
-    // Store the Information in DB
     try {
-      const userInfo = await User.create({
-        ...userInformation,
-        password: hashedPassword,
-      });
       const createdAddress = await UserAddresses.create({
         ...userAddressInformation,
-        user_id: userInfo.dataValues?.id,
       });
 
-      const createdPetInformation = await Pets.create({
-        ...petInformation,
-        pet_owner_id: userInfo.dataValues?.id,
-      });
-
+      const createdPetInformation = await Pets.create({ ...petInformation });
       await PetOwner.create({
         ...petOwnerInformation,
-        user_id: userInfo.dataValues.id,
-        address_id: createdAddress.dataValues?.id,
-        pet_id: createdPetInformation.dataValues?.id,
+        address_id: createdAddress.dataValues.id!,
+        pet_id: createdPetInformation.dataValues.id,
+        password: hashedPassword,
       });
-      return responseHandler.responseSuccess(201, "User Created Successfully");
+
+      return responseHandler.responseSuccess(
+        201,
+        "Pet Owner Created Successfully"
+      );
     } catch (error) {
       return responseHandler.responseError(
         400,
@@ -90,44 +86,45 @@ class AuthService {
    * @param {PetProviderInformationInterface} petProviderInformation
    */
   async registerPetProvider(
-    userInformation: UserInterface,
     userAddressInformation: UserAddressesInformationInterface,
     providerServiceTypeInformation: PetProviderServiceInterface,
-    petProviderInformation: PetProviderInformationInterface
+    petProviderInformation: UserInterface
   ) {
-    const { User, UserAddresses, ProviderServiceType, PetProvider } = models;
+    const { UserAddresses, ProviderServiceType, PetProvider } = models;
+    console.log(
+      userAddressInformation,
+      providerServiceTypeInformation,
+      petProviderInformation
+    );
 
     // First Check if a user does not exist
-    const { email, password } = userInformation;
-    const result = await User.findAll({ where: { email } });
+    const { email, password } = petProviderInformation;
+    const result = await PetProvider.findAll({ where: { email } });
 
     if (result.length) {
-      return responseHandler.responseError(400, "User Exists Already");
+      return responseHandler.responseError(400, "Pet Provider Exists Already");
     }
     // Hash the Password
     const hashedPassword = await bcrypt.hash(password, 10);
     // Store the Information in DB
     try {
-      const userInfo = await User.create({
-        ...userInformation,
-        password: hashedPassword,
-      });
       const createdAddress = await UserAddresses.create({
         ...userAddressInformation,
-        user_id: userInfo.dataValues?.id,
       });
 
       const createdServiceType = await ProviderServiceType.create({
         ...providerServiceTypeInformation,
-        pet_provider_id: userInfo.dataValues?.id,
       });
       await PetProvider.create({
         ...petProviderInformation,
-        user_id: userInfo.dataValues.id,
-        address_id: createdAddress.dataValues?.id,
-        service_type: createdServiceType.dataValues?.id,
+        address_id: createdAddress.dataValues.id!,
+        service_type: createdServiceType.dataValues.id!,
+        password: hashedPassword,
       });
-      return responseHandler.responseSuccess(201, "User Created Successfully");
+      return responseHandler.responseSuccess(
+        201,
+        "Pet Provider Created Successfully"
+      );
     } catch (error) {
       return responseHandler.responseError(
         400,
@@ -140,7 +137,7 @@ class AuthService {
    * Login a user
    * @param {UserInterface} loginDetails
    */
-  async login(loginDetails: UserInterface): Promise<{
+  async login(loginDetails: any): Promise<{
     statusCode: number;
     response: {
       code: number;
@@ -150,10 +147,11 @@ class AuthService {
     };
   }> {
     const { user_type, email, password } = loginDetails;
-    const { User } = models;
+
+    const currentModel: any = getModelToBeUsed(user_type);
     try {
       // Check if email exists
-      const result = await User.findOne({ where: { email } });
+      const result = await currentModel.findOne({ where: { email } });
       if (!result) {
         return responseHandler.responseError(400, "Invalid Login Details");
       }
@@ -174,14 +172,16 @@ class AuthService {
       const accessToken = tokenHandler.createAccessToken(
         {
           id: currentUser.id,
-          userType: currentUser.userType,
+          user_type: currentUser.user_type,
+          user_verified: currentUser.user_verified,
         },
         "1d"
       );
       const refreshToken = tokenHandler.createRefreshToken(
         {
           id: currentUser.id,
-          userType: currentUser.userType,
+          user_type: currentUser.user_type,
+          user_verified: currentUser.user_verified,
         },
         "7d"
       );
@@ -203,12 +203,12 @@ class AuthService {
    * Sends Verification Mail
    * @param user_id
    */
-  async sendVerificationMailToUserEmail(user_id: string) {
-    const { User, OTP } = models;
-    const currentUser: any = await User.findOne({
+  async sendVerificationMailToUserEmail(user_id: string, user_type: UserType) {
+    const { OTP } = models;
+    const currentModel: any = getModelToBeUsed(user_type);
+    const currentUser = await currentModel.findOne({
       where: { id: user_id },
     });
-    
 
     if (!currentUser)
       return responseHandler.responseError(400, "User not found");
@@ -223,14 +223,17 @@ class AuthService {
     if (otpData) {
       await OTP.update({ otp }, { where: { id: otpData.dataValues?.id } });
     } else {
-      await OTP.create({ otp, email: currentUser.email });
+      await OTP.create({ otp, email: currentUser.dataValues?.email });
     }
 
     // Sends Email
     const res = await this.mailingService.sendEmail({
-      to: currentUser.email,
+      to: currentUser.dataValues?.email,
       subject: "Verify Email Code",
-      body: emailVerificationOTPMail({ otp, email: currentUser.email }),
+      body: emailVerificationOTPMail({
+        otp,
+        email: currentUser.dataValues?.email,
+      }),
     });
 
     return res;
@@ -242,10 +245,12 @@ class AuthService {
    * @param otp
    * @returns
    */
-  async validateOTP(user_id: string, otp: string) {
+  async validateOTP(user_id: string, otp: string, user_type: UserType) {
     try {
-      const { User, OTP } = models;
-      const currentUser: any = await User.findOne({
+      const { OTP } = models;
+      const currentModel: any = getModelToBeUsed(user_type);
+
+      const currentUser = await currentModel.findOne({
         where: { id: user_id },
       });
 
@@ -254,7 +259,7 @@ class AuthService {
       }
 
       const otpData = await OTP.findOne({
-        where: { email: currentUser.email },
+        where: { email: currentUser.dataValues?.email },
       });
 
       if (!otpData) {
@@ -272,8 +277,8 @@ class AuthService {
       if (diff > 30 || !correctOtp) {
         return responseHandler.responseError(400, "Invalid or Expired Otp!");
       }
-      const updateUserStatus = await User.update(
-        { user_verified: 1 },
+      const updateUserStatus = await currentModel.update(
+        { user_verified: true },
         { where: { id: user_id } }
       );
 

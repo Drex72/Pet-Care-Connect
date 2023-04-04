@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { models } from "../models";
 import AuthService from "../services/AuthService";
+import { getModelToBeUsed } from "../utils/getModelToBeUsed";
 
 class AuthController {
   authService: AuthService;
@@ -9,11 +10,6 @@ class AuthController {
   }
 
   registerPetOwner = async (req: Request, res: Response) => {
-    const userInformation = {
-      email: req.body.email,
-      password: req.body.password,
-      user_type: req.body.user_type,
-    };
     const userAddressInformation = {
       street: req.body.street,
       city: req.body.city,
@@ -31,9 +27,10 @@ class AuthController {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       phone_number: req.body.phone_number,
+      email: req.body.email,
+      password: req.body.password,
     };
     const newPetOwner = await this.authService.registerPetOwner(
-      userInformation,
       userAddressInformation,
       petInformation,
       petOwnerInformation
@@ -42,11 +39,7 @@ class AuthController {
   };
 
   registerPetProvider = async (req: Request, res: Response) => {
-    const userInformation = {
-      email: req.body.email,
-      password: req.body.password,
-      user_type: req.body.user_type,
-    };
+    console.log(req.body);
     const userAddressInformation = {
       street: req.body.street,
       city: req.body.city,
@@ -62,9 +55,10 @@ class AuthController {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       phone_number: req.body.phone_number,
+      email: req.body.email,
+      password: req.body.password,
     };
     const newPetProvider = await this.authService.registerPetProvider(
-      userInformation,
       userAddressInformation,
       providerServiceTypeInformation,
       petProviderInformation
@@ -104,29 +98,45 @@ class AuthController {
     res.sendStatus(204);
   };
 
-  sendVerificationEmail = async (req: any, res: Response) => {
-    const { User } = models;
+  sendVerificationEmail = async (req: Request, res: Response) => {
+    const { email, user_type } = req.body;
+    const currentModel: any = getModelToBeUsed(user_type);
     try {
-      const currentUser = await User.findOne({ where: { id: req?.user?.id } });
-      if (parseInt(currentUser?.dataValues.user_verified) === 1) {
+      const currentUser = await currentModel.findOne({
+        where: { email },
+      });
+
+      if (!currentUser) {
+        return res.status(400).send({ message: "User not Found" });
+      }
+
+      if (currentUser?.dataValues.user_verified) {
         return res.send({ message: "User Already Verified" });
       }
+
       const responseData =
         await this.authService.sendVerificationMailToUserEmail(
-          currentUser?.dataValues.id
+          currentUser?.dataValues.id,
+          user_type
         );
-      res.status(responseData.statusCode).send(responseData.response);
+
+      return res.status(responseData.statusCode).send(responseData.response);
     } catch (e) {
-      res.status(500).send(`Error while sending, ${e}`);
+      return res.status(500).send(`Error while sending, ${e}`);
     }
   };
 
   validateSentOtp = async (req: any, res: Response) => {
-    const { otp } = req.body;
+    const { otp, email, user_type } = req.body;
     try {
+      const currentModel: any = getModelToBeUsed(user_type);
+      const currentUser = await currentModel.findOne({
+        where: { email },
+      });
       const responseData = await this.authService.validateOTP(
-        req?.user.id,
-        otp
+        currentUser.dataValues?.id,
+        otp,
+        user_type
       );
       res.status(responseData.statusCode).send(responseData.response);
     } catch (e) {

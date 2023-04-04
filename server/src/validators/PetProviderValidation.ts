@@ -49,7 +49,28 @@ class PetProviderValidation {
     req: Request,
     res: Response,
     next: NextFunction
-  ) {}
+  ) {
+     const { params } = req;
+
+     // Create User Schema
+     const getAPetProviderValidationSchema: Joi.ObjectSchema = Joi.object({
+       id: Joi.string().length(36).required(),
+     });
+
+     const { error, value } = getAPetProviderValidationSchema.validate(
+       params,
+       schemaOptions
+     );
+
+     // If Error, handle Error
+     if (error) {
+       // Add our Error handler
+       return next(new ApiErrorException(joiErrorFormatter(error), 400));
+     }
+
+     req.params = value;
+     return next();
+  }
   async updatePetProviderValidation(
     req: Request,
     res: Response,
@@ -59,7 +80,28 @@ class PetProviderValidation {
     req: Request,
     res: Response,
     next: NextFunction
-  ) {}
+  ) {
+     const { query } = req;
+
+     // Create User Schema
+     const deleteAPetProviderValidationSchema: Joi.ObjectSchema = Joi.object({
+       id: Joi.string().length(36).required(),
+     });
+
+     const { error, value } = deleteAPetProviderValidationSchema.validate(
+       query,
+       schemaOptions
+     );
+
+     // If Error, handle Error
+     if (error) {
+       // Add our Error handler
+       return next(new ApiErrorException(joiErrorFormatter(error), 400));
+     }
+
+     req.params = value;
+     return next();
+  }
 }
 
 const petProviderValidation = new PetProviderValidation();

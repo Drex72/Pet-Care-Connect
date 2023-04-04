@@ -3,5 +3,7 @@ import { UserType } from "./UserTypeInterface";
 export interface UserInterface {
   email: string;
   password: string;
-  user_type: UserType;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
 }

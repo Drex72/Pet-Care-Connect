@@ -1,6 +1,6 @@
 export interface UserAddressesInformationInterface {
   street: string;
-  city: number;
-  postal_code: string;
+  city: string;
+  postal_code: number;
   region: string;
 }

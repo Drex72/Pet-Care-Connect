@@ -1,15 +1,13 @@
 import { Request, Response } from "express";
 import { PetOwnerInformationInterface } from "../interfaces/PetOwnerInformationInterface";
+import { models } from "../models";
 import AuthService from "../services/AuthService";
 import PetOwnerService from "../services/PetOwnerService";
-import ProviderServicesService from "../services/ProviderServicesService";
 
 class PetOwnerController {
   petOwnerService: PetOwnerService;
-  providerService: ProviderServicesService;
   constructor() {
     this.petOwnerService = new PetOwnerService();
-    this.providerService = new ProviderServicesService();
   }
 
   /**
@@ -17,28 +15,62 @@ class PetOwnerController {
    * @param req
    * @param res
    */
-  getAPetOwner = async (req: Request, res: Response) => {};
+  getAPetOwner = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      const currentPetOwner = await this.petOwnerService.getPetOwner(id);
+      res.status(currentPetOwner.statusCode).send(currentPetOwner.response);
+    } catch (e) {
+      res.status(500).send(`Error while fetching Pet Owner, ${e}`);
+    }
+  };
 
   /**
    *
    * @param req
    * @param res
    */
-  getAllPetOwners = async (req: Request, res: Response) => {};
+  getAllPetOwners = async (req: any, res: Response) => {
+    try {
+      const allPetOwners = await this.petOwnerService.getAllPetOwners();
+      res.status(allPetOwners.statusCode).send(allPetOwners.response);
+    } catch (e) {
+      res.status(500).send(`Error while fetching Users, ${e}`);
+    }
+  };
 
   /**
    *
    * @param req
    * @param res
    */
-  updatePetOwner = async (req: Request, res: Response) => {};
+  updatePetOwner = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    // try {
+    //   const updatedPetOwner = await this.petOwnerService.updatePetOwner(id);
+    //   res.status(updatedPetOwner.statusCode).send(updatedPetOwner.response);
+    // } catch (e) {
+    //   res.status(500).send(`Error while Updating Pet Owner, ${e}`);
+    // }
+  };
 
   /**
    *
    * @param req
    * @param res
    */
-  deletePetOwner = async (req: Request, res: Response) => {};
+  deletePetOwner = async (req: Request, res: Response) => {
+    const { id } = req.query;
+    console.log(id);
+    try {
+      const deletedPetOwner = await this.petOwnerService.deletePetOwner(
+        id as string
+      );
+      res.status(deletedPetOwner.statusCode).send(deletedPetOwner.response);
+    } catch (e) {
+      res.status(500).send(`Error while fetching Users, ${e}`);
+    }
+  };
 }
 
 const petOwnerController = new PetOwnerController();

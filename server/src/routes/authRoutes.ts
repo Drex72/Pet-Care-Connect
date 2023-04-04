@@ -35,17 +35,18 @@ router.get(
 );
 
 // Verify User with OTP
-router
-  .route("/verify-email")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    authController.sendVerificationEmail
-  )
-  .post(
-    tokenHandler.validateAccessTokenMiddleware,
-    authValidation.verifyEmailValidation,
-    authController.validateSentOtp
-  );
+router.post(
+  "/verify-email",
+  authValidation.sendOtpCodeValidation,
+  authController.sendVerificationEmail
+);
+
+router.post(
+  "/verify-email/validate",
+  tokenHandler.validateAccessTokenMiddleware,
+  authValidation.verifyEmailValidation,
+  authController.validateSentOtp
+);
 
 // Endpoint for Refreshing Access Tokens
 router.get("/refresh", tokenHandler.refreshAccessToken);

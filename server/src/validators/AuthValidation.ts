@@ -25,7 +25,6 @@ class AuthValidation {
       serviceName: Joi.string().required(),
       serviceDescription: Joi.string().optional(),
       servicePricePerHour: Joi.string().required(),
-      
     });
 
     // Schema Options
@@ -84,13 +83,13 @@ class AuthValidation {
     req.body = { ...value, user_type: body?.user_type };
     return next();
   }
-
-  async verifyEmailValidation(req: Request, res: Response, next: NextFunction) {
+  async sendOtpCodeValidation(req: Request, res: Response, next: NextFunction) {
     const { body } = req;
 
     // Create User Schema
     const verifyEmailValidationSchema: Joi.ObjectSchema = Joi.object({
-      otp: Joi.string().length(6).required(),
+      email: Joi.string().required(),
+      user_type: userTypeValidationSchema.userTypeValidation().required(),
     });
 
     const { error, value } = verifyEmailValidationSchema.validate(
@@ -103,7 +102,30 @@ class AuthValidation {
       return next(new ApiError(joiErrorFormatter(error), 400));
     }
 
-    req.body = value;
+    req.body = { ...value, user_type: body?.user_type };
+    return next();
+  }
+  async verifyEmailValidation(req: Request, res: Response, next: NextFunction) {
+    const { body } = req;
+
+    // Create User Schema
+    const verifyEmailValidationSchema: Joi.ObjectSchema = Joi.object({
+      otp: Joi.string().length(6).required(),
+      email: Joi.string().required(),
+      user_type: userTypeValidationSchema.userTypeValidation().required(),
+    });
+
+    const { error, value } = verifyEmailValidationSchema.validate(
+      body,
+      schemaOptions
+    );
+
+    // If Error, handle Error
+    if (error) {
+      return next(new ApiError(joiErrorFormatter(error), 400));
+    }
+
+    req.body = { ...value, user_type: body?.user_type };
     return next();
   }
 }

@@ -10,13 +10,6 @@ export const PetModel = (sequelize: Sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-      pet_owner_id: {
-        type: DataTypes.UUID,
-        references: {
-          model: "user",
-          key: "id",
-        },
-      },
       pet_name: {
         type: DataTypes.STRING,
         allowNull: false,

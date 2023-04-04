@@ -7,10 +7,6 @@ export const OTPModel = (sequelize: Sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        references: {
-          model: "user",
-          key: "email",
-        },
       },
       otp: {
         type: DataTypes.INTEGER({ length: 6 }),

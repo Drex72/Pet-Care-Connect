@@ -1,18 +1,15 @@
 import { Dialect, Sequelize } from "sequelize";
 import { config } from "./";
 
-const postgresConnection = new Sequelize(
-  config.postgresUrl,
-  {
-    dialect: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false, // Allows self-signed SSL certificates
-      },
+const postgresConnection = new Sequelize(config.postgresUrl, {
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Allows self-signed SSL certificates
     },
-  }
-);
+  },
+});
 const mysqlConnection = new Sequelize(
   config.dbName,
   config.dbUserName,
@@ -23,4 +20,4 @@ const mysqlConnection = new Sequelize(
   }
 );
 
-export const sequelize = postgresConnection;
+export const sequelize = mysqlConnection;

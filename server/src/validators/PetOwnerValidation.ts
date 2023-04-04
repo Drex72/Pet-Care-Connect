@@ -31,11 +31,11 @@ class PetOwnerValidation {
       phone_number: Joi.string().required().min(10).max(30),
       street: Joi.string().required(),
       city: Joi.string().required(),
-      postal_code: Joi.string().required(),
+      postal_code: Joi.number().required(),
       region: Joi.string().required(),
       pet_name: Joi.string().required(),
       pet_breed: Joi.string().required(),
-      pet_birthday: Joi.string().required(),
+      pet_birthday: Joi.date().required(),
       pet_gender: Joi.string().required(),
       pet_special_needs: Joi.string().optional(),
     });
@@ -108,7 +108,7 @@ class PetOwnerValidation {
       pet_type: Joi.string().required(),
       pet_name: Joi.string().required(),
       pet_breed: Joi.string().required(),
-      pet_birthday: Joi.string().required(),
+      pet_birthday: Joi.date().required(),
       pet_gender: Joi.string().required(),
       pet_special_needs: Joi.string().optional(),
     });
@@ -140,7 +140,7 @@ class PetOwnerValidation {
     _: Response,
     next: NextFunction
   ) {
-    const { params } = req;
+    const { query } = req;
 
     // Create User Schema
     const deleteAPetOwnerValidationSchema: Joi.ObjectSchema = Joi.object({
@@ -148,7 +148,7 @@ class PetOwnerValidation {
     });
 
     const { error, value } = deleteAPetOwnerValidationSchema.validate(
-      params,
+      query,
       schemaOptions
     );
 

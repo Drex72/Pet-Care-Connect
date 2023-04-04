@@ -1,24 +1,21 @@
 import { NextFunction, Request, Response } from "express";
-import { get } from "https";
 import jwt, { DecodeOptions, VerifyErrors, VerifyOptions } from "jsonwebtoken";
 import { config } from "../config";
-import { models } from "../models";
+import { UserType } from "../interfaces/UserTypeInterface";
 import { getModelToBeUsed } from "../utils/getModelToBeUsed";
-interface ITokenHandler {
-  createAccessToken(
-    signedInformation: any,
-    expiryDate: string | number
-  ): string;
-  createRefreshToken(
-    signedInformation: any,
-    expiryDate: string | number
-  ): string;
+interface ISignedInformation {
+  id: string;
+  user_type: UserType;
+  user_verified: boolean;
 }
-class TokenHandler implements ITokenHandler {
+class TokenHandler {
   /**
    * @params
    */
-  createAccessToken = (signedInformation: any, expiryDate: string | number) => {
+  createAccessToken = (
+    signedInformation: ISignedInformation,
+    expiryDate: string | number
+  ) => {
     return jwt.sign(signedInformation, config.accessTokenSecret, {
       expiresIn: expiryDate,
     });
@@ -26,7 +23,7 @@ class TokenHandler implements ITokenHandler {
 
   // Creates the Refresh Token
   createRefreshToken = (
-    signedInformation: any,
+    signedInformation: ISignedInformation,
     expiryDate: string | number
   ) => {
     return jwt.sign(signedInformation, config.refreshTokenSecret, {
@@ -42,23 +39,20 @@ class TokenHandler implements ITokenHandler {
     const authHeader = req.headers["authorization"];
     if (!authHeader) return res.sendStatus(401);
     const token = authHeader.split(" ")[1];
-
     // Verifies the Token
     jwt.verify(
       token,
       config.accessTokenSecret,
       async (err: any, decoded: any) => {
         if (err) return res.sendStatus(401);
-
-        const { User } = models;
+        const currentModel: any = getModelToBeUsed(decoded?.user_type);
 
         // Checks our DB if we have a user with the email in the token
-        const validUser = await User.findAll({
+        const validUser = await currentModel.findOne({
           where: { id: decoded.id },
         });
-
         // If that user Exists, then the Access Token is still valid
-        if (validUser.length === 0) return res.sendStatus(401);
+        if (!validUser) return res.sendStatus(401);
         req.user = decoded;
         next();
       }
@@ -72,30 +66,29 @@ class TokenHandler implements ITokenHandler {
     const token = req.cookies?.refresh_token;
     if (!token) return res.status(400).json({ message: "No Refresh Token" });
 
-    let userPayload: any = null;
+    let userPayload: ISignedInformation | null = null;
 
     try {
-      userPayload = this.validateRefreshToken(token);
+      userPayload = this.validateRefreshToken(token) as ISignedInformation;
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: "Error, Try Again" });
     }
 
     // Check if there is a valid user
-    const { id, userType } = userPayload;
-    const currentModel: any = getModelToBeUsed(userType);
+    const { id, user_type } = userPayload!;
+    const currentModel: any = getModelToBeUsed(user_type);
+
     const user = currentModel.findOne({ id });
 
     if (!user) return res.status(400).json({ message: "No Valid User" });
 
-    const userData = {
-      id,
-      userType,
-    };
-
-    return res
-      .status(200)
-      .json({ accessToken: this.createAccessToken(userData, "1d") });
+    return res.status(200).json({
+      accessToken: this.createAccessToken(
+        userPayload as ISignedInformation,
+        "1d"
+      ),
+    });
   };
 }
 const tokenHandler = new TokenHandler();

@@ -12,7 +12,6 @@ router
   .route("/")
   .get(
     tokenHandler.validateAccessTokenMiddleware,
-    petProviderValidation.getAPetProviderValidation,
     petProviderController.getAllPetProviders
   )
   .put(
@@ -33,17 +32,33 @@ router
     petProviderValidation.getAPetProviderValidation,
     petProviderController.getAPetProvider
   );
-
 router
-  .route("/bookings")
+  .route("/services")
   .get(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.getBooking,
+    bookingValidation.getBookingValidation,
     bookingsController.getAllBookings
   )
   .put(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.updateBooking,
+    bookingValidation.updateBookingValidation,
+    bookingsController.updateABooking
+  )
+  .post(
+    tokenHandler.validateAccessTokenMiddleware,
+    bookingValidation.updateBookingValidation,
+    bookingsController.updateABooking
+  );
+router
+  .route("/bookings")
+  .get(
+    tokenHandler.validateAccessTokenMiddleware,
+    bookingValidation.getBookingValidation,
+    bookingsController.getAllBookings
+  )
+  .put(
+    tokenHandler.validateAccessTokenMiddleware,
+    bookingValidation.updateBookingValidation,
     bookingsController.updateABooking
   );
 
@@ -51,7 +66,7 @@ router
   .route("/bookings/:id")
   .get(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.getBooking,
+    bookingValidation.getBookingValidation,
     bookingsController.getABooking
   );
 

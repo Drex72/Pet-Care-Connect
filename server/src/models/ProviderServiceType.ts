@@ -1,8 +1,24 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes, Sequelize, Model } from "sequelize";
+import { PetProviderServiceInterface } from "../interfaces/ProviderServiceTypeInformation";
+
+interface PetProviderServiceAttributes extends PetProviderServiceInterface {
+  id?: string;
+}
+export class PetProviderService
+  extends Model<PetProviderServiceAttributes>
+  implements PetProviderServiceAttributes
+{
+  public id!: string;
+  public service_name!: string;
+  public service_description!: string;
+  public service_price_per_hour!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 
 export const ProviderServiceType = (sequelize: Sequelize) => {
-  return sequelize.define(
-    "provider_service_type",
+  PetProviderService.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -22,16 +38,13 @@ export const ProviderServiceType = (sequelize: Sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      pet_provider_id: {
-        type: DataTypes.UUID,
-        references: {
-          model: "user",
-          key: "id",
-        },
-      },
     },
     {
+      sequelize,
       freezeTableName: true,
+      modelName: "provider_service_type",
     }
   );
+
+  return PetProviderService;
 };
