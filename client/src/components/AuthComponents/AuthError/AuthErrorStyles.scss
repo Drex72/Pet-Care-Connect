@@ -1,0 +1,16 @@
+.error_container {
+  margin-block: 5px;
+  display: flex;
+  border-radius: 8px;
+  border: 3px solid #f6374e;
+  padding: 10px 5px;
+  align-items: center;
+  gap: 10px;
+  margin-block: 1em;
+}
+
+.error_message {
+  margin-block: 5px;
+  text-align: center;
+  font-weight: normal;
+}

@@ -10,6 +10,13 @@ class BookingService {
   constructor() {
     this.bookingModel = models.Booking;
   }
+
+  private bookingNotFound() {
+    return responseHandler.responseError(
+      400,
+      "Booking with Given id does not Exist"
+    );
+  }
   async createNewBooking(bookingInformation: BookingRequestInterface) {
     try {
       const currentPetOwner = await models.PetOwner.findOne({
@@ -50,9 +57,16 @@ class BookingService {
   }
   async getBooking(id: string) {
     try {
-      const currentBooking = this.bookingModel.findOne({
+      const currentBooking = await this.bookingModel.findOne({
         where: { id },
       });
+
+      if (!currentBooking) {
+        return responseHandler.responseError(
+          400,
+          `Booking with Given Id Does not Exist`
+        );
+      }
 
       return responseHandler.responseSuccess(
         200,
@@ -82,21 +96,11 @@ class BookingService {
           {
             model: models.PetOwner,
 
-            attributes: [
-              ["id", "pet_owner_id"],
-              "email",
-              "user_type",
-              "first_name",
-              "phone_number",
-              "last_name",
-              "street",
-              "city",
-              "postal_code",
-              "region",
-            ],
+            attributes: this.getBoookingsAttributes()
+              .ownerAttributes as string[],
           },
         ],
-        attributes: ["id", "date", "time", "status"],
+        attributes: this.getBoookingsAttributes().bookingAttributes,
       });
 
       return responseHandler.responseSuccess(
@@ -109,12 +113,55 @@ class BookingService {
     } catch (error) {
       return responseHandler.responseError(
         400,
-        `Error Creating Booking ${JSON.stringify(error)}`
+        `Error Fetching Booking ${JSON.stringify(error)}`
+      );
+    }
+  }
+
+  async getBookingsForProvider(id: string) {
+    try {
+      const currentPetProvider = await models.PetProvider.findOne({
+        where: { id },
+      });
+      if (!currentPetProvider) {
+        return responseHandler.responseError(400, "User  not Found");
+      }
+      const allBookings = await this.bookingModel.findAll({
+        where: { pet_provider_id: currentPetProvider.id },
+        include: [
+          {
+            model: models.PetOwner,
+
+            attributes: this.getBoookingsAttributes()
+              .providerAttributes as string[],
+          },
+        ],
+        attributes: this.getBoookingsAttributes().bookingAttributes,
+      });
+
+      return responseHandler.responseSuccess(
+        200,
+        "All Bookings Found Successfully",
+        {
+          allBookings,
+        }
+      );
+    } catch (error) {
+      return responseHandler.responseError(
+        400,
+        `Error Fetching Booking ${JSON.stringify(error)}`
       );
     }
   }
   async deleteABooking(id: string) {
     try {
+      const selectedBooking = await this.bookingModel.findOne({
+        where: { id },
+      });
+
+      if (!selectedBooking) {
+        return this.bookingNotFound();
+      }
       const deletedBooking = this.bookingModel.destroy({
         where: { id },
       });
@@ -132,6 +179,36 @@ class BookingService {
         `Error Deleting Booking ${JSON.stringify(error)}`
       );
     }
+  }
+
+  private getBoookingsAttributes() {
+    return {
+      ownerAttributes: [
+        ["id", "pet_owner_id"],
+        "email",
+        "user_type",
+        "first_name",
+        "phone_number",
+        "last_name",
+        "street",
+        "city",
+        "postal_code",
+        "region",
+      ],
+      providerAttributes: [
+        ["id", "pet_provider_id"],
+        "email",
+        "user_type",
+        "first_name",
+        "phone_number",
+        "last_name",
+        "street",
+        "city",
+        "postal_code",
+        "region",
+      ],
+      bookingAttributes: ["id", "date", "time", "status"],
+    };
   }
 }
 

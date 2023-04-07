@@ -43,7 +43,7 @@ router
   )
   .get(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.getBookingValidation,
+    bookingValidation.getBookingForUserValidation,
     bookingsController.getAllBookingsForAUser
   )
   .delete(
@@ -52,13 +52,13 @@ router
     bookingsController.deleteABooking
   );
 
-// router
-//   .route("/bookings/:id")
-//   .get(
-//     tokenHandler.validateAccessTokenMiddleware,
-//     bookingValidation.getBookingValidation,
-//     bookingsController.getABooking
-//   );
+router
+  .route("/bookings/book-provider/:id")
+  .get(
+    tokenHandler.validateAccessTokenMiddleware,
+    bookingValidation.getBookingValidation,
+    bookingsController.getABooking
+  );
 
 router
   .route("/review-pet-provider")
@@ -71,11 +71,7 @@ router
     tokenHandler.validateAccessTokenMiddleware
     // bookingsController.getAllBookings
   )
-  // .put(
-  //   tokenHandler.validateAccessTokenMiddleware,
-  //   bookingValidation.updateBookingValidation,
-  //   bookingsController.updateABooking
-  // )
+
   .delete(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.deleteBookingValidation,

@@ -1,0 +1,105 @@
+.custom-input {
+  &__label {
+    color: #272727;
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 120%;
+
+    .input_required_asterisk {
+      color: #f6374e;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+  textarea {
+    font-family: inherit;
+  }
+
+  &__container {
+    position: relative;
+
+    &__input {
+      border-radius: 5px;
+      display: block;
+      padding: 15px;
+      padding-right: 30px;
+      caret-color: #157cff;
+      width: 100%;
+      outline: none;
+      background-color: white;
+      font-size: 1rem;
+      line-height: 120%;
+      border: 1px solid #272727;
+      transition: all 0.3s ease-in;
+
+      &:focus {
+        border-color: #157cff;
+      }
+      &::placeholder {
+        color: #b5b2b6;
+      }
+
+      &-errored {
+        border-color: #e48181;
+
+        &:focus {
+          border-color: #f6374e;
+        }
+      }
+    }
+
+    .right-icon {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  &__error {
+    text-transform: capitalize;
+    font-size: 0.75rem;
+    color: #f6374e;
+
+    &-hidden {
+      display: none;
+    }
+  }
+}
+
+.react-tel-input > .form-control {
+  width: 100% !important;
+  font-size: 1rem !important;
+  height: 50px !important;
+  background-color: white !important;
+  border-radius: 5px !important;
+  padding-left: 60px !important;
+  transition: all 0.3s ease-in !important;
+}
+.react-tel-input > .form-control:focus {
+  border-color: #157cff !important;
+}
+
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+  background: transparent !important;
+}
+.react-tel-input .flag-dropdown.open .selected-flag {
+  background: transparent !important;
+}
+.react-tel-input > .phone_input_error {
+  border: 1px solid #f6374e !important;
+}
+.react-tel-input > .phone_input_normal {
+  border: 1px solid #272727 !important;
+}
+.react-tel-input .flag-dropdown {
+  background-color: transparent !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+  width: 50px !important;
+  border: none !important;
+  padding-left: 5px !important;
+}

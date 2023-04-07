@@ -50,18 +50,16 @@ router
     petProviderServiceValidation.deletePetProviderValidation,
     petProviderServiceController.deletePetProvider
   );
-router
-  .route("/bookings")
-  // .get(
-  //   tokenHandler.validateAccessTokenMiddleware,
-  //   bookingValidation.getBookingValidation,
-  //   bookingsController.getAllBookings
-  // )
-  // .put(
-  //   tokenHandler.validateAccessTokenMiddleware,
-  //   bookingValidation.updateBookingValidation,
-  //   bookingsController.updateABooking
-  // );
+router.route("/bookings/book-provider").get(
+  tokenHandler.validateProviderAccessTokenMiddleware, 
+  bookingValidation.getBookingValidation,
+  bookingsController.getAllBookingsForAProvider
+);
+// .put(
+//   tokenHandler.validateAccessTokenMiddleware,
+//   bookingValidation.updateBookingValidation,
+//   bookingsController.updateABooking
+// );
 
 router
   .route("/bookings/:id")

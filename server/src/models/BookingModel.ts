@@ -1,17 +1,23 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { BookingRequestInterface, BookingStatus } from "../interfaces/BookingRequestInterface";
+import {
+  BookingRequestInterface,
+  BookingStatus,
+} from "../interfaces/BookingRequestInterface";
 interface BookingAttributes extends BookingRequestInterface {
   id?: string;
 }
 
-export class Booking extends Model<BookingAttributes> implements BookingAttributes {
+export class Booking
+  extends Model<BookingAttributes>
+  implements BookingAttributes
+{
   public id?: string;
   public pet_owner_id!: string;
   public pet_provider_id!: string;
   public service_type_id!: string;
   public date!: string;
   public time!: string;
-  public status!: BookingStatus
+  public status!: BookingStatus;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -58,7 +64,7 @@ export const BookingModel = (sequelize: Sequelize) => {
       status: {
         type: DataTypes.ENUM("REJECTED", "CONFIRMED", "PENDING"),
         allowNull: true,
-        defaultValue: "pending",
+        defaultValue: "PENDING",
       },
     },
     {

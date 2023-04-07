@@ -4,16 +4,29 @@ import allRoutes from "./routes";
 import httpStatus from "http-status";
 import ApiError from "./exceptions/ApiErrorException";
 import { config } from "./config";
-import  { sequelize } from "./config/database";
+import { sequelize } from "./config/database";
+import cors from "cors";
+import { credentials } from "./utils/corsCredentials";
+import { corsOptions } from "./utils/corsOptions";
 
+// App Entry Point
+
+// Created the Application
 const app: Application = express();
 
+// PORT for the Backend
 const PORT = config.port || 3500;
+
+// Converts all necessary information to json
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(credentials);
+app.use(cors(corsOptions));
 
+// Routes for our application
 app.use("/", allRoutes);
 
+// If Route does not exist, throw them na error
 app.use((_, __, next) => {
   next(new ApiError("Not found", httpStatus.NOT_FOUND));
 });

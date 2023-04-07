@@ -1,0 +1,68 @@
+.auth_container {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 600px;
+}
+.tiny_link {
+  margin-bottom: 5px;
+  color: #157cff !important;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.login_logo_container {
+  margin-bottom: 2em;
+}
+
+.login-form {
+  .inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.login_submit_button {
+  margin-top: 3em;
+}
+
+.auth_user_type {
+  &-label {
+    font-size: 18px;
+    color: black;
+  }
+}
+.auth_login_checkboxes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.auth_login_checkboxes input {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 300 ease-in-out;
+}
+
+.auth_login_checkboxes .custom-input {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  flex-direction: row-reverse;
+
+  label {
+    margin: 0;
+  }
+
+  input {
+    margin: 0;
+  }
+}

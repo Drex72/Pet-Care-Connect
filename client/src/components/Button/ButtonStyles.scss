@@ -1,0 +1,45 @@
+.custom-button {
+  transition: all 0.2s ease;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.custom-button:disabled {
+  pointer-events: none;
+}
+
+.custom-button .ml-custom-spinner {
+  margin-left: 8px;
+}
+
+.custom-button-primary:not(:disabled) {
+  background-color: #157cff;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.custom-button-primary:hover {
+  background-color: #157cff;
+  box-shadow: 8px 8px 20px rgba(55, 126, 63, 0.15);
+}
+
+.custom-button-primary:disabled {
+  background-color: #e1ece2;
+  color: #c3c3cb;
+}
+
+.custom-button-secondary {
+  background-color: #ffffff !important;
+  border: 1.5px solid #157cff !important;
+  color: #000;
+  margin-top: 1em;
+}
+
+.button {
+  border-radius: 6px;
+  font-weight: normal;
+  line-height: 120%;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}

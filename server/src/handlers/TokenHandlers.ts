@@ -58,6 +58,35 @@ class TokenHandler {
       }
     );
   };
+  validateProviderAccessTokenMiddleware = (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) return res.sendStatus(401);
+    const token = authHeader.split(" ")[1];
+    // Verifies the Token
+    jwt.verify(
+      token,
+      config.accessTokenSecret,
+      async (err: any, decoded: any) => {
+        if (err) return res.sendStatus(401);
+        const currentModel: any = getModelToBeUsed(decoded?.user_type);
+
+        // Checks our DB if we have a user with the email in the token
+        const validUser = await currentModel.findOne({
+          where: { id: decoded.id },
+        });
+        // If that user Exists, then the Access Token is still valid
+        if (!validUser) return res.sendStatus(401);
+        if (decoded.user_type !== "PET-PROVIDER")
+          return res.status(401).json({ message: "Not a Pet Provider" });
+        req.user = decoded;
+        next();
+      }
+    );
+  };
   // Validates the Refresh Token
   validateRefreshToken = (refreshToken: string) => {
     return jwt.verify(refreshToken, config.accessTokenSecret);

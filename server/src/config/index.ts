@@ -15,7 +15,7 @@ type configType = {
   sendGridKey: string;
 };
 export const config = Object.freeze({
-  port: 6000,
+  port: 8000,
   dbName: process.env.DB_NAME,
   dbUserName: process.env.DB_USERNAME,
   dbHost: process.env.DB_HOST,

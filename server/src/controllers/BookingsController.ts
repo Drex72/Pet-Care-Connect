@@ -34,7 +34,22 @@ class BookingsController {
   getAllBookingsForAUser = async (req: Request, res: Response) => {
     const { id } = req.query;
     try {
-      const currentBooking = await this.bookingService.getBookingsForUser(id as string);
+      const currentBooking = await this.bookingService.getBookingsForUser(
+        id as string
+      );
+      return res
+        .status(currentBooking.statusCode)
+        .send(currentBooking.response);
+    } catch (e) {
+      return res.status(500).send(`Error while fetching Booking, ${e}`);
+    }
+  };
+  getAllBookingsForAProvider = async (req: Request, res: Response) => {
+    const { id } = req.query;
+    try {
+      const currentBooking = await this.bookingService.getBookingsForProvider(
+        id as string
+      );
       return res
         .status(currentBooking.statusCode)
         .send(currentBooking.response);
@@ -56,9 +71,11 @@ class BookingsController {
   };
 
   deleteABooking = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { id } = req.query;
     try {
-      const deletedBooking = await this.bookingService.deleteABooking(id);
+      const deletedBooking = await this.bookingService.deleteABooking(
+        id as string
+      );
       return res
         .status(deletedBooking.statusCode)
         .send(deletedBooking.response);

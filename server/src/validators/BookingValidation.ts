@@ -42,7 +42,7 @@ class BookingValidation {
     return next();
   }
 
-  async getBookingValidation(req: Request, _: Response, next: NextFunction) {
+  async getBookingForUserValidation(req: Request, _: Response, next: NextFunction) {
     const { query } = req;
 
     // Create User Schema
@@ -65,7 +65,28 @@ class BookingValidation {
     return next();
   }
 
+  async getBookingValidation(req: Request, _: Response, next: NextFunction) {
+    const { params } = req;
 
+    // Create User Schema
+    const getBookingValidationSchema: Joi.ObjectSchema = Joi.object({
+      id: Joi.string().length(36).required(),
+    });
+
+    const { error, value } = getBookingValidationSchema.validate(
+      params,
+      schemaOptions
+    );
+
+    // If Error, handle Error
+    if (error) {
+      // Add our Error handler
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
+
+    req.body = value;
+    return next();
+  }
 
   async deleteBookingValidation(req: Request, _: Response, next: NextFunction) {
     const { query } = req;
