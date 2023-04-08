@@ -1,0 +1,25 @@
+.otp_input_container {
+  margin-bottom: 48px;
+  display: flex;
+  width: 100%;
+  max-width: 360px;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-block: 1em;
+}
+.otp_input_box {
+  height: 60px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  caret-color: #157cff;
+}
+
+.otp_input_box:focus {
+  outline-color: #157cff;
+}

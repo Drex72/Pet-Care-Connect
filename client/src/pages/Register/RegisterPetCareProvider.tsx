@@ -21,6 +21,7 @@ import useApi from "../../hooks/useApi";
 import { LoginResponse } from "../../interfaces/LoginInput";
 import { AllRouteConstants } from "../../routes/routes";
 import AuthError from "../../components/AuthComponents/AuthError/AuthError";
+import { UserType } from "../../interfaces/User";
 
 export const RegisterPetCareProvider = () => {
   // Add Login Image
@@ -29,13 +30,13 @@ export const RegisterPetCareProvider = () => {
   useEffect(() => {
     dispatch(authScreenActions.addImage(RegisterPetCareProviderImage));
   }, []);
-  const location = useLocation();
-  let userType: string = location?.state?.userType;
-  //   useEffect(() => {
-  //     if (!userType) {
-  //       navigate(AllRouteConstants.auth.register.index);
-  //     }
-  //   }, []);
+//   const location = useLocation();
+//   let userType: UserType = location?.state?.userType;
+//   useEffect(() => {
+//     if (!userType) {
+//       navigate(AllRouteConstants.auth.register.index);
+//     }
+//   }, []);
 
   // SignUp Form
   const {
@@ -147,12 +148,21 @@ export const RegisterPetCareProvider = () => {
           />
         </div>
 
-        <Button
-          label={`Register`}
-          loading={createPetProviderApiRequest.loading}
-          variant="primary"
-          buttonClassName="signup_submit_button"
-        />
+        <div className="register_submit_button_containers">
+          <Button
+            label={`Back`}
+            type="button"
+            variant="secondary"
+            buttonClassName="signup_back_button"
+            onClick={() => navigate(AllRouteConstants.auth.register.address)}
+          />
+          <Button
+            label={`Register`}
+            loading={createPetProviderApiRequest.loading}
+            variant="primary"
+            buttonClassName="signup_submit_button"
+          />
+        </div>
 
         <AuthError error={createPetProviderApiRequest.error?.message} />
       </form>

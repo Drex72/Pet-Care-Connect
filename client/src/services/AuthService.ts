@@ -1,8 +1,12 @@
 import axios from "axios";
-import { UserBaseInformation } from "../interfaces/BasicUserInterface";
 import { LoginInput } from "../interfaces/LoginInput";
-import { PetInformationInterface } from "../interfaces/PetInformationInterface";
-import { PetProviderServiceInterface } from "../interfaces/ProviderServiceTypeInformation";
+import { ICreatePetOwner } from "../interfaces/PetInformationInterface";
+import { ICreatePetCareProvider } from "../interfaces/ProviderServiceTypeInformation";
+import { UserType } from "../interfaces/User";
+import {
+  IConfirmOTP,
+  ISendVerification,
+} from "../interfaces/VerifyEmailInterface";
 import axiosInstance from "./axios";
 
 class AuthService {
@@ -16,11 +20,30 @@ class AuthService {
       withCredentials: true,
     });
   };
-  createPetCareProvider = (
-    data: UserBaseInformation & PetProviderServiceInterface
-  ) => {
+  createPetCareProvider = (data: ICreatePetCareProvider) => {
     return axios.post(
       `http://localhost:8000/auth/register/pet-provider`,
+      data,
+      {
+        withCredentials: true,
+      }
+    );
+  };
+
+  createPetOwner = (data: ICreatePetOwner) => {
+    return axios.post(`http://localhost:8000/auth/register/pet-owner`, data, {
+      withCredentials: true,
+    });
+  };
+  sendVerificationMail = (data: ISendVerification) => {
+    return axios.post(`http://localhost:8000/auth/verify-email`, data, {
+      withCredentials: true,
+    });
+  };
+
+  confirmVerificationCode = (data: IConfirmOTP) => {
+    return axios.post(
+      `http://localhost:8000/auth/verify-email/validate`,
       data,
       {
         withCredentials: true,

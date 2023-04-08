@@ -12,16 +12,17 @@ import Button from "../../components/Button/Button";
 import Logo from "../../components/Logo/Logo";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { registrationFormActions } from "../../redux/RegistrationFormSlice";
-import {
-  ICreatePetCareProvider,
-  PetProviderServiceInterface,
-} from "../../interfaces/ProviderServiceTypeInformation";
+
 import authService from "../../services/AuthService";
 import useApi from "../../hooks/useApi";
 import { LoginResponse } from "../../interfaces/LoginInput";
 import { AllRouteConstants } from "../../routes/routes";
 import AuthError from "../../components/AuthComponents/AuthError/AuthError";
-import { PetInformationInterface } from "../../interfaces/PetInformationInterface";
+import {
+  ICreatePetOwner,
+  PetInformationInterface,
+} from "../../interfaces/PetInformationInterface";
+import { UserType } from "../../interfaces/User";
 
 export const RegisterPetOwner = () => {
   // Add Login Image
@@ -31,14 +32,13 @@ export const RegisterPetOwner = () => {
     dispatch(authScreenActions.addImage(RegisterPetOwnerImage));
   }, []);
 
-  const location = useLocation();
-  let userType: string = location?.state?.userType;
-  //   useEffect(() => {
-  //     if (!userType) {
-  //       navigate(AllRouteConstants.auth.register.index);
-  //     }
-  //   }, []);
-
+//   const location = useLocation();
+//   let userType: UserType = location?.state?.userType;
+//   useEffect(() => {
+//     if (!userType) {
+//       navigate(AllRouteConstants.auth.register.index);
+//     }
+//   }, []);
   // SignUp Form
   const {
     petOwnerFields,
@@ -63,20 +63,19 @@ export const RegisterPetOwner = () => {
 
   // Register Pet Care Provider Api Request
 
-  const createPetProviderApiService = (data: ICreatePetCareProvider) =>
-    authService.createPetCareProvider(data);
+  const createPetOwnerApiService = (data: ICreatePetOwner) =>
+    authService.createPetOwner(data);
 
-  const createPetProviderApiRequest = useApi<
-    LoginResponse,
-    ICreatePetCareProvider
-  >(createPetProviderApiService);
+  const createPetOwnerApiRequest = useApi<LoginResponse, ICreatePetOwner>(
+    createPetOwnerApiService
+  );
 
   // Submit Handler
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     dispatch(registrationFormActions.setPetOwnerFields(registrationForm.form));
     registrationForm.resetFormErrors();
-    createPetProviderApiRequest.reset();
+    createPetOwnerApiRequest.reset();
     const valid = registrationForm.validate();
 
     if (valid) {
@@ -86,15 +85,13 @@ export const RegisterPetOwner = () => {
         ...registrationForm.form,
       };
 
-      //   try {
-      //     const user = await createPetProviderApiRequest.request(
-      //       requestInformation
-      //     );
-      //     if (user?.status) {
-      //       dispatch(registrationFormActions.resetAllFields());
-      //       return navigate(AllRouteConstants.auth.login);
-      //     }
-      //   } catch (error) {}
+      try {
+        const user = await createPetOwnerApiRequest.request(requestInformation);
+        if (user?.status) {
+          dispatch(registrationFormActions.resetAllFields());
+          return navigate(AllRouteConstants.auth.login);
+        }
+      } catch (error) {}
     }
   };
 
@@ -139,6 +136,7 @@ export const RegisterPetOwner = () => {
               id="Pet Birthday"
               label="Pet Birthday"
               error={registrationForm.formErrors.pet_birthday}
+              inputClassName="styled-date"
               inputProps={{
                 placeholder: "Enter your Pet Birthday",
                 value: registrationForm.form.pet_birthday,
@@ -164,28 +162,36 @@ export const RegisterPetOwner = () => {
               }}
             />
           </div>
-          <Input
-            id="Pet Name"
-            label="Pet Name"
-            error={registrationForm.formErrors.pet_name}
-            inputProps={{
-              placeholder: "Enter your Pet Name",
-              value: registrationForm.form.pet_name,
+          <TextArea
+            id="Pet Special Needs"
+            label="Pet Special Needs"
+            error={registrationForm.formErrors.pet_special_needs as any}
+            inputClassName="pet_provider_service_description_input"
+            textareaProps={{
+              placeholder: "Enter your Pet Special Needs",
+              value: registrationForm.form.pet_special_needs,
               onChange: handleInputChange,
-              name: "pet_name",
-              required: true,
+              name: "pet_special_needs",
             }}
           />
         </div>
+        <div className="register_submit_button_containers">
+          <Button
+            label={`Back`}
+            type="button"
+            variant="secondary"
+            buttonClassName="signup_back_button"
+            onClick={() => navigate(AllRouteConstants.auth.register.address)}
+          />
+          <Button
+            label={`Register`}
+            loading={createPetOwnerApiRequest.loading}
+            variant="primary"
+            buttonClassName="signup_submit_button"
+          />
+        </div>
 
-        <Button
-          label={`Register`}
-          loading={createPetProviderApiRequest.loading}
-          variant="primary"
-          buttonClassName="signup_submit_button"
-        />
-
-        <AuthError error={createPetProviderApiRequest.error?.message} />
+        <AuthError error={createPetOwnerApiRequest.error?.message} />
       </form>
     </div>
   );

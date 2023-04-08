@@ -15,6 +15,7 @@ import { AddressInterface } from "../../interfaces/BasicUserInterface";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { registrationFormActions } from "../../redux/RegistrationFormSlice";
 import PhoneInputField from "../../components/Input/PhoneInput";
+import { UserType } from "../../interfaces/User";
 
 export const RegisterAddress = () => {
   // Add Login Image
@@ -24,12 +25,12 @@ export const RegisterAddress = () => {
     dispatch(authScreenActions.addImage(RegisterAddressImage));
   }, []);
   const location = useLocation();
-  let userType: string = location?.state?.userType;
-  useEffect(() => {
-    if (!userType) {
-      navigate(AllRouteConstants.auth.register.index);
-    }
-  }, []);
+  let userType: UserType = location?.state?.userType;
+  // useEffect(() => {
+  //   if (!userType) {
+  //     navigate(AllRouteConstants.auth.register.index);
+  //   }
+  // }, []);
 
   // SignUp Form
   const { baseAddressInformation, validators } = useAppSelector(
@@ -55,11 +56,18 @@ export const RegisterAddress = () => {
       registrationFormActions.setBaseUserAddressFields(registrationForm.form)
     );
     if (userType === "PET-OWNER") {
-      return navigate(AllRouteConstants.auth.register.pet_owner_register);
+      return navigate(AllRouteConstants.auth.register.pet_owner_register, {
+        state: { userType },
+        replace: true,
+      });
     }
     if (userType === "PET-PROVIDER") {
       return navigate(
-        AllRouteConstants.auth.register.pet__care_provider_register
+        AllRouteConstants.auth.register.pet__care_provider_register,
+        {
+          state: { userType },
+          replace: true,
+        }
       );
     }
   };
@@ -140,12 +148,20 @@ export const RegisterAddress = () => {
             />
           </div>
         </div>
-
-        <Button
-          label={`Continue`}
-          variant="primary"
-          buttonClassName="signup_submit_button"
-        />
+        <div className="register_submit_button_containers">
+          <Button
+            label={`Back`}
+            type="button"
+            variant="secondary"
+            buttonClassName="signup_back_button"
+            onClick={() => navigate(AllRouteConstants.auth.register.index)}
+          />
+          <Button
+            label={`Continue`}
+            variant="primary"
+            buttonClassName="signup_submit_button"
+          />
+        </div>
       </form>
     </div>
   );

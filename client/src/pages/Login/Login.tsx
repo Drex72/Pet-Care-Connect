@@ -20,6 +20,8 @@ import { UserType } from "../../interfaces/User";
 import authService from "../../services/AuthService";
 import Logo from "../../components/Logo/Logo";
 import AuthError from "../../components/AuthComponents/AuthError/AuthError";
+import Loader from "../../components/Loader/Loader";
+import { ISendVerification } from "../../interfaces/VerifyEmailInterface";
 
 export const Login = () => {
   // Add Login Image
@@ -44,6 +46,12 @@ export const Login = () => {
 
   // Login Api Request
   const loginApiService = (data: LoginInput) => authService.login(data);
+  const verificationemail = (data: ISendVerification) =>
+    authService.sendVerificationMail(data);
+
+  const verificationemailApiRequest = useApi<string, ISendVerification>(
+    verificationemail
+  );
 
   const loginApiRequest = useApi<LoginResponse, LoginInput>(loginApiService);
 
@@ -67,6 +75,19 @@ export const Login = () => {
     if (valid) {
       try {
         const user = await loginApiRequest.request(loginForm.form);
+
+        if (!user?.data.userDetails?.user_verified) {
+          const { email, user_type } = user?.data.userDetails;
+          const result = await verificationemailApiRequest.request({
+            email,
+            user_type,
+          });
+          console.log(result);
+          return navigate(AllRouteConstants.auth.verifyEmail, {
+            state: { userType: user_type, userEmail: email },
+            replace: true,
+          });
+        }
 
         if (user?.code === 200 && loginForm.form.user_type === "PET-OWNER") {
           return navigate(AllRouteConstants.pet_owner_routes.home);

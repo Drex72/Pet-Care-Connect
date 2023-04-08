@@ -89,6 +89,7 @@ export const Register = () => {
                   name: "user_type",
                   required: true,
                   autoFocus: true,
+                  checked: userType == "PET-OWNER",
                 }}
               />
               <Input
@@ -100,6 +101,7 @@ export const Register = () => {
                   type: "radio",
                   name: "user_type",
                   required: true,
+                  checked: userType == "PET-PROVIDER",
                 }}
               />
             </div>
@@ -182,11 +184,13 @@ export const Register = () => {
           />
         </div>
 
-        <Button
-          label={`Continue`}
-          variant="primary"
-          buttonClassName="signup_submit_button"
-        />
+        <div className="register_submit_button_containers">
+          <Button
+            label={`Continue`}
+            variant="primary"
+            buttonClassName="signup_submit_button"
+          />
+        </div>
 
         <p>
           Already Joined?{" "}

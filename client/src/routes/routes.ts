@@ -3,6 +3,7 @@ export const AllRouteConstants = {
   auth: {
     index: "/auth",
     login: "/auth/login",
+    verifyEmail: "/auth/verify-email",
     register: {
       index: "/auth/register",
       address: "/auth/register/address",
@@ -17,3 +18,5 @@ export const AllRouteConstants = {
     home: "/",
   },
 };
+
+export const RE_DIGIT = new RegExp(/^\d+$/);

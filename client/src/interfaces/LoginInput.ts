@@ -10,5 +10,5 @@ export interface LoginResponse {
   status: boolean;
   code: number;
   message: string;
-  data: { accessToken: string; refreshToken: string };
+  data: { accessToken: string; refreshToken: string; userDetails: any };
 }

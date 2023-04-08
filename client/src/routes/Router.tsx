@@ -1,15 +1,21 @@
 import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Scroll from "../components/scrollToTop/ScrollToTop";
-import { IRootState } from "../redux/store";
 import { AllRouteConstants } from "./routes";
-import { LandingPage, Login, Register, RegisterAddress, RegisterPetCareProvider, RegisterPetOwner } from "../pages";
+import {
+  LandingPage,
+  Login,
+  Register,
+  RegisterAddress,
+  RegisterPetCareProvider,
+  RegisterPetOwner,
+  VerifyEmail,
+} from "../pages";
 import AuthLayout from "../layout/authLayout/AuthLayout";
 import HomeLayout from "../layout/mainPageLayout/HomeLayout";
 import { RequirePetOwner } from "../components/HigherOrderComponents/";
 
 function Router() {
-
   return (
     <BrowserRouter>
       <Scroll />
@@ -38,6 +44,10 @@ function Router() {
           <Route
             path={AllRouteConstants.auth.register.pet_owner_register}
             element={<RegisterPetOwner />}
+          />
+          <Route
+            path={AllRouteConstants.auth.verifyEmail}
+            element={<VerifyEmail />}
           />
         </Route>
 

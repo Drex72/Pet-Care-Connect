@@ -23,10 +23,6 @@
   }
 }
 
-.signup_submit_button {
-  margin-top: 3em;
-}
-
 .auth_user_type {
   &-label {
     font-size: 18px;
@@ -81,6 +77,13 @@
   .custom-input {
     width: 100%;
   }
+}
+.register_submit_button_containers {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 3em;
 }
 @media screen and (min-width: 768px) {
   .signup_form_flex_container {
