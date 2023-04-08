@@ -31,7 +31,7 @@ class PetOwnerValidation {
       phone_number: Joi.string().required().min(10).max(30),
       street: Joi.string().required(),
       city: Joi.string().required(),
-      postal_code: Joi.number().required(),
+      postal_code: Joi.string().required(),
       region: Joi.string().required(),
       pet_name: Joi.string().required(),
       pet_breed: Joi.string().required(),

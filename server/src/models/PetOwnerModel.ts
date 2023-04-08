@@ -17,7 +17,7 @@ export class PetOwner extends Model<PetOwnerAttributes> implements PetOwnerAttri
   public phone_number!: string;
   public street!: string;
   public city!: string;
-  public postal_code!: number;
+  public postal_code!: string;
   public region!: string;
   public user_type!: UserType;
 
@@ -74,7 +74,7 @@ export const PetOwnerModel = (sequelize: Sequelize) => {
         allowNull: false,
       },
       postal_code: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       region: {

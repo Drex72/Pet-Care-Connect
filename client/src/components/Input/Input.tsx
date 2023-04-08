@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react";
 import "./inputStyles.scss";
+import Select from "react-select";
 
 interface InputProps {
   id: string;
@@ -32,7 +33,7 @@ const Input = forwardRef<Ref, InputProps>(
       <div className="custom-input">
         <label htmlFor={id} className={`custom-input__label ${labelClassName}`}>
           {label}{" "}
-          {requiredAstersik && inputProps?.required && (
+          {inputProps?.required && (
             <span className="input_required_asterisk">*</span>
           )}
         </label>
@@ -108,4 +109,57 @@ export const TextArea = ({
     </div>
   );
 };
+
+interface DropdownProps {
+  options: { value: string; label: string }[];
+  disabled?: boolean;
+  loading?: boolean;
+  id: string;
+  label: string;
+  error: string | null;
+  inputClassName?: string;
+  labelClassName?: string;
+  required?: boolean;
+  dropdownProps?: any;
+}
+
+export const Dropdown = (props: DropdownProps) => {
+  const {
+    options,
+    disabled,
+    loading,
+    required,
+    label,
+    labelClassName,
+    id,
+    error,
+    dropdownProps,
+  } = props;
+  return (
+    <div className="custom-input">
+      <label htmlFor={id} className={`custom-input__label ${labelClassName}`}>
+        {label}{" "}
+        {dropdownProps?.required && (
+          <span className="input_required_asterisk">*</span>
+        )}
+      </label>
+      <Select
+        className="basic-single"
+        classNamePrefix="select"
+        defaultValue={options[0]}
+        isDisabled={disabled}
+        isLoading={loading}
+        name="color"
+        options={options}
+        {...dropdownProps}
+      />
+      <span
+        className={`custom-input__error ${
+          !error ? "custom-input__error-hidden" : undefined
+        } animate__animated animate__fadeIn`}
+      >{`${id} ${error}`}</span>
+    </div>
+  );
+};
+
 export default Input;

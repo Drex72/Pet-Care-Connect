@@ -24,7 +24,7 @@ class PetProviderValidation {
       phone_number: Joi.string().required().min(10).max(30),
       street: Joi.string().required(),
       city: Joi.string().required(),
-      postal_code: Joi.number().required(),
+      postal_code: Joi.string().required(),
       region: Joi.string().required(),
       service_name: Joi.string().required(),
       service_description: Joi.string().optional(),
@@ -42,7 +42,7 @@ class PetProviderValidation {
       return next(new ApiErrorException(joiErrorFormatter(error), 400));
     }
 
-    req.body = { ...value, user_type: 'PET-PROVIDER' };
+    req.body = { ...value, user_type: "PET-PROVIDER" };
     return next();
   }
   async getAPetProviderValidation(
@@ -50,26 +50,26 @@ class PetProviderValidation {
     res: Response,
     next: NextFunction
   ) {
-     const { params } = req;
+    const { params } = req;
 
-     // Create User Schema
-     const getAPetProviderValidationSchema: Joi.ObjectSchema = Joi.object({
-       id: Joi.string().length(36).required(),
-     });
+    // Create User Schema
+    const getAPetProviderValidationSchema: Joi.ObjectSchema = Joi.object({
+      id: Joi.string().length(36).required(),
+    });
 
-     const { error, value } = getAPetProviderValidationSchema.validate(
-       params,
-       schemaOptions
-     );
+    const { error, value } = getAPetProviderValidationSchema.validate(
+      params,
+      schemaOptions
+    );
 
-     // If Error, handle Error
-     if (error) {
-       // Add our Error handler
-       return next(new ApiErrorException(joiErrorFormatter(error), 400));
-     }
+    // If Error, handle Error
+    if (error) {
+      // Add our Error handler
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
 
-     req.params = value;
-     return next();
+    req.params = value;
+    return next();
   }
   async updatePetProviderValidation(
     req: Request,
@@ -81,26 +81,26 @@ class PetProviderValidation {
     res: Response,
     next: NextFunction
   ) {
-     const { query } = req;
+    const { query } = req;
 
-     // Create User Schema
-     const deleteAPetProviderValidationSchema: Joi.ObjectSchema = Joi.object({
-       id: Joi.string().length(36).required(),
-     });
+    // Create User Schema
+    const deleteAPetProviderValidationSchema: Joi.ObjectSchema = Joi.object({
+      id: Joi.string().length(36).required(),
+    });
 
-     const { error, value } = deleteAPetProviderValidationSchema.validate(
-       query,
-       schemaOptions
-     );
+    const { error, value } = deleteAPetProviderValidationSchema.validate(
+      query,
+      schemaOptions
+    );
 
-     // If Error, handle Error
-     if (error) {
-       // Add our Error handler
-       return next(new ApiErrorException(joiErrorFormatter(error), 400));
-     }
+    // If Error, handle Error
+    if (error) {
+      // Add our Error handler
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
 
-     req.params = value;
-     return next();
+    req.params = value;
+    return next();
   }
 }
 

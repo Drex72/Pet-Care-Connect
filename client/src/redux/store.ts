@@ -1,5 +1,6 @@
 import userReducer from "./UserSlice";
 import authScreenImageReducer from "./AuthScreenImageSlice";
+import registrationFormReducer from "./RegistrationFormSlice";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
@@ -18,6 +19,7 @@ import {
 const rootReducer = combineReducers({
   userReducer,
   authScreenImageReducer,
+  registrationFormReducer,
 });
 
 // Redux Persistor Configuration
@@ -34,9 +36,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] as any,
-    },
+    serializableCheck: false,
   }),
 });
 export const persistor = persistStore(store);

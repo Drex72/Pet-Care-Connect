@@ -97,6 +97,7 @@ export const Login = () => {
               value: loginForm.form.email,
               onChange: handleInputChange,
               name: "email",
+              autoFocus: true,
             }}
           />
 
@@ -180,3 +181,4 @@ export const Login = () => {
     </div>
   );
 };
+// woman-with-twodogs.jpg

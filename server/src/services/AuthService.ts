@@ -155,7 +155,7 @@ class AuthService {
       if (!isPasswordMatch) {
         return responseHandler.responseError(400, "Invalid Login Details");
       }
-
+      delete currentUser?.password;
       // Store basic info in jwt
       const accessToken = tokenHandler.createAccessToken(
         {
@@ -178,6 +178,7 @@ class AuthService {
       return responseHandler.responseSuccess(200, "Logged in Successfully", {
         accessToken,
         refreshToken,
+        userDetails: currentUser,
       });
     } catch (error) {
       return responseHandler.responseError(

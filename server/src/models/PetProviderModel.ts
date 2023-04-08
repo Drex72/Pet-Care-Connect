@@ -19,7 +19,7 @@ export class PetProvider
   public phone_number!: string;
   public street!: string;
   public city!: string;
-  public postal_code!: number;
+  public postal_code!: string;
   public region!: string;
   public user_verified!: boolean;
   public user_type!: string;
@@ -68,7 +68,7 @@ export const PetProviderModel = (sequelize: Sequelize) => {
         allowNull: false,
       },
       postal_code: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       region: {

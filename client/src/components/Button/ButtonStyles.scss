@@ -2,6 +2,7 @@
   transition: all 0.2s ease;
   vertical-align: middle;
   text-align: center;
+  display: flex;
 }
 
 .custom-button:disabled {
@@ -24,8 +25,8 @@
 }
 
 .custom-button-primary:disabled {
-  background-color: #e1ece2;
-  color: #c3c3cb;
+  background-color: rgba(#157cff, 0.25);
+  color: #707073;
 }
 
 .custom-button-secondary {
@@ -42,4 +43,12 @@
   outline: none;
   border: none;
   cursor: pointer;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin: 0 auto;
+    // width: 5%;
+  }
 }

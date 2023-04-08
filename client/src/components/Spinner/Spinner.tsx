@@ -3,17 +3,8 @@ import "./SpinnerStyles.scss";
 
 const Spinner = () => {
   return (
-    <div className="loadingio-spinner-double-ring-xezx2nkjxt">
-      <div className="ldio-i68zquo2ap">
-        <div></div>
-        <div></div>
-        <div>
-          <div></div>
-        </div>
-        <div>
-          <div></div>
-        </div>
-      </div>
+    <div className="col-sm-2">
+      <div className="sp sp-circle"></div>
     </div>
   );
 };
