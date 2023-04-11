@@ -13,11 +13,14 @@
         width: 40%;
         display: flex;
         flex-direction: column;
-        color: black;
+        color: #131313;
+        margin-top: -20px;
 
         h2 {
-          font-size: 4rem;
+          font-size: 58px;
           margin: 0;
+          color: #131313;
+          font-weight: 600;
 
           span {
             color: #157cff;
@@ -25,8 +28,8 @@
         }
         p {
           margin-block: 1em;
-          font-size: 20px;
-          font-weight: 500;
+          font-size: 18px;
+          font-weight: 400;
         }
         .custom-button {
           width: 40% !important;
@@ -66,13 +69,15 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
+        grid-gap: 50px;
 
         .reasons {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 24px;
 
           .reason_content {
+            width: 60%;
             h4 {
               font-weight: 600;
               font-size: 1.3rem;
@@ -80,6 +85,7 @@
             }
             p {
               font-weight: 300;
+              line-height: 1.5em;
             }
           }
         }
@@ -99,10 +105,10 @@
       h2 {
         color: white;
         text-align: center;
-        font-size: 1.5rem;
+        font-size: 2.5rem;
         font-weight: 700;
         margin: 0 auto;
-        width: 30%;
+        width: 50%;
         line-height: 1.5em;
       }
       .testimonial_message {
@@ -136,7 +142,6 @@
                 font-weight: 600;
                 font-size: 1.3rem;
                 margin: 0;
-                letter-spacing: 2px;
               }
               p {
                 font-weight: 300;

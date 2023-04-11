@@ -16,9 +16,13 @@ export const HomePage = () => {
         <div className="home_page-hero_section_container">
           <div className="text_container">
             <h2>
-              Find the best <br /> <span>Pet Care</span> services in Scotland...
+              Find the best <br /> <span>Pet Care</span> services <br /> in
+              Scotland
             </h2>
-            <p>A beautiful tagline to represent your business</p>
+            <p>
+              Ensuring happy tails across Scotland - Discover the best Pet Care
+              bervices.
+            </p>
             <Button variant="primary" label="Find Pet Care Around" />
           </div>
           <div className="image_container">
@@ -109,11 +113,7 @@ export const HomePage = () => {
             <div className="services_container">
               <div className="service">
                 <div className="service_image_container">
-                  <img
-                    loading="lazy"
-                    src={BookingImage}
-                    alt="Online Booking"
-                  />
+                  <img loading="lazy" src={BookingImage} alt="Online Booking" />
                 </div>
                 <div className="service_content">
                   <h4>Online Booking</h4>
@@ -143,11 +143,7 @@ export const HomePage = () => {
               </div>
               <div className="service">
                 <div className="service_image_container">
-                  <img
-                    loading="lazy"
-                    src={PetImage}
-                    alt="A Happy Pet"
-                  />
+                  <img loading="lazy" src={PetImage} alt="A Happy Pet" />
                 </div>
                 <div className="service_content">
                   <h4>Happy Pet</h4>
@@ -162,7 +158,7 @@ export const HomePage = () => {
           </div>
 
           <div className="testimonial_container">
-           <h2>What people Say about Us</h2>
+            <h2>What people Say about Us</h2>
           </div>
         </div>
       </section>

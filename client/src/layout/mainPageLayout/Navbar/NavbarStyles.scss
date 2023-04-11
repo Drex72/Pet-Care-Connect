@@ -39,9 +39,12 @@
     text-decoration: none;
     list-style-type: none;
     position: relative;
+    transition: all 300ms ease-in-out;
+    color: #232323;
 
     .active {
       transition: all 300ms ease-in-out;
+      color: #157cff;
       &::after {
         content: "";
         width: 100%;
@@ -55,8 +58,8 @@
       }
     }
     a {
-      color: black;
-      font-weight: 600;
+      color: #232323;
+      font-weight: 500;
       text-decoration: none;
       font-size: 1.1rem;
     }

@@ -13,7 +13,7 @@ class MailingService {
   }
 
   async sendEmail({
-    from = "yemmy072@gmail.com",
+    from = "Petcare.connect@gmail.com",
     to,
     subject,
     body,
