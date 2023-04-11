@@ -12,10 +12,7 @@ const router = express.Router();
 // Pet Provider Auth Routes
 router
   .route("/")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    petProviderController.getAllPetProviders
-  )
+  .get(petProviderController.getAllOrOnePetProviders)
   .put(
     tokenHandler.validateAccessTokenMiddleware,
     petProviderValidation.updatePetProviderValidation,
@@ -28,18 +25,8 @@ router
   );
 
 router
-  .route("/:id")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    petProviderValidation.getAPetProviderValidation,
-    petProviderController.getAPetProvider
-  );
-router
-  .route("/service/service-types")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    petProviderServiceController.getAllPetProviderservices
-  )
+  .route("/service")
+  .get(petProviderServiceController.getAllPetProviderservices)
   .post(
     tokenHandler.validateAccessTokenMiddleware,
     petProviderServiceValidation.createPetProviderServiceValidation,
@@ -50,16 +37,18 @@ router
     petProviderServiceValidation.deletePetProviderValidation,
     petProviderServiceController.deletePetProvider
   );
-router.route("/bookings/book-provider").get(
-  tokenHandler.validateProviderAccessTokenMiddleware, 
-  bookingValidation.getBookingValidation,
-  bookingsController.getAllBookingsForAProvider
-);
-// .put(
-//   tokenHandler.validateAccessTokenMiddleware,
-//   bookingValidation.updateBookingValidation,
-//   bookingsController.updateABooking
-// );
+router
+  .route("/bookings")
+  .get(
+    tokenHandler.validateProviderAccessTokenMiddleware,
+    bookingValidation.getBookingForUserValidation,
+    bookingsController.getAllBookingsForAProvider
+  )
+  .put(
+    tokenHandler.validateAccessTokenMiddleware,
+    bookingValidation.updateBookingForUserValidation,
+    bookingsController.getAllBookingsForAUser
+  );
 
 router
   .route("/bookings/:id")

@@ -48,6 +48,10 @@ router.post(
 );
 
 // Endpoint for Refreshing Access Tokens
-router.get("/refresh", tokenHandler.refreshAccessToken);
+router.post(
+  "/refresh",
+  authValidation.sendNewAccessTokenValidation,
+  tokenHandler.refreshAccessToken
+);
 
 export default router;

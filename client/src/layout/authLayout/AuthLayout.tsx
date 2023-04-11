@@ -8,20 +8,18 @@ import AuthSectionLeft from "../../components/AuthComponents/AuthSectionLeft/Aut
 const AuthLayout = () => {
   const navigate = useNavigate();
 
-  const { data } = useAppSelector((state) => state.userReducer);
+  const user = useAppSelector((state) => state.userReducer);
 
   useEffect(() => {
-    if (data?.user_type === "PET-OWNER") {
-      navigate(AllRouteConstants.pet_owner_routes.home);
-    } else if (data?.user_type === "PET-PROVIDER") {
-      navigate(AllRouteConstants.pet_owner_routes.home);
+    if (user.data?.id) {
+      navigate(AllRouteConstants.dashboardRoutes.index);
     }
-  }, [data]);
+  }, []);
 
   return (
     <div className="auth_layout">
       <AuthSectionLeft />
-      <div className="outlet_container">
+      <div className="outlet_container ">
         <Outlet />
       </div>
     </div>

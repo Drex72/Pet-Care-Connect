@@ -1,0 +1,33 @@
+.search_component_container {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  .search_input_container {
+    flex: 6;
+    .search_input_class {
+      background-color: #f2f2f2;
+      width: 100%;
+    }
+  }
+}
+
+.search_component_button {
+  background: #157cff;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: white;
+  font-size: 25px;
+  border-radius: 4px;
+  transition: all 300ms ease-in-out;
+  flex: .5;
+
+  &:hover {
+    border: 1px solid #157cff;
+    background-color: white;
+    color: #157cff;
+  }
+}
+.search_component_close {
+  font-size: 25px;
+}

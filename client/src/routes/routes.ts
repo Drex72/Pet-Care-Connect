@@ -1,5 +1,11 @@
 export const AllRouteConstants = {
-  landingRoute: "/",
+  landingRoute: {
+    index: "/",
+    aboutUs: "/about-us",
+    contactUs: "/contact-us",
+    findPetProvider:'/find-provider'
+
+  },
   auth: {
     index: "/auth",
     login: "/auth/login",
@@ -11,11 +17,18 @@ export const AllRouteConstants = {
       pet__care_provider_register: "/auth/register/pet-care-provider",
     },
   },
-  pet_owner_routes: {
-    home: "/",
-  },
-  pet_care_provider_routes: {
-    home: "/",
+
+  dashboardRoutes: {
+    index: "/dashboard",
+    settings: "/dashboard/settings",
+    booking: "/dashboard/booking",
+    pet_owner_routes: {
+      petCareProviders: "/dashboard/pet-care-providers",
+      pets: "/dashboard/pet-owner-pets",
+    },
+    pet_care_provider_routes: {
+      services: "/dashboard/provider-services",
+    },
   },
 };
 

@@ -88,13 +88,10 @@ export const VerifyEmail = () => {
       user_type: userType,
       otp,
     });
-    if (result?.status && userType === "PET-OWNER") {
-      return navigate(AllRouteConstants.pet_owner_routes.home);
+    if (result?.status ) {
+      return navigate(AllRouteConstants.dashboardRoutes.index);
     }
 
-    if (result?.status && userType === "PET-PROVIDER") {
-      return navigate(AllRouteConstants.pet_care_provider_routes.home);
-    }
   };
 
   useEffect(() => {

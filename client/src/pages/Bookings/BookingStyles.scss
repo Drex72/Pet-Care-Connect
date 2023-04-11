@@ -1,0 +1,33 @@
+.booking_header_components {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+}
+.booking_create_new_btn {
+  margin-top: 1em;
+}
+.bookings_table_container {
+  margin-top: 2em;
+}
+
+@media screen and (min-width: 768px) {
+  .booking_header_components {
+    flex-direction: row;
+  }
+  .booking_search {
+    flex: 1 0 130px;
+    max-width: 450px;
+  }
+  .booking_filter {
+    flex: 1 0 130px;
+    width: 200px;
+  }
+
+  .booking_create_new_btn {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+}

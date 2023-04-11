@@ -15,27 +15,24 @@ class PetOwnerController {
    * @param req
    * @param res
    */
-  getAPetOwner = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-      const currentPetOwner = await this.petOwnerService.getPetOwner(id);
-      res.status(currentPetOwner.statusCode).send(currentPetOwner.response);
-    } catch (e) {
-      res.status(500).send(`Error while fetching Pet Owner, ${e}`);
-    }
-  };
-
-  /**
-   *
-   * @param req
-   * @param res
-   */
-  getAllPetOwners = async (req: any, res: Response) => {
-    try {
-      const allPetOwners = await this.petOwnerService.getAllPetOwners();
-      res.status(allPetOwners.statusCode).send(allPetOwners.response);
-    } catch (e) {
-      res.status(500).send(`Error while fetching Users, ${e}`);
+  getAllOrOnePetOwners = async (req: any, res: Response) => {
+    const { query } = req;
+    if (query?.id) {
+      try {
+        const currentPetOwner = await this.petOwnerService.getPetOwner(
+          query.id
+        );
+        res.status(currentPetOwner.statusCode).send(currentPetOwner.response);
+      } catch (e) {
+        res.status(500).send(`Error while fetching Pet Owner, ${e}`);
+      }
+    } else {
+      try {
+        const allPetOwners = await this.petOwnerService.getAllPetOwners();
+        res.status(allPetOwners.statusCode).send(allPetOwners.response);
+      } catch (e) {
+        res.status(500).send(`Error while fetching Users, ${e}`);
+      }
     }
   };
 

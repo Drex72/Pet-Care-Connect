@@ -17,7 +17,9 @@ export class Booking
   public service_type_id!: string;
   public date!: string;
   public time!: string;
-  public status!: BookingStatus;
+  public status?: BookingStatus;
+  public duration!: number;
+  public price?: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -61,8 +63,21 @@ export const BookingModel = (sequelize: Sequelize) => {
         type: DataTypes.TIME,
         allowNull: false,
       },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      duration: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       status: {
-        type: DataTypes.ENUM("REJECTED", "CONFIRMED", "PENDING"),
+        type: DataTypes.ENUM(
+          "REJECTED",
+          "CONFIRMED",
+          "PENDING",
+          "PAYMENTPENDING"
+        ),
         allowNull: true,
         defaultValue: "PENDING",
       },

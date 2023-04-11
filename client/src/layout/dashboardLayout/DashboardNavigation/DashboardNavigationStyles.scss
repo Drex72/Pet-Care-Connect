@@ -1,0 +1,35 @@
+.dashboard_navigation_container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.dashboard_navigation_logo {
+  width: 15%;
+  min-width: 50px;
+  max-width: 25%;
+  img {
+    width: 100%;
+  }
+}
+.dashboard_navigation_hamburger_container {
+  background: #bbc8d9;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 10px;
+  .dashboard_navigation_hamburger {
+    font-size: 1.5rem;
+    color: #157cff;
+    font-weight: bold;
+  }
+}
+
+.desktop_navigation {
+  background-color: white;
+  box-shadow: 1px 5px 5px rgba(#000, 0.25);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 7px 0;
+  padding-right: 20px;
+}

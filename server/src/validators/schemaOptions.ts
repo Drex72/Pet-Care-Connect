@@ -47,7 +47,7 @@ export const bookingStatusValidationSchema = Joi.extend((joi) => {
     },
 
     validate(value, helpers) {
-      const allowedTypes = ["REJECTED", "CONFIRMED", "PENDING"];
+      const allowedTypes = ["REJECTED", "CONFIRMED", "PENDING", "PAYMENTPENDING"];
       if (!allowedTypes.includes(value)) {
         return {
           value,

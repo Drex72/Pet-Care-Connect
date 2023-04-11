@@ -100,7 +100,7 @@ export const RegisterPetCareProvider = () => {
   };
 
   return (
-    <div className="auth_container">
+    <div className="auth_container animate__animated animate__fadeIn">
       <div className="signup_logo_container">
         <Logo />
       </div>

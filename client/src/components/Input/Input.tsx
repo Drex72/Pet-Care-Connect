@@ -117,9 +117,8 @@ interface DropdownProps {
   id: string;
   label: string;
   error: string | null;
-  inputClassName?: string;
+  dropdownClassName?: string;
   labelClassName?: string;
-  required?: boolean;
   dropdownProps?: any;
 }
 
@@ -128,12 +127,12 @@ export const Dropdown = (props: DropdownProps) => {
     options,
     disabled,
     loading,
-    required,
     label,
     labelClassName,
     id,
     error,
     dropdownProps,
+    dropdownClassName,
   } = props;
   return (
     <div className="custom-input">
@@ -144,12 +143,10 @@ export const Dropdown = (props: DropdownProps) => {
         )}
       </label>
       <Select
-        className="basic-single"
+        className={dropdownClassName}
         classNamePrefix="select"
-        defaultValue={options[0]}
         isDisabled={disabled}
         isLoading={loading}
-        name="color"
         options={options}
         {...dropdownProps}
       />

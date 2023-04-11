@@ -12,7 +12,7 @@ router
   .route("/")
   .get(
     tokenHandler.validateAccessTokenMiddleware,
-    petOwnerController.getAllPetOwners
+    petOwnerController.getAllOrOnePetOwners
   )
   .put(
     tokenHandler.validateAccessTokenMiddleware,
@@ -25,17 +25,9 @@ router
     petOwnerController.deletePetOwner
   );
 
-router
-  .route("/:id")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    petOwnerValidation.getAPetOwnerValidation,
-    petOwnerController.getAPetOwner
-  );
-
 // Booking Routes
 router
-  .route("/bookings/book-provider")
+  .route("/bookings")
   .post(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.createNewBookingValidation,
@@ -45,6 +37,11 @@ router
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.getBookingForUserValidation,
     bookingsController.getAllBookingsForAUser
+  )
+  .put(
+    tokenHandler.validateAccessTokenMiddleware,
+    bookingValidation.updateBookingForUserValidation,
+    bookingsController.updateBookingForUser
   )
   .delete(
     tokenHandler.validateAccessTokenMiddleware,

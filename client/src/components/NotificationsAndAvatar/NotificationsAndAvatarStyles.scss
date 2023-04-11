@@ -1,0 +1,45 @@
+.notifications_and_avatar_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dashboard_notifications {
+  background: #b8d0ef;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  position: relative;
+
+  &_icon {
+    color: #157cff;
+    font-size: 1.5rem;
+  }
+  &_counter {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #157cff;
+    position: absolute;
+    top: 20%;
+    right: 25%;
+    border: 1px solid white;
+  }
+}
+
+.dashboard_avatar {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #157cff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+  .dashboard_avatar {
+    width: 30px;
+    height: 30px;
+  }
+}

@@ -38,7 +38,28 @@ models.PetOwner.hasMany(models.Booking, {
   sourceKey: "id",
   foreignKey: "pet_owner_id",
 });
+models.ProviderServiceType.hasMany(models.Booking, {
+  onDelete: "CASCADE",
+  sourceKey: "id",
+  foreignKey: "service_type_id",
+});
+
+models.PetProvider.hasMany(models.Booking, {
+  onDelete: "CASCADE",
+  sourceKey: "id",
+  foreignKey: "pet_provider_id",
+});
 models.Booking.belongsTo(models.PetOwner, {
   foreignKey: "pet_owner_id",
+  onDelete: "CASCADE",
+});
+
+models.Booking.belongsTo(models.PetProvider, {
+  foreignKey: "pet_provider_id",
+  onDelete: "CASCADE",
+});
+
+models.Booking.belongsTo(models.ProviderServiceType, {
+  foreignKey: "service_type_id",
   onDelete: "CASCADE",
 });

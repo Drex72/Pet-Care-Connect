@@ -22,11 +22,17 @@ import Logo from "../../components/Logo/Logo";
 import AuthError from "../../components/AuthComponents/AuthError/AuthError";
 import Loader from "../../components/Loader/Loader";
 import { ISendVerification } from "../../interfaces/VerifyEmailInterface";
+import { userActions } from "../../redux/UserSlice";
+import accessToken from "../../utils/accessToken/AccessToken";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { getRouteToBeUsed } from "../../utils/getRouteToBeUsed";
 
 export const Login = () => {
   // Add Login Image
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
   useEffect(() => {
     dispatch(authScreenActions.addImage(LoginImage));
   }, []);
@@ -71,37 +77,47 @@ export const Login = () => {
     e.preventDefault();
     loginForm.resetFormErrors();
     loginApiRequest.reset();
+    verificationemailApiRequest.reset()
     const valid = loginForm.validate();
     if (valid) {
       try {
         const user = await loginApiRequest.request(loginForm.form);
+        const userData = user?.data.userDetails;
 
+        // Store Access Token
+        accessToken.setAccessToken(user?.data.accessToken!);
+        localStorage.setItem("refreshToken", user?.data.refreshToken!);
+
+        // If the user isn't Verified, Send a mail to them containing an otp and then navigate to the page
         if (!user?.data.userDetails?.user_verified) {
           const { email, user_type } = user?.data.userDetails;
-          const result = await verificationemailApiRequest.request({
+          await verificationemailApiRequest.request({
             email,
             user_type,
           });
-          console.log(result);
           return navigate(AllRouteConstants.auth.verifyEmail, {
             state: { userType: user_type, userEmail: email },
             replace: true,
           });
         }
 
-        if (user?.code === 200 && loginForm.form.user_type === "PET-OWNER") {
-          return navigate(AllRouteConstants.pet_owner_routes.home);
-        }
+        // Dispatch the Login Action
+        dispatch(
+          userActions.login({
+            id: userData?.id,
+            user_type: userData?.user_type,
+          })
+        );
 
-        if (user?.code === 200 && loginForm.form.user_type === "PET-PROVIDER") {
-          return navigate(AllRouteConstants.pet_care_provider_routes.home);
+        if (user?.code === 200) {
+          return navigate(AllRouteConstants.dashboardRoutes.index);
         }
       } catch (error) {}
     }
   };
 
   return (
-    <div className="auth_container">
+    <div className="auth_container animate__animated animate__fadeIn">
       <div className="login_logo_container">
         <Logo />
       </div>
@@ -184,6 +200,7 @@ export const Login = () => {
         />
 
         <AuthError error={loginApiRequest.error?.message} />
+        <AuthError error={verificationemailApiRequest.error?.message} />
 
         <p>
           Getting Started?{" "}

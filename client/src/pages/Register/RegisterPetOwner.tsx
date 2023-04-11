@@ -32,13 +32,13 @@ export const RegisterPetOwner = () => {
     dispatch(authScreenActions.addImage(RegisterPetOwnerImage));
   }, []);
 
-//   const location = useLocation();
-//   let userType: UserType = location?.state?.userType;
-//   useEffect(() => {
-//     if (!userType) {
-//       navigate(AllRouteConstants.auth.register.index);
-//     }
-//   }, []);
+  //   const location = useLocation();
+  //   let userType: UserType = location?.state?.userType;
+  //   useEffect(() => {
+  //     if (!userType) {
+  //       navigate(AllRouteConstants.auth.register.index);
+  //     }
+  //   }, []);
   // SignUp Form
   const {
     petOwnerFields,
@@ -96,7 +96,7 @@ export const RegisterPetOwner = () => {
   };
 
   return (
-    <div className="auth_container">
+    <div className="auth_container animate__animated animate__fadeIn">
       <div className="signup_logo_container">
         <Logo />
       </div>
@@ -172,6 +172,7 @@ export const RegisterPetOwner = () => {
               value: registrationForm.form.pet_special_needs,
               onChange: handleInputChange,
               name: "pet_special_needs",
+              required: true,
             }}
           />
         </div>

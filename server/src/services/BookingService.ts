@@ -1,7 +1,10 @@
 import { Request } from "express";
 import { Op, Sequelize } from "sequelize";
 import responseHandler from "../handlers/ResponseHandler";
-import { BookingRequestInterface } from "../interfaces/BookingRequestInterface";
+import {
+  BookingRequestInterface,
+  BookingStatus,
+} from "../interfaces/BookingRequestInterface";
 import { models } from "../models";
 import { Booking } from "../models/BookingModel";
 
@@ -17,7 +20,9 @@ class BookingService {
       "Booking with Given id does not Exist"
     );
   }
-  async createNewBooking(bookingInformation: BookingRequestInterface) {
+  async createNewBooking(
+    bookingInformation: Omit<BookingRequestInterface, "status">
+  ) {
     try {
       const currentPetOwner = await models.PetOwner.findOne({
         where: { id: bookingInformation.pet_owner_id },
@@ -37,8 +42,12 @@ class BookingService {
       if (!currentService) {
         return responseHandler.responseError(400, "Service not Found");
       }
+      const price =
+        currentService.service_price_per_hour * bookingInformation.duration;
+      console.log(bookingInformation, price);
       const createdBooking = this.bookingModel.create({
         ...bookingInformation,
+        price,
       });
 
       return responseHandler.responseSuccess(
@@ -52,6 +61,38 @@ class BookingService {
       return responseHandler.responseError(
         400,
         `Error Creating Booking ${JSON.stringify(error)}`
+      );
+    }
+  }
+
+  async updateBooking(id: string, status: BookingStatus) {
+    try {
+      const selectedBooking = await this.bookingModel.findOne({
+        where: { id },
+      });
+
+      if (!selectedBooking) {
+        return this.bookingNotFound();
+      }
+
+      const updatedBooking = await this.bookingModel.update(
+        { status },
+        {
+          where: { id },
+        }
+      );
+
+      return responseHandler.responseSuccess(
+        200,
+        "Booking Updated Successfully",
+        {
+          updatedBooking,
+        }
+      );
+    } catch (error) {
+      return responseHandler.responseError(
+        400,
+        `Error Updating Booking ${JSON.stringify(error)}`
       );
     }
   }
@@ -95,9 +136,19 @@ class BookingService {
         include: [
           {
             model: models.PetOwner,
-
             attributes: this.getBoookingsAttributes()
               .ownerAttributes as string[],
+          },
+          {
+            model: models.PetProvider,
+
+            attributes: this.getBoookingsAttributes()
+              .providerAttributes as string[],
+          },
+          {
+            model: models.ProviderServiceType,
+            attributes: this.getBoookingsAttributes()
+              .providerServiceAttributes as string[],
           },
         ],
         attributes: this.getBoookingsAttributes().bookingAttributes,
@@ -119,39 +170,44 @@ class BookingService {
   }
 
   async getBookingsForProvider(id: string) {
-    try {
-      const currentPetProvider = await models.PetProvider.findOne({
-        where: { id },
-      });
-      if (!currentPetProvider) {
-        return responseHandler.responseError(400, "User  not Found");
-      }
-      const allBookings = await this.bookingModel.findAll({
-        where: { pet_provider_id: currentPetProvider.id },
-        include: [
-          {
-            model: models.PetOwner,
-
-            attributes: this.getBoookingsAttributes()
-              .providerAttributes as string[],
-          },
-        ],
-        attributes: this.getBoookingsAttributes().bookingAttributes,
-      });
-
-      return responseHandler.responseSuccess(
-        200,
-        "All Bookings Found Successfully",
-        {
-          allBookings,
-        }
-      );
-    } catch (error) {
-      return responseHandler.responseError(
-        400,
-        `Error Fetching Booking ${JSON.stringify(error)}`
-      );
+    // try {
+    const currentPetProvider = await models.PetProvider.findOne({
+      where: { id },
+    });
+    if (!currentPetProvider) {
+      return responseHandler.responseError(400, "User  not Found");
     }
+    const allBookings = await this.bookingModel.findAll({
+      where: { pet_provider_id: currentPetProvider.id },
+      include: [
+        {
+          model: models.PetOwner,
+
+          attributes: this.getBoookingsAttributes().ownerAttributes as string[],
+        },
+
+        {
+          model: models.ProviderServiceType,
+          attributes: this.getBoookingsAttributes()
+            .providerServiceAttributes as string[],
+        },
+      ],
+      attributes: this.getBoookingsAttributes().bookingAttributes,
+    });
+
+    return responseHandler.responseSuccess(
+      200,
+      "All Bookings Found Successfully",
+      {
+        allBookings,
+      }
+    );
+    // } catch (error) {
+    //   return responseHandler.responseError(
+    //     400,
+    //     `Error Fetching Booking ${JSON.stringify(error)}`
+    //   );
+    // }
   }
   async deleteABooking(id: string) {
     try {
@@ -207,7 +263,13 @@ class BookingService {
         "postal_code",
         "region",
       ],
-      bookingAttributes: ["id", "date", "time", "status"],
+      providerServiceAttributes: [
+        ["id", "service_type_id"],
+        "service_name",
+        "service_description",
+        "service_price_per_hour",
+      ],
+      bookingAttributes: ["id", "date", "time", "status", "duration", "price"],
     };
   }
 }

@@ -115,7 +115,9 @@ class AuthController {
 
       return res.status(responseData.statusCode).send(responseData.response);
     } catch (e) {
-      return res.status(500).send(`Error while sending, ${e}`);
+      return res
+        .status(400)
+        .send(`Error while sending otp, Please Check your Network`);
     }
   };
 

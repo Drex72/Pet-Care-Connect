@@ -12,34 +12,30 @@ class PetProviderController {
    * @param req
    * @param res
    */
-  getAPetProvider = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-      const currentPetProvider = await this.petProviderService.getPetProvider(
-        id
-      );
-      return res
-        .status(currentPetProvider.statusCode)
-        .send(currentPetProvider.response);
-    } catch (e) {
-      return res.status(500).send(`Error while fetching Pet Owner, ${e}`);
-    }
-  };
-
-  /**
-   *
-   * @param req
-   * @param res
-   */
-  getAllPetProviders = async (req: Request, res: Response) => {
-    try {
-      const allPetProviders =
-        await this.petProviderService.getAllPetProviders();
-      return res
-        .status(allPetProviders.statusCode)
-        .send(allPetProviders.response);
-    } catch (e) {
-      return res.status(500).send(`Error while fetching Users, ${e}`);
+  getAllOrOnePetProviders = async (req: Request, res: Response) => {
+    const { query } = req;
+    if (query.id) {
+      const { id } = query;
+      try {
+        const currentPetProvider = await this.petProviderService.getPetProvider(
+          id as string
+        );
+        return res
+          .status(currentPetProvider.statusCode)
+          .send(currentPetProvider.response);
+      } catch (e) {
+        return res.status(500).send(`Error while fetching Pet Owner, ${e}`);
+      }
+    } else {
+      try {
+        const allPetProviders =
+          await this.petProviderService.getAllPetProviders();
+        return res
+          .status(allPetProviders.statusCode)
+          .send(allPetProviders.response);
+      } catch (e) {
+        return res.status(500).send(`Error while fetching Users, ${e}`);
+      }
     }
   };
 

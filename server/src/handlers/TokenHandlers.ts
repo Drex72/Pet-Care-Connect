@@ -18,6 +18,7 @@ class TokenHandler {
   ) => {
     return jwt.sign(signedInformation, config.accessTokenSecret, {
       expiresIn: expiryDate,
+      // expiresIn: expiryDate,
     });
   };
 
@@ -89,10 +90,11 @@ class TokenHandler {
   };
   // Validates the Refresh Token
   validateRefreshToken = (refreshToken: string) => {
-    return jwt.verify(refreshToken, config.accessTokenSecret);
+    return jwt.verify(refreshToken, config.refreshTokenSecret);
   };
-  refreshAccessToken = (req: Request, res: Response) => {
-    const token = req.cookies?.refresh_token;
+  refreshAccessToken = async (req: Request, res: Response) => {
+    const token = req.body?.refreshToken;
+
     if (!token) return res.status(400).json({ message: "No Refresh Token" });
 
     let userPayload: ISignedInformation | null = null;
@@ -100,21 +102,26 @@ class TokenHandler {
     try {
       userPayload = this.validateRefreshToken(token) as ISignedInformation;
     } catch (error) {
-      console.log(error);
-      res.status(400).json({ message: "Error, Try Again" });
+      res
+        .status(400)
+        .json({ message: `Error, Try Again ${JSON.stringify(error)}` });
     }
 
     // Check if there is a valid user
     const { id, user_type } = userPayload!;
     const currentModel: any = getModelToBeUsed(user_type);
 
-    const user = currentModel.findOne({ id });
+    const user = await currentModel.findOne({ id });
 
     if (!user) return res.status(400).json({ message: "No Valid User" });
 
     return res.status(200).json({
       accessToken: this.createAccessToken(
-        userPayload as ISignedInformation,
+        {
+          user_type: userPayload?.user_type,
+          user_verified: userPayload?.user_verified,
+          id: userPayload?.id,
+        } as ISignedInformation,
         "1d"
       ),
     });

@@ -16,7 +16,7 @@ class BookingsController {
       service_type_id: req.body.service_type_id,
       date: req.body.date,
       time: req.body.time,
-      status: req.body.status,
+      duration: req.body.duration,
     };
 
     try {
@@ -28,6 +28,21 @@ class BookingsController {
         .send(createdBooking.response);
     } catch (error) {
       return res.status(500).send(`Error while Creating Booking, ${error}`);
+    }
+  };
+
+  updateBookingForUser = async (req: Request, res: Response) => {
+    const { id, status } = req.body;
+    try {
+      const updatedBooking = await this.bookingService.updateBooking(
+        id as string,
+        status
+      );
+      return res
+        .status(updatedBooking.statusCode)
+        .send(updatedBooking.response);
+    } catch (e) {
+      return res.status(500).send(`Error while updating Booking, ${e}`);
     }
   };
 

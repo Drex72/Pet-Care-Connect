@@ -128,6 +128,31 @@ class AuthValidation {
     req.body = { ...value, user_type: body?.user_type };
     return next();
   }
+  async sendNewAccessTokenValidation(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { body } = req;
+
+    // Create User Schema
+    const sendNewAccessTokenValidationSchema: Joi.ObjectSchema = Joi.object({
+      refreshToken: Joi.string().required(),
+    });
+
+    const { error, value } = sendNewAccessTokenValidationSchema.validate(
+      body,
+      schemaOptions
+    );
+
+    // If Error, handle Error
+    if (error) {
+      return next(new ApiError(joiErrorFormatter(error), 400));
+    }
+
+    req.body = value;
+    return next();
+  }
 }
 
 const authValidation = new AuthValidation();

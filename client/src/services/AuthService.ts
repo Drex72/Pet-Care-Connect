@@ -1,8 +1,6 @@
-import axios from "axios";
 import { LoginInput } from "../interfaces/LoginInput";
 import { ICreatePetOwner } from "../interfaces/PetInformationInterface";
 import { ICreatePetCareProvider } from "../interfaces/ProviderServiceTypeInformation";
-import { UserType } from "../interfaces/User";
 import {
   IConfirmOTP,
   ISendVerification,
@@ -10,45 +8,27 @@ import {
 import axiosInstance from "./axios";
 
 class AuthService {
-  // login = async (data: LoginInput) => {
-  //   return await axiosInstance.post(`/auth/login`, data, {
-  //     withCredentials: true,
-  //   });
-  // };
-  login = (data: LoginInput) => {
-    return axios.post(`http://localhost:8000/auth/login`, data, {
-      withCredentials: true,
-    });
-  };
-  createPetCareProvider = (data: ICreatePetCareProvider) => {
-    return axios.post(
-      `http://localhost:8000/auth/register/pet-provider`,
-      data,
-      {
-        withCredentials: true,
-      }
-    );
+  login = async (data: LoginInput) => {
+    return await axiosInstance.post(`/auth/login`, data);
   };
 
-  createPetOwner = (data: ICreatePetOwner) => {
-    return axios.post(`http://localhost:8000/auth/register/pet-owner`, data, {
-      withCredentials: true,
-    });
-  };
-  sendVerificationMail = (data: ISendVerification) => {
-    return axios.post(`http://localhost:8000/auth/verify-email`, data, {
-      withCredentials: true,
-    });
+  createPetCareProvider = async (data: ICreatePetCareProvider) => {
+    return await axiosInstance.post(`/auth/register/pet-provider`, data);
   };
 
-  confirmVerificationCode = (data: IConfirmOTP) => {
-    return axios.post(
-      `http://localhost:8000/auth/verify-email/validate`,
-      data,
-      {
-        withCredentials: true,
-      }
-    );
+  createPetOwner = async (data: ICreatePetOwner) => {
+    return await axiosInstance.post(`/auth/register/pet-owner`, data);
+  };
+  sendVerificationMail = async (data: ISendVerification) => {
+    return await axiosInstance.post(`/auth/verify-email`, data);
+  };
+
+  confirmVerificationCode = async (data: IConfirmOTP) => {
+    return await axiosInstance.post(`/auth/verify-email/validate`, data);
+  };
+
+  logout = async () => {
+    return await axiosInstance.get(`/auth/logout`);
   };
 }
 

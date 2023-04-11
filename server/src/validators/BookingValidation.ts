@@ -22,12 +22,40 @@ class BookingValidation {
       service_type_id: Joi.string().length(36).required(),
       date: Joi.date().required(),
       time: Joi.string().required(),
+      duration: Joi.number().required(),
+    });
+
+    const { error, value } = createNewBookingValidationSchema.validate(
+      body,
+      schemaOptions
+    );
+
+    // If Error, handle Error
+    if (error) {
+      // Add our Error handler
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
+
+    req.body = value;
+    return next();
+  }
+
+  async updateBookingForUserValidation(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { body } = req;
+
+    // Create User Schema
+    const updateBookingForUserValidationSchema: Joi.ObjectSchema = Joi.object({
+      id: Joi.string().length(36).required(),
       status: bookingStatusValidationSchema
         .bookingStatusValidation()
         .required(),
     });
 
-    const { error, value } = createNewBookingValidationSchema.validate(
+    const { error, value } = updateBookingForUserValidationSchema.validate(
       body,
       schemaOptions
     );
@@ -42,7 +70,11 @@ class BookingValidation {
     return next();
   }
 
-  async getBookingForUserValidation(req: Request, _: Response, next: NextFunction) {
+  async getBookingForUserValidation(
+    req: Request,
+    _: Response,
+    next: NextFunction
+  ) {
     const { query } = req;
 
     // Create User Schema
