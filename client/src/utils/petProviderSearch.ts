@@ -10,7 +10,11 @@ export const filterPetProvidersBySearch = (
     petProviders.map((provider) => {
       const providerAddress = `${provider.region} ${provider.city} ${provider.street}`;
 
-      if (providerAddress.includes(searchKeyword)) {
+      if (
+        providerAddress
+          .toLocaleLowerCase()
+          .includes(searchKeyword.toLocaleLowerCase())
+      ) {
         result.push(provider);
       }
     });
@@ -22,11 +26,19 @@ export const filterPetProvidersBySearch = (
 
 export const filterPetProvidersByServiceType = (
   petProviders: IFormattedPetProvider[],
-  service_id: string
+  service_name: string
 ) => {
-  if (service_id) {
-    const result = petProviders.filter((provider) => {
-     return  provider.provider_service_types.id === service_id;
+  if (service_name) {
+    const result: IFormattedPetProvider[] = [];
+    petProviders.map((provider) => {
+      provider.provider_service_types.map((serviceType) => {
+        if (
+          serviceType.service_name.toLocaleLowerCase() ===
+          service_name.toLocaleLowerCase()
+        ) {
+          result.push(provider);
+        }
+      });
     });
 
     return { message: "Successfully Searched", data: result };

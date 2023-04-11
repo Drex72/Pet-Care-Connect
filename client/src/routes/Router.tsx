@@ -20,6 +20,7 @@ import DashboardLayout from "../layout/dashboardLayout/DashboardLayout";
 import { RequirePetOwner } from "../components/HigherOrderComponents";
 import HomeLayout from "../layout/mainPageLayout/HomeLayout";
 import { AboutUs, ContactUs, HomePage } from "../pages/LandingPages";
+import SinglePetProvider from "../pages/FindPetProvider/SinglePetProvider";
 
 function Router() {
   return (
@@ -45,6 +46,14 @@ function Router() {
             element={
               <div style={{ width: "90%", margin: "0 auto" }}>
                 <FindPetProvider />
+              </div>
+            }
+          />
+          <Route
+            path={AllRouteConstants.landingRoute.findSinglePetProvider}
+            element={
+              <div style={{ width: "90%", margin: "0 auto" }}>
+                <SinglePetProvider />
               </div>
             }
           />
@@ -101,6 +110,18 @@ function Router() {
             element={
               <RequirePetOwner>
                 <FindPetProvider />
+              </RequirePetOwner>
+            }
+          />
+
+          <Route
+            path={
+              AllRouteConstants.dashboardRoutes.pet_owner_routes
+                .petCareProvidersSingle
+            }
+            element={
+              <RequirePetOwner>
+                <SinglePetProvider />
               </RequirePetOwner>
             }
           />

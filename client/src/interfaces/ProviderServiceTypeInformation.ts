@@ -17,12 +17,14 @@ export interface PetProviderApiResponseInterface {
   data: ProviderServiceType[];
 }
 
-interface ProviderServiceType extends PetProviderServiceInterface {
+export interface ProviderServiceType extends PetProviderServiceInterface {
   id: string;
 }
 
 export interface IFormattedPetProvider extends UserBaseInformation {
+  id: string;
   user_type: UserType;
   user_verified: boolean;
-  provider_service_types: ProviderServiceType;
+  provider_service_types: ProviderServiceType[];
+  user_avatar: string;
 }

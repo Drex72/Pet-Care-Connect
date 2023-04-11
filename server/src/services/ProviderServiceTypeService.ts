@@ -51,6 +51,7 @@ class ProviderServiceTypeService {
           "service_description",
           "service_price_per_hour",
         ],
+        group: ["service_name", "id"],
       });
       return responseHandler.responseSuccess(
         200,

@@ -6,6 +6,7 @@ interface PetProviderAttributes extends UserInterface {
   id?: string;
   user_verified?: boolean;
   user_type?: string;
+  user_avatar?: string;
 }
 export class PetProvider
   extends Model<PetProviderAttributes>
@@ -23,6 +24,7 @@ export class PetProvider
   public region!: string;
   public user_verified!: boolean;
   public user_type!: string;
+  public user_avatar?: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -74,6 +76,10 @@ export const PetProviderModel = (sequelize: Sequelize) => {
       region: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      user_avatar: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       user_verified: {
         type: DataTypes.BOOLEAN,

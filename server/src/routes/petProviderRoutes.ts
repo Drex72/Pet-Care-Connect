@@ -6,7 +6,10 @@ import tokenHandler from "../handlers/TokenHandlers";
 import bookingValidation from "../validators/BookingValidation";
 import petProviderServiceValidation from "../validators/PetProviderServiceValidation";
 import petProviderValidation from "../validators/PetProviderValidation";
+import multer from "multer";
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 const router = express.Router();
 
 // Pet Provider Auth Routes
@@ -22,6 +25,15 @@ router
     tokenHandler.validateAccessTokenMiddleware,
     petProviderValidation.deletePetProviderValidation,
     petProviderController.deletePetProvider
+  );
+
+router
+  .route("/upload-avatar")
+  .post(
+    tokenHandler.validateAccessTokenMiddleware,
+    upload.single("file"),
+    petProviderValidation.addPetProviderImageValidation,
+    petProviderController.addPetProviderImage
   );
 
 router

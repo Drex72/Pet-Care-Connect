@@ -76,6 +76,41 @@ class PetProviderValidation {
     res: Response,
     next: NextFunction
   ) {}
+  async addPetProviderImageValidation(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const imageSchema = Joi.object({
+      file: Joi.object({
+        mimetype: Joi.string()
+          .valid("image/jpeg", "image/png", "image/gif")
+          .required(),
+        size: Joi.number().max(5000000).required(),
+        originalname: Joi.string().required(),
+      }).required(),
+    });
+
+    const imageInformationSchema: Joi.ObjectSchema = Joi.object({
+      providerId: Joi.string().length(36).required(),
+      providerName: Joi.string().required(),
+    });
+
+    const { error, value } = imageSchema.validate(req, schemaOptions);
+    const { error: contentError, value: contentValue } =
+      imageInformationSchema.validate(req.body, schemaOptions);
+
+    // If Error, handle Error
+    if (error) {
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
+    if (contentError) {
+      return next(new ApiErrorException(joiErrorFormatter(contentError), 400));
+    }
+    // req.file = value;
+    req.body = contentValue;
+    return next();
+  }
   async deletePetProviderValidation(
     req: Request,
     res: Response,

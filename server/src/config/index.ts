@@ -13,6 +13,8 @@ type configType = {
   refreshTokenSecret: string;
   postgresUrl: string;
   sendGridKey: string;
+  awsAccessKey: string;
+  awsSecretKey: string;
 };
 export const config = Object.freeze({
   port: 8000,
@@ -25,4 +27,6 @@ export const config = Object.freeze({
   refreshTokenSecret: "Damilola&123",
   postgresUrl: process.env.POSTGRES_URL,
   sendGridKey: process.env.SEND_GRID_API_KEY,
+  awsAccessKey: process.env.AWS_ACCESS_KEY,
+  awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
 } as configType);

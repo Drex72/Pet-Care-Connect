@@ -3,13 +3,11 @@ import Loader from "../../components/Loader/Loader";
 import Search from "../../components/Search/Search";
 import Map from "../../assets/images/map.svg";
 import Avatar from "../../assets/images/image1.svg";
-
 import "./FindPetProviderStyles.scss";
 import { MdStar } from "react-icons/md";
 import { AiOutlineArrowRight, AiOutlineRight } from "react-icons/ai";
 import petProviderService from "../../services/PetProviderService";
 import useApi from "../../hooks/useApi";
-import { LoginResponse } from "../../interfaces/LoginInput";
 import {
   IFormattedPetProvider,
   PetProviderApiResponseInterface,
@@ -19,6 +17,8 @@ import {
   filterPetProvidersBySearch,
   filterPetProvidersByServiceType,
 } from "../../utils/petProviderSearch";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AllRouteConstants } from "../../routes/routes";
 interface ProviderServiceType extends PetProviderServiceInterface {
   id: string;
 }
@@ -61,7 +61,6 @@ export const FindPetProvider = () => {
         all: providers.data?.allPetProviders,
         filtered: providers.data?.allPetProviders,
       });
-      console.log(providers.data);
     } catch (error) {
       setServicesLoading(false);
     }
@@ -88,7 +87,22 @@ export const FindPetProvider = () => {
       filtered: petProviderServiceTypeFilter,
     });
   };
-
+  const handleClickServiceTypeBtn = (serviceName: string) => {
+    if (
+      serviceName.toLocaleLowerCase() ===
+      sortProviderKeys.sortByServiceName.toLocaleLowerCase()
+    ) {
+      setSortProviderKeys({
+        ...sortProviderKeys,
+        sortByServiceName: "",
+      });
+    } else {
+      setSortProviderKeys({
+        ...sortProviderKeys,
+        sortByServiceName: serviceName.toLocaleLowerCase(),
+      });
+    }
+  };
   useEffect(() => {
     filterPetProviders();
   }, [sortProviderKeys]);
@@ -112,7 +126,7 @@ export const FindPetProvider = () => {
           <div className="pet_provider_search_flex_container">
             <div className="text_information_container">
               {sortProviderKeys.search && (
-                <h3>
+                <h3 className="animate__animated animate__fadeIn">
                   Results around <span>{sortProviderKeys.search}</span>
                 </h3>
               )}
@@ -123,7 +137,12 @@ export const FindPetProvider = () => {
                     return (
                       <ServiceElement
                         key={service.id}
-                        service={service.service_name}
+                        serviceTypeInformation={service}
+                        onClick={handleClickServiceTypeBtn}
+                        selected={
+                          service.service_name.toLocaleLowerCase() ===
+                          sortProviderKeys.sortByServiceName.toLocaleLowerCase()
+                        }
                       />
                     );
                   })}
@@ -132,16 +151,18 @@ export const FindPetProvider = () => {
               </div>
 
               <div className="pet_care_provider_list">
-                {allPetProviders.all.map((petProvider) => {
-                  console.log(petProvider);
+                {allPetProviders.filtered.map((petProvider, index) => {
                   return (
-                    <PetProviderCard petProviderInformation={petProvider} />
+                    <PetProviderCard
+                      key={index}
+                      petProviderInformation={petProvider}
+                    />
                   );
                 })}
               </div>
             </div>
             <div className="image_container">
-              <img src={Map} alt="map" />
+              <img loading="lazy" src={Map} alt="map" />
             </div>
           </div>
         </div>
@@ -150,8 +171,26 @@ export const FindPetProvider = () => {
   );
 };
 
-export const ServiceElement = ({ service }: { service: string }) => {
-  return <div className="service_name_container">{service}</div>;
+export const ServiceElement = ({
+  serviceTypeInformation,
+  onClick,
+  selected,
+}: {
+  serviceTypeInformation: ProviderServiceType;
+  onClick: (val: string) => void;
+  selected: boolean;
+}) => {
+  const { service_name, id } = serviceTypeInformation;
+  return (
+    <div
+      className={`service_name_container ${
+        selected ? "service_name_selected" : undefined
+      }`}
+      onClick={() => onClick(service_name)}
+    >
+      {service_name}
+    </div>
+  );
 };
 
 export const PetProviderCard = ({
@@ -159,13 +198,36 @@ export const PetProviderCard = ({
 }: {
   petProviderInformation: IFormattedPetProvider;
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { pathname } = location;
+  const handleButtonClick = () => {
+    const id = petProviderInformation.id;
+    if (pathname.split("/").includes("dashboard")) {
+      navigate(
+        `${AllRouteConstants.dashboardRoutes.pet_owner_routes.petCareProviders}/${id}`
+      );
+    } else {
+      navigate(`${AllRouteConstants.landingRoute.findPetProvider}/${id}`);
+    }
+  };
   return (
     <div className="pet_provider_card">
       <div className="pet_provider_card_container">
-        <img src={Avatar} alt="avatar" />
+        <div className="avatar_container">
+          <img
+            loading="lazy"
+            src={petProviderInformation.user_avatar ?? Avatar}
+            alt="avatar"
+          />
+        </div>
         <div className="pet_provider_card_right">
           <div className="pet_provider_card_right_top">
-            <p>38, John St, AB25 1LL, Aberdeen, Scotland</p>
+            <p>
+              {petProviderInformation.street}, {petProviderInformation.city},{" "}
+              {petProviderInformation.region}
+            </p>
 
             <span>3.4km away</span>
           </div>
@@ -175,9 +237,11 @@ export const PetProviderCard = ({
             {petProviderInformation.last_name}
           </h5>
           <ul className="pet_provider_card_services">
-            <li>Pet Walking</li>
-            <li>Dog training</li>
-            <li>Pet Sitting</li>
+            {petProviderInformation.provider_service_types.map(
+              (serviceType) => {
+                return <li key={serviceType.id}>{serviceType.service_name}</li>;
+              }
+            )}
           </ul>
 
           <div className="pet_provider_card_right_bottom">
@@ -188,7 +252,7 @@ export const PetProviderCard = ({
               </span>
               <p>28 Reviews</p>
             </div>
-            <button>
+            <button onClick={handleButtonClick}>
               View Profile <AiOutlineArrowRight />{" "}
             </button>
           </div>

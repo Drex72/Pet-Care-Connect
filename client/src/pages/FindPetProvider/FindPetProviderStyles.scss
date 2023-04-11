@@ -13,21 +13,19 @@
   }
 
   .pet_provider_search_flex_container {
-    display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 20px;
 
     .image_container {
       width: 50%;
+      display: none;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .text_information_container {
-      width: 45%;
-
       .sortValues {
         display: flex;
         align-items: center;
@@ -48,15 +46,19 @@
           }
 
           .service_name_container {
-            color: #157cff;
-            border: 1px solid #157cff;
             border-radius: 20px;
-            background-color: #c7daf3;
             padding: 5px 10px;
             font-weight: 600;
             font-size: 14px;
             white-space: nowrap;
             cursor: pointer;
+            border: 1px solid #131313;
+            transition: all 300ms ease-in-out;
+          }
+          .service_name_selected {
+            color: #157cff;
+            border: 1px solid #157cff;
+            background-color: #c7daf3;
           }
         }
       }
@@ -65,7 +67,17 @@
         margin-top: 4em;
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 15px;
+        max-height: 600px;
+        overflow-y: scroll;
+        border-radius: 5px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
         .pet_provider_card {
           background: #ffffff;
@@ -81,6 +93,14 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            .avatar_container {
+              width: 200px;
+              height: 200px;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
           }
           &_services {
             display: flex;
@@ -172,9 +192,70 @@
   }
 }
 
+.pet_provider_information {
+  margin-block: 2em;
+  &_container {
+    display: flex;
+  }
+  &_image_container {
+    background: #157cff;
+    padding: 1.5rem;
+    .image_container {
+      width: 300px;
+      height: 400px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .name_content_container {
+      color: white;
+      text-align: center;
+      margin-block: 1.5em;
+
+      h2 {
+        font-size: 2rem;
+      }
+    }
+    .book_provider_button {
+      color: #131313;
+      width: 100%;
+      padding: 1rem;
+      background: white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      outline: none;
+      border: none;
+      box-shadow: 2px 2px 10px rgba(#000, 0.25);
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 300ms ease-in-out;
+
+      &:hover {
+        border: 1px solid #131313;
+        background: transparent;
+        color: white;
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 768px) {
   .pet_provider_search {
     flex: 1 0 130px;
     max-width: 500px;
+  }
+  .find_pet_provider_container {
+    .pet_provider_search_flex_container {
+      display: flex;
+      .image_container {
+        display: block;
+      }
+      .text_information_container {
+        width: 45%;
+      }
+    }
   }
 }

@@ -51,6 +51,7 @@ class PetProviderService {
           "city",
           "postal_code",
           "region",
+          "user_avatar",
         ],
       });
       if (!currentPetProvider) {
@@ -102,6 +103,7 @@ class PetProviderService {
           "city",
           "postal_code",
           "region",
+          "user_avatar",
         ],
       });
       return responseHandler.responseSuccess(
@@ -138,6 +140,38 @@ class PetProviderService {
       return responseHandler.responseError(
         400,
         `Error Fetching Pet Providers ${JSON.stringify(error)}`
+      );
+    }
+  }
+
+  async uploadProviderAvatar(imageLink: string, id: string) {
+    try {
+      const selectedPetProvider = await this.petProviderModel.findOne({
+        where: { id },
+      });
+
+      if (!selectedPetProvider) {
+        return this.petProviderNotFound();
+      }
+
+      const updatedPetProvider = await this.petProviderModel.update(
+        { user_avatar: imageLink },
+        {
+          where: { id },
+        }
+      );
+
+      return responseHandler.responseSuccess(
+        200,
+        "Avatar Updated Successfully",
+        {
+          updatedPetProvider,
+        }
+      );
+    } catch (error) {
+      return responseHandler.responseError(
+        400,
+        `Error Updating Booking ${JSON.stringify(error)}`
       );
     }
   }
