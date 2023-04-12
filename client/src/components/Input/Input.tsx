@@ -148,6 +148,7 @@ export const Dropdown = (props: DropdownProps) => {
         isDisabled={disabled}
         isLoading={loading}
         options={options}
+        required={dropdownProps?.required}
         {...dropdownProps}
       />
       <span

@@ -60,10 +60,11 @@ class PetProviderController {
 
     const params = {
       Bucket: "petcareconnectbucket",
-      Key: `${providerName}-avatar.jpg`,
+      Key: `${providerId}-avatar.jpg`,
       Body: req.file!.buffer,
       ACL: "public-read",
     };
+
     try {
       s3.upload(params, async (err: any, data: any) => {
         if (err) {

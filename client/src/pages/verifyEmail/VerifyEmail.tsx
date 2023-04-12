@@ -27,6 +27,7 @@ import {
   IConfirmOTP,
   ISendVerification,
 } from "../../interfaces/VerifyEmailInterface";
+import VerifiedNoticeModal from "../../components/AuthComponents/AuthModals/VerifiedNoticeModal";
 
 export const VerifyEmail = () => {
   // Add Login Image
@@ -42,6 +43,7 @@ export const VerifyEmail = () => {
   const [disable, setDisable] = useState(true);
   const [seconds, setSeconds] = useState(59);
   const [minutes, setMinutes] = useState<number>(0);
+  const [mailVerified, setMailVerified] = useState<boolean>(false);
 
   const onChange = (value: string) => setOtp(value.trim());
 
@@ -88,10 +90,9 @@ export const VerifyEmail = () => {
       user_type: userType,
       otp,
     });
-    if (result?.status ) {
-      return navigate(AllRouteConstants.dashboardRoutes.index);
+    if (result?.status) {
+      return setMailVerified(true);
     }
-
   };
 
   useEffect(() => {
@@ -120,6 +121,13 @@ export const VerifyEmail = () => {
     }
   }, [seconds]);
 
+  const handleCloseModal = () => {
+    setMailVerified(false);
+    setTimeout(() => {
+      navigate(AllRouteConstants.auth.login);
+    }, 1000);
+  };
+
   // Send The Email on App Start
 
   useEffect(() => {
@@ -130,6 +138,11 @@ export const VerifyEmail = () => {
 
   return (
     <div className="auth_container">
+      <VerifiedNoticeModal
+        modalToggler={mailVerified}
+        onClose={handleCloseModal}
+        email={userEmail}
+      />
       <div className="login_logo_container">
         <Logo />
       </div>
@@ -159,7 +172,6 @@ export const VerifyEmail = () => {
           loading={confirmOTPApiRequest.loading}
           variant="primary"
         />
-
 
         <Button
           label={"Resend"}

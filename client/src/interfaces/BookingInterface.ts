@@ -11,7 +11,7 @@ export interface BookingRequestInterface {
   date: string;
   time: String;
   status?: BookingStatus;
-  duration: number;
+  duration: string | number;
   price?: number;
 }
 

@@ -19,6 +19,7 @@ export interface PetProviderApiResponseInterface {
 
 export interface ProviderServiceType extends PetProviderServiceInterface {
   id: string;
+  service_type_id?: string;
 }
 
 export interface IFormattedPetProvider extends UserBaseInformation {

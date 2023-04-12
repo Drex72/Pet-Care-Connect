@@ -109,8 +109,8 @@ export const RegisterAddress = () => {
               }}
             />
             <Input
-              id="City Name"
-              label="City Name"
+              id="Town"
+              label="Town"
               error={registrationForm.formErrors.city}
               inputProps={{
                 placeholder: "Enter your City Name",
@@ -123,8 +123,8 @@ export const RegisterAddress = () => {
           </div>
           <div className="signup_form_flex_container">
             <Input
-              id="State"
-              label="State"
+              id="region"
+              label="Region"
               error={registrationForm.formErrors.region}
               inputProps={{
                 placeholder: "Enter your State",

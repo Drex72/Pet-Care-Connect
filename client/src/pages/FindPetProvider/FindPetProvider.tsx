@@ -147,7 +147,6 @@ export const FindPetProvider = () => {
                     );
                   })}
                 </div>
-                hey
               </div>
 
               <div className="pet_care_provider_list">
@@ -228,8 +227,6 @@ export const PetProviderCard = ({
               {petProviderInformation.street}, {petProviderInformation.city},{" "}
               {petProviderInformation.region}
             </p>
-
-            <span>3.4km away</span>
           </div>
 
           <h5>

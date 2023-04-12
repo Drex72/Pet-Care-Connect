@@ -20,18 +20,20 @@ import { UserType } from "../../interfaces/User";
 import authService from "../../services/AuthService";
 import Logo from "../../components/Logo/Logo";
 import AuthError from "../../components/AuthComponents/AuthError/AuthError";
-import Loader from "../../components/Loader/Loader";
 import { ISendVerification } from "../../interfaces/VerifyEmailInterface";
 import { userActions } from "../../redux/UserSlice";
 import accessToken from "../../utils/accessToken/AccessToken";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { getRouteToBeUsed } from "../../utils/getRouteToBeUsed";
+import VerificationFormModal from "../../components/AuthComponents/AuthModals/VerificationNoticeModal";
 
 export const Login = () => {
   // Add Login Image
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [unConfirmedAccount, setUnconfirmedAccount] = useState({
+    user_type: "" as UserType,
+    email: "",
+    status: false,
+  });
 
   useEffect(() => {
     dispatch(authScreenActions.addImage(LoginImage));
@@ -77,7 +79,7 @@ export const Login = () => {
     e.preventDefault();
     loginForm.resetFormErrors();
     loginApiRequest.reset();
-    verificationemailApiRequest.reset()
+    verificationemailApiRequest.reset();
     const valid = loginForm.validate();
     if (valid) {
       try {
@@ -95,10 +97,8 @@ export const Login = () => {
             email,
             user_type,
           });
-          return navigate(AllRouteConstants.auth.verifyEmail, {
-            state: { userType: user_type, userEmail: email },
-            replace: true,
-          });
+          console.log(user);
+          return setUnconfirmedAccount({ user_type, email, status: true });
         }
 
         // Dispatch the Login Action
@@ -116,8 +116,23 @@ export const Login = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setUnconfirmedAccount({ ...unConfirmedAccount, status: false });
+    return navigate(AllRouteConstants.auth.verifyEmail, {
+      state: {
+        userType: unConfirmedAccount.user_type,
+        userEmail: unConfirmedAccount.email,
+      },
+      replace: true,
+    });
+  };
+
   return (
     <div className="auth_container animate__animated animate__fadeIn">
+      <VerificationFormModal
+        modalToggler={unConfirmedAccount.status}
+        onClose={handleCloseModal}
+      />
       <div className="login_logo_container">
         <Logo />
       </div>

@@ -3,15 +3,21 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import Logo from "../../../components/Logo/Logo";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 import { AllRouteConstants } from "../../../routes/routes";
 import "./NavbarStyles.scss";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { data: userData } = useAppSelector((state) => state.userReducer);
 
   const gotoLoginPage = () => {
     navigate(AllRouteConstants.auth.login);
+  };
+
+  const goToDashboard = () => {
+    navigate(AllRouteConstants.dashboardRoutes.index);
   };
   const toggleSidebar = () => {
     setSidebarOpened(!sidebarOpened);
@@ -70,12 +76,21 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="navbar_item">
-            <Button
-              variant="primary"
-              label="Login"
-              onClick={gotoLoginPage}
-              width="150px"
-            />
+            {!userData ? (
+              <Button
+                variant="primary"
+                label="Login"
+                onClick={gotoLoginPage}
+                width="150px"
+              />
+            ) : (
+              <Button
+                variant="primary"
+                label="Go To Dashboard"
+                onClick={goToDashboard}
+                width="200px"
+              />
+            )}
           </li>
         </ul>
       </nav>

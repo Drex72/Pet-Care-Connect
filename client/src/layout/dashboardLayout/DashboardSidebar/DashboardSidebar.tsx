@@ -47,7 +47,7 @@ const DashboardSidebar = () => {
       ) : (
         <div className="dashboard_sidebar_container">
           <div
-            onClick={() => navigate(AllRouteConstants.dashboardRoutes.index)}
+            onClick={() => navigate(AllRouteConstants.landingRoute.index)}
             className="dashboard_sidebar_logo"
           >
             <Logo />
@@ -55,20 +55,15 @@ const DashboardSidebar = () => {
 
           <div className="dashboard_sidebar_items">
             <DashboardSidebarItem
-              paths={['/', AllRouteConstants.dashboardRoutes.index]}
+              paths={["/", AllRouteConstants.dashboardRoutes.index]}
               onClick={goToPage(AllRouteConstants.dashboardRoutes.index)}
               sidebarIcon={<AiOutlineHome />}
               sidebarItemName="Dashboard"
             />
 
             <DashboardSidebarItem
-              paths={[
-                "/booking",
-                AllRouteConstants.dashboardRoutes.booking,
-              ]}
-              onClick={goToPage(
-                AllRouteConstants.dashboardRoutes.booking
-              )}
+              paths={["/booking", AllRouteConstants.dashboardRoutes.booking]}
+              onClick={goToPage(AllRouteConstants.dashboardRoutes.booking)}
               sidebarIcon={<AiOutlineBook />}
               sidebarItemName="Bookings"
             />
@@ -76,14 +71,26 @@ const DashboardSidebar = () => {
               <>
                 {/* Pet Owner Dashboard Items */}
                 <DashboardSidebarItem
-                  paths={["/pet-care-providers", AllRouteConstants.dashboardRoutes.pet_owner_routes.petCareProviders]}
-                  onClick={goToPage(AllRouteConstants.dashboardRoutes.pet_owner_routes.petCareProviders)}
+                  paths={[
+                    "/pet-care-providers",
+                    AllRouteConstants.dashboardRoutes.pet_owner_routes
+                      .petCareProviders,
+                  ]}
+                  onClick={goToPage(
+                    AllRouteConstants.dashboardRoutes.pet_owner_routes
+                      .petCareProviders
+                  )}
                   sidebarIcon={<BsPersonGear />}
                   sidebarItemName="Pet Care Providers"
                 />
                 <DashboardSidebarItem
-                  paths={["/pet-owner-pets", AllRouteConstants.dashboardRoutes.pet_owner_routes.pets]}
-                  onClick={goToPage(AllRouteConstants.dashboardRoutes.pet_owner_routes.pets)}
+                  paths={[
+                    "/pet-owner-pets",
+                    AllRouteConstants.dashboardRoutes.pet_owner_routes.pets,
+                  ]}
+                  onClick={goToPage(
+                    AllRouteConstants.dashboardRoutes.pet_owner_routes.pets
+                  )}
                   sidebarIcon={<MdOutlinePets />}
                   sidebarItemName="Pets"
                 />
@@ -92,8 +99,15 @@ const DashboardSidebar = () => {
               <>
                 {/* Pet Care Provider Items */}
                 <DashboardSidebarItem
-                  paths={["/provider-services", AllRouteConstants.dashboardRoutes.pet_care_provider_routes.services]}
-                  onClick={goToPage(AllRouteConstants.dashboardRoutes.pet_care_provider_routes.services)}
+                  paths={[
+                    "/provider-services",
+                    AllRouteConstants.dashboardRoutes.pet_care_provider_routes
+                      .services,
+                  ]}
+                  onClick={goToPage(
+                    AllRouteConstants.dashboardRoutes.pet_care_provider_routes
+                      .services
+                  )}
                   sidebarIcon={<AiOutlineTool />}
                   sidebarItemName="Services"
                 />

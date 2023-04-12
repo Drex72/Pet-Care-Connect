@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from "../../../components/Logo/Logo";
 const Footer = () => {
   return (
-    <div className="footer animate__animated animate__fadeIn">
+    <div className="footer animate__animated">
       <div className="footer_inner_container">
         <div className="footer_inner_container_rows">
           <Link to="/" className="footer_logo_container">

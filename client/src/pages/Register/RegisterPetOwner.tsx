@@ -32,13 +32,6 @@ export const RegisterPetOwner = () => {
     dispatch(authScreenActions.addImage(RegisterPetOwnerImage));
   }, []);
 
-  //   const location = useLocation();
-  //   let userType: UserType = location?.state?.userType;
-  //   useEffect(() => {
-  //     if (!userType) {
-  //       navigate(AllRouteConstants.auth.register.index);
-  //     }
-  //   }, []);
   // SignUp Form
   const {
     petOwnerFields,
