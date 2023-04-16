@@ -6,7 +6,7 @@ import {
   Bookings,
   FindPetProvider,
   Login,
-  PetCareProviders,
+  ForgotPassword,
   Pets,
   Register,
   RegisterAddress,
@@ -14,10 +14,15 @@ import {
   RegisterPetOwner,
   Settings,
   VerifyEmail,
+  ResetPassword,
+  PetCareProviderServices,
 } from "../pages";
 import AuthLayout from "../layout/authLayout/AuthLayout";
 import DashboardLayout from "../layout/dashboardLayout/DashboardLayout";
-import { RequirePetOwner } from "../components/HigherOrderComponents";
+import {
+  RequirePetOwner,
+  RequirePetProvider,
+} from "../components/HigherOrderComponents";
 import HomeLayout from "../layout/mainPageLayout/HomeLayout";
 import { AboutUs, ContactUs, HomePage } from "../pages/LandingPages";
 import SinglePetProvider from "../pages/FindPetProvider/SinglePetProvider";
@@ -83,6 +88,14 @@ function Router() {
             path={AllRouteConstants.auth.verifyEmail}
             element={<VerifyEmail />}
           />
+          <Route
+            path={AllRouteConstants.auth.forgotPassword}
+            element={<ForgotPassword />}
+          />
+          <Route
+            path={AllRouteConstants.auth.resetPassword}
+            element={<ResetPassword />}
+          />
         </Route>
 
         {/* Dashboard Routes */}
@@ -135,6 +148,17 @@ function Router() {
           />
 
           {/* Pet Provider Routes */}
+          <Route
+            path={
+              AllRouteConstants.dashboardRoutes.pet_care_provider_routes
+                .services
+            }
+            element={
+              <RequirePetProvider>
+                <PetCareProviderServices />
+              </RequirePetProvider>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

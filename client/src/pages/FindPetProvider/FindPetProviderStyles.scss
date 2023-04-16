@@ -20,6 +20,7 @@
     .image_container {
       width: 50%;
       display: none;
+      // height: 1000px;
       img {
         width: 100%;
         height: 100%;
@@ -70,7 +71,7 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-        max-height: 600px;
+        max-height: 1000px;
         overflow-y: scroll;
         border-radius: 5px;
         -ms-overflow-style: none;
@@ -217,6 +218,7 @@
   }
   &_container {
     display: flex;
+    flex-direction: column;
     gap: 30px;
   }
   &_image_container {
@@ -224,7 +226,7 @@
     padding: 1.5rem;
     .image_container {
       width: 300px;
-      height: 400px;
+      height: 350px;
 
       img {
         width: 100%;
@@ -256,6 +258,12 @@
       border-radius: 5px;
       transition: all 300ms ease-in-out;
 
+      &:disabled {
+        pointer-events: none;
+        background-color: #8e8e8e;
+        color: #ebebe4;
+      }
+
       &:hover {
         border: 1px solid #131313;
         background: transparent;
@@ -268,10 +276,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    .icon_container {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
     .text_item {
-      width: 70%;
+      width: 100%;
       color: #131313;
-      margin-bottom: 1.5em;
       h3 {
         margin: 0;
       }
@@ -300,9 +312,120 @@
 
   &_review {
     margin-top: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     h2 {
       margin: 0;
       color: #131313;
+    }
+    .custom-button {
+      width: 40% !important;
+    }
+  }
+
+  .review_container {
+    display: flex;
+    align-items: flex-start;
+    gap: 3em;
+    margin-top: 2.5em;
+    flex-direction: column;
+    // width: 100vw;
+    .stars_and_statistics {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+
+      .star_container {
+        display: flex;
+        align-items: center;
+        gap: 0.3em;
+        .rating_star_icon {
+          color: #f3bd28;
+          width: 20px;
+        }
+        .star_grey {
+          color: #dadada;
+        }
+      }
+      .stars_amount {
+        display: flex;
+        gap: 2em;
+        align-items: center;
+
+        .ratings_amount {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5em;
+          min-width: 100px;
+          h2 {
+            color: black;
+            margin: 0;
+            font-size: 2rem;
+          }
+
+          span {
+            font-size: 14px;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            display: flex;
+          }
+        }
+
+        .progress_bar_container {
+          display: flex;
+          flex-direction: column;
+          gap: 0.6em;
+          .progress_bar {
+            display: flex;
+            gap: 1em;
+            color: black;
+            font-size: 14px;
+            span {
+              width: 10px;
+            }
+            .bar {
+              border-radius: 10px;
+              min-width: 200px;
+              background: #8e8e8e;
+
+              &--active {
+                background: #157cff;
+              }
+            }
+          }
+        }
+      }
+
+      .service_type_stars_amount {
+        color: #131313;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6em;
+        margin-top: 1em;
+        .service_type_stars_single {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          p {
+            margin: 0;
+          }
+          .stars {
+            display: flex;
+            gap: 1em;
+            align-items: center;
+          }
+        }
+      }
+    }
+
+    .review_ratings_full_content_container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      overflow-y: scroll;
+      border-radius: 10px;
     }
   }
 }
@@ -312,6 +435,28 @@
     flex: 1 0 130px;
     max-width: 500px;
   }
+  .pet_provider_information {
+    &_container {
+      flex-direction: row;
+    }
+
+    &_text_container {
+      .text_item {
+        width: 70%;
+      }
+    }
+
+    &_review {
+      .custom-button {
+        width: 15% !important;
+      }
+    }
+
+    .review_container {
+      flex-direction: row;
+    }
+  }
+
   .find_pet_provider_container {
     .pet_provider_search_flex_container {
       display: flex;

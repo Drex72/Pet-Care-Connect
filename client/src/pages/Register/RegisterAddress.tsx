@@ -74,7 +74,10 @@ export const RegisterAddress = () => {
 
   return (
     <div className="auth_container animate__animated animate__fadeIn">
-      <div className="signup_logo_container">
+      <div
+        className="signup_logo_container"
+        onClick={() => navigate(AllRouteConstants.landingRoute.index)}
+      >
         <Logo />
       </div>
 

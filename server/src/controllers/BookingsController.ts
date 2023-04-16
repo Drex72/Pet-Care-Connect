@@ -33,6 +33,7 @@ class BookingsController {
 
   updateBookingForUser = async (req: Request, res: Response) => {
     const { id, status } = req.body;
+    console.log(id, status, 'hey')
     try {
       const updatedBooking = await this.bookingService.updateBooking(
         id as string,

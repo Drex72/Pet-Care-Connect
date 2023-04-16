@@ -7,6 +7,7 @@ interface PetProviderAttributes extends UserInterface {
   user_verified?: boolean;
   user_type?: string;
   user_avatar?: string;
+  overall_provider_rating?: number;
 }
 export class PetProvider
   extends Model<PetProviderAttributes>
@@ -25,6 +26,7 @@ export class PetProvider
   public user_verified!: boolean;
   public user_type!: string;
   public user_avatar?: string;
+  public overall_provider_rating?: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -85,6 +87,11 @@ export const PetProviderModel = (sequelize: Sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+      },
+      overall_provider_rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
       },
       user_type: {
         type: DataTypes.ENUM("PET-PROVIDER", "PET-OWNER"),

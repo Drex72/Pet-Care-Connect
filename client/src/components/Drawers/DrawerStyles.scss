@@ -1,0 +1,104 @@
+// Create Appointment Drawer
+.pay_for_booking_drawer {
+  padding-block: 1em;
+  &_container {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  // Create Appointment Drawer Heading
+  &_head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 1em;
+    &_container {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    &_icon {
+      font-size: 1.5rem;
+      transition: all 300ms ease-in-out;
+      cursor: pointer;
+    }
+    &_icon:hover {
+      font-size: 1.8rem;
+    }
+  }
+
+  &_body {
+    .rccs__card--unknown > div {
+      background-image: url(../../assets/images/card_bg.jpeg);
+    }
+
+    .rccs {
+      width: 100%;
+      height: 100%;
+
+      margin: 0;
+    }
+    .rccs__card {
+      width: 400px;
+      height: 250px;
+    }
+
+    &_card_container {
+      margin-top: 2em;
+      position: relative;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      -webkit-transition: all 0.4s linear;
+      transition: all 0.4s linear;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2em;
+    }
+    .booking_information_to_be_paid{
+      h4{
+        margin: 0;
+        margin-bottom: 1em;
+        color: inherit;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.rccs__card--front {
+  position: relative;
+  transform: rotateY(0deg);
+  background-color: red;
+}
+.back {
+  position: relative;
+  transform: rotateY(180deg);
+  background-color: yellow;
+}
+
+.front1 {
+  display: flex;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: blue;
+}
+
+.back1 {
+  transform: rotateY(360deg);
+  margin-bottom: 30px !important;
+  background-color: yellow;
+}
+
+.back3 {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-image: url(../../assets/images/card_bg.jpeg);
+}

@@ -27,6 +27,9 @@ const Navbar = () => {
     if (pathname === route) {
       return true;
     }
+    if (pathname.split("/").includes(route)) {
+      return true;
+    }
     return false;
   };
 
@@ -53,7 +56,7 @@ const Navbar = () => {
             <Link
               to="/find-provider"
               className={`${
-                checkIfItemActive("/find-provider") ? "active" : ""
+                checkIfItemActive("find-provider") ? "active" : ""
               }`}
             >
               Find a service provider
@@ -62,7 +65,7 @@ const Navbar = () => {
           <li className="navbar_item">
             <Link
               to="/about-us"
-              className={`${checkIfItemActive("/about-us") ? "active" : ""}`}
+              className={`${checkIfItemActive("about-us") ? "active" : ""}`}
             >
               About Us
             </Link>
@@ -70,7 +73,7 @@ const Navbar = () => {
           <li className="navbar_item">
             <Link
               to="/contact-us"
-              className={`${checkIfItemActive("/contact-us") ? "active" : ""}`}
+              className={`${checkIfItemActive("contact-us") ? "active" : ""}`}
             >
               Contact Us
             </Link>

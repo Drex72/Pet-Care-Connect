@@ -20,6 +20,7 @@ export interface PetProviderApiResponseInterface {
 export interface ProviderServiceType extends PetProviderServiceInterface {
   id: string;
   service_type_id?: string;
+  service_rating: number;
 }
 
 export interface IFormattedPetProvider extends UserBaseInformation {
@@ -28,4 +29,15 @@ export interface IFormattedPetProvider extends UserBaseInformation {
   user_verified: boolean;
   provider_service_types: ProviderServiceType[];
   user_avatar: string;
+  reviews: any[];
+  overall_provider_rating: number;
+}
+
+export interface IFormattedPetOwner extends UserBaseInformation {
+  id: string;
+  user_type: UserType;
+  user_verified: boolean;
+  provider_service_types: ProviderServiceType[];
+  user_avatar: string;
+
 }

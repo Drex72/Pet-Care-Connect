@@ -4,6 +4,7 @@ import { AuthHeader } from "../../components/AuthComponents/AuthHeader/AuthHeade
 import Button from "../../components/Button/Button";
 import { Dropdown } from "../../components/Input/Input";
 import Loader from "../../components/Loader/Loader";
+import NoBookingCard from "../../components/NoBookings/NoBookingCard";
 import Search from "../../components/Search/Search";
 import BookingTable from "../../components/Table/BookingTable";
 import { bookingFilterOptions } from "../../data/BookingsFilterOptions";
@@ -147,12 +148,18 @@ export const Bookings = () => {
               />
             </div>
           )}
-
-          <div className="bookings_table_container">
-            <BookingTable
-              tableHead={bookingTableHeadPetOwner}
-              tableData={bookings.filteredBookings}
-            />
+          <div className="appointment_list_container">
+            {!bookings.filteredBookings.length ? (
+              <NoBookingCard message="Looks like you don't have any bookings yet" />
+            ) : (
+              <div className="bookings_table_container">
+                <BookingTable
+                  tableHead={bookingTableHeadPetOwner}
+                  tableData={bookings.filteredBookings}
+                  refreshBookings={getAllBookings}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

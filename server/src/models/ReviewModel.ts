@@ -1,8 +1,31 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes, Sequelize, Model } from "sequelize";
+
+export interface ReviewModelInterface {
+  id?: string;
+  pet_provider_id: string;
+  pet_owner_id: string;
+  service_type_id: string;
+  rating: number;
+  comment: string;
+}
+
+export class Review
+  extends Model<ReviewModelInterface>
+  implements ReviewModelInterface
+{
+  public id!: string;
+  public pet_provider_id!: string;
+  public pet_owner_id!: string;
+  public service_type_id!: string;
+  public rating!: number;
+  public comment!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 
 export const ReviewModel = (sequelize: Sequelize) => {
-  return sequelize.define(
-    "review_model",
+  Review.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -25,6 +48,13 @@ export const ReviewModel = (sequelize: Sequelize) => {
           key: "id",
         },
       },
+      service_type_id: {
+        type: DataTypes.UUID,
+        references: {
+          model: "provider_service_type",
+          key: "id",
+        },
+      },
       rating: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -33,13 +63,13 @@ export const ReviewModel = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
     },
     {
+      sequelize,
       freezeTableName: true,
+      modelName: "reviews",
     }
   );
+
+  return Review;
 };

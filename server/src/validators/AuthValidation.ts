@@ -90,6 +90,7 @@ class AuthValidation {
     const verifyEmailValidationSchema: Joi.ObjectSchema = Joi.object({
       email: Joi.string().required(),
       user_type: userTypeValidationSchema.userTypeValidation().required(),
+      status:Joi.string().optional()
     });
 
     const { error, value } = verifyEmailValidationSchema.validate(
@@ -113,6 +114,34 @@ class AuthValidation {
       otp: Joi.string().length(6).required(),
       email: Joi.string().required(),
       user_type: userTypeValidationSchema.userTypeValidation().required(),
+    });
+
+    const { error, value } = verifyEmailValidationSchema.validate(
+      body,
+      schemaOptions
+    );
+
+    // If Error, handle Error
+    if (error) {
+      return next(new ApiError(joiErrorFormatter(error), 400));
+    }
+
+    req.body = { ...value, user_type: body?.user_type };
+    return next();
+  }
+  async resetPasswordValidation(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { body } = req;
+
+    // Create User Schema
+    const verifyEmailValidationSchema: Joi.ObjectSchema = Joi.object({
+      otp: Joi.string().length(6).required(),
+      email: Joi.string().required(),
+      user_type: userTypeValidationSchema.userTypeValidation().required(),
+      password: Joi.string().required(),
     });
 
     const { error, value } = verifyEmailValidationSchema.validate(

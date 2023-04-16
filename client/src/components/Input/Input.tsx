@@ -85,7 +85,7 @@ export const TextArea = ({
     <div className="custom-input">
       <label htmlFor={id} className={`custom-input__label ${labelClassName}`}>
         {label}{" "}
-        {requiredAstersik && textareaProps?.required && (
+        {textareaProps?.required && (
           <span className="input_required_asterisk">*</span>
         )}{" "}
       </label>

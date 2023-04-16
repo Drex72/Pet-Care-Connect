@@ -47,6 +47,18 @@ router.post(
   authController.validateSentOtp
 );
 
+router.post(
+  "/forgot-password",
+  authValidation.sendOtpCodeValidation,
+  authController.sendVerificationEmail
+);
+
+router.post(
+  "/forgot-password/validate",
+  authValidation.resetPasswordValidation,
+  authController.validateSentOtp
+);
+
 // Endpoint for Refreshing Access Tokens
 router.post(
   "/refresh",

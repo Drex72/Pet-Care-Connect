@@ -96,6 +96,7 @@
   &-testimonial_section {
     background: #003272;
     padding-block: 3em;
+    position: relative;
 
     &_container {
       width: 90%;
@@ -149,11 +150,27 @@
               }
             }
           }
+
+          .testimonial_container {
+            margin-top: 5em;
+
+            h2 {
+              margin-bottom: 1em;
+            }
+          }
         }
       }
-
       .testimonial_container {
-        margin-top: 5em;
+        h2 {
+          margin-block: 2em;
+        }
+        .all_testimonal_container {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 2rem;
+        }
       }
     }
   }
@@ -203,7 +220,165 @@
             flex-direction: column;
           }
         }
+
+        .all_testimonal_container {
+          justify-content: center;
+        }
       }
     }
   }
+}
+
+.support-form {
+  margin-block: 2rem;
+}
+.settings_support_header_text {
+  font-weight: 600;
+  font-size: 20px;
+  color: #295f2f;
+  margin-top: 0.7em;
+}
+.settings_support_input_fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .settings_support_input_fields_personal_info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+.support_form_submit_button {
+  margin-top: 1em;
+}
+@media screen and (min-width: 768px) {
+  .settings_support_input_fields {
+    width: 80%;
+    max-width: 1000px;
+    .settings_support_input_fields_personal_info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: space-between;
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+  .support_form_submit_button {
+    width: 20%;
+    margin-top: 2rem;
+  }
+}
+
+.contact_us {
+  margin-top: 2em;
+
+  &_container {
+    width: 90%;
+    margin: 0 auto;
+
+    &_image {
+      height: 400px;
+      width: 100%;
+
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+// Support
+.support-form {
+  margin-block: 2rem;
+}
+.settings_support_header_text {
+  font-weight: 600;
+  font-size: 25px;
+  color: #157cff;
+  margin-top: 1.5em;
+}
+.settings_support_input_fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .settings_support_input_fields_personal_info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+.support_form_submit_button {
+  margin-top: 1em;
+}
+@media screen and (min-width: 768px) {
+  .settings_support_input_fields {
+    width: 80%;
+    max-width: 1000px;
+    .settings_support_input_fields_personal_info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: space-between;
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+  .support_form_submit_button {
+    width: 20%;
+    margin-top: 2rem;
+  }
+}
+.settings_2fa_verification_qr_container {
+  height: auto;
+  margin: 0 auto;
+  max-width: 300px;
+  width: 100%;
+  margin-top: 2em;
+
+  h2 {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+@media screen and (min-width: 768px) {
+  .settings_twofa_inner_container {
+    width: 60%;
+    display: flex;
+    gap: 1.5em;
+    flex-direction: column;
+    margin-bottom: 1em;
+    p {
+      margin-top: 30px;
+    }
+  }
+  .settings_2fa_verification_qr_container {
+    // max-width: 200px;
+    margin: 0;
+    // display: flex;
+    // align-items: flex-end;
+    // width: 400px;
+    // border: 3px solid red;
+  }
+}
+.settings_2fa_verification_buttons_container {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 2em;
+
+  .twofa_reset_button {
+    margin: 0;
+  }
+}
+.settings_2fa_verification_qr_input {
+  width: 100%;
 }

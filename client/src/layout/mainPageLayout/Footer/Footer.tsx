@@ -2,6 +2,8 @@ import React from "react";
 import "./FooterStyles.scss";
 import { Link } from "react-router-dom";
 import Logo from "../../../components/Logo/Logo";
+import { SocialIcon } from "react-social-icons";
+
 const Footer = () => {
   return (
     <div className="footer animate__animated">
@@ -47,6 +49,31 @@ const Footer = () => {
 
             <li className="list_item">
               <a href="/contact-us">Contact Us</a>
+            </li>
+          </div>
+          <div className="footer_inner_container_column">
+            <h5>Socials</h5>
+            <li className="list_item social_list_item">
+              <div className="icon">
+                <SocialIcon url="https://facebook.com/petCareConnect" />
+              </div>
+
+              <a href="#">Facebook</a>
+            </li>
+
+            <li className="list_item social_list_item">
+              <div className="icon">
+                <SocialIcon url="https://instagram.com/petCareConnect" />
+              </div>
+
+              <a href="#">Instagram</a>
+            </li>
+            <li className="list_item social_list_item">
+              <div className="icon">
+                <SocialIcon url="https://twitter.com/petCareConnect" />
+              </div>
+
+              <a href="#">Twitter</a>
             </li>
           </div>
         </div>

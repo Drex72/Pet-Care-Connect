@@ -5,6 +5,7 @@ import { PetProviderInformationInterface } from "../interfaces/PetProviderInform
 import { Op } from "sequelize";
 import { sequelize } from "../config/database";
 import { PetProvider } from "../models/PetProviderModel";
+import { UserInterface } from "../interfaces/BasicUserInterface";
 
 class PetProviderService {
   private petProviderModel: typeof PetProvider;
@@ -36,7 +37,16 @@ class PetProviderService {
               "service_name",
               "service_description",
               "service_price_per_hour",
+              "service_rating",
             ],
+          },
+          {
+            model: models.Review,
+            on: {
+              pet_provider_id: {
+                [Op.eq]: Sequelize.col("pet_provider.id"),
+              },
+            },
           },
         ],
         attributes: [
@@ -52,6 +62,7 @@ class PetProviderService {
           "postal_code",
           "region",
           "user_avatar",
+          "overall_provider_rating",
         ],
       });
       if (!currentPetProvider) {
@@ -88,7 +99,16 @@ class PetProviderService {
               "service_name",
               "service_description",
               "service_price_per_hour",
+              "service_rating",
             ],
+          },
+          {
+            model: models.Review,
+            on: {
+              pet_provider_id: {
+                [Op.eq]: Sequelize.col("pet_provider.id"),
+              },
+            },
           },
         ],
         attributes: [
@@ -104,6 +124,7 @@ class PetProviderService {
           "postal_code",
           "region",
           "user_avatar",
+          "overall_provider_rating",
         ],
       });
       return responseHandler.responseSuccess(
@@ -123,23 +144,34 @@ class PetProviderService {
 
   async updatePetProvider(
     id: string,
-    information: PetProviderInformationInterface
+    petProviderInformation: Omit<UserInterface, "password">
   ) {
     try {
-      // Check if Pet Provider Exists
-      const selectedPetProvider = await this.petProviderModel.findOne({
+      // Check if Pet Owner Exists
+      const selectedPetOwner = await this.petProviderModel.findOne({
         where: { id },
       });
 
-      if (!selectedPetProvider) {
-        this.petProviderNotFound();
+      if (!selectedPetOwner) {
+        return this.petProviderNotFound();
       }
 
-      // selectedPetProvider.update()
+      const updatePetProvider = await this.petProviderModel.update(
+        { ...petProviderInformation },
+        {
+          where: { id },
+        }
+      );
+
+      return responseHandler.responseSuccess(
+        200,
+        "User Updated Successfully",
+        updatePetProvider
+      );
     } catch (error) {
       return responseHandler.responseError(
         400,
-        `Error Fetching Pet Providers ${JSON.stringify(error)}`
+        `Error Updating Pet Owners ${JSON.stringify(error)}`
       );
     }
   }

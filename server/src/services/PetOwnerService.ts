@@ -2,6 +2,8 @@ import responseHandler from "../handlers/ResponseHandler";
 import { models } from "../models";
 import { PetOwnerInformationInterface } from "../interfaces/PetOwnerInformationInterface";
 import { Model, ModelCtor, Op, Sequelize } from "sequelize";
+import { PetInformationInterface } from "../interfaces/PetInformationInterface";
+import { UserInterface } from "../interfaces/BasicUserInterface";
 
 class PetOwnerService {
   private petOwnerModel: ModelCtor<Model<any, any>>;
@@ -50,6 +52,7 @@ class PetOwnerService {
           "city",
           "postal_code",
           "region",
+          "user_avatar",
         ],
       });
 
@@ -104,6 +107,7 @@ class PetOwnerService {
           "city",
           "postal_code",
           "region",
+          "user_avatar",
         ],
       });
 
@@ -122,16 +126,22 @@ class PetOwnerService {
     }
   }
 
-  async updatePetOwner(id: string, information: PetOwnerInformationInterface) {
+  async registerPet(petInformation: PetInformationInterface, id: string) {
     try {
       // Check if Pet Owner Exists
-      const selectedPetOwner = await this.petOwnerModel.findOne({
+      const currentPetOwner = await this.petOwnerModel.findOne({
         where: { id },
       });
-
-      if (!selectedPetOwner) {
-        this.petOwnerNotFound();
+      if (!currentPetOwner) {
+        return this.petOwnerNotFound();
       }
+
+      await models.Pets.create({
+        ...petInformation,
+        pet_owner_id: id,
+      });
+
+      return responseHandler.responseSuccess(201, "Pet Created Successfully");
 
       // selectedPetOwner.update()
     } catch (error) {
@@ -141,7 +151,71 @@ class PetOwnerService {
       );
     }
   }
+  async uploadPetOwnerAvatar(imageLink: string, id: string) {
+    try {
+      const selectedPetOwner = await this.petOwnerModel.findOne({
+        where: { id },
+      });
 
+      if (!selectedPetOwner) {
+        return this.petOwnerNotFound();
+      }
+
+      const updatedPetOwner = await this.petOwnerModel.update(
+        { user_avatar: imageLink },
+        {
+          where: { id },
+        }
+      );
+
+      return responseHandler.responseSuccess(
+        200,
+        "Avatar Updated Successfully",
+        {
+          updatedPetOwner,
+        }
+      );
+    } catch (error) {
+      return responseHandler.responseError(
+        400,
+        `Error Updating Booking ${JSON.stringify(error)}`
+      );
+    }
+  }
+
+  async updatePetOwner(
+    id: string,
+    petOwnerInformation: Omit<UserInterface, "password">
+  ) {
+    try {
+      // Check if Pet Owner Exists
+      const selectedPetOwner = await this.petOwnerModel.findOne({
+        where: { id },
+      });
+
+      if (!selectedPetOwner) {
+        return this.petOwnerNotFound();
+      }
+
+      const updatePetOwner = await this.petOwnerModel.update(
+        { ...petOwnerInformation },
+        {
+          where: { id },
+        }
+      );
+
+      return responseHandler.responseSuccess(
+        200,
+        "User Updated Successfully",
+        updatePetOwner
+      );
+    } catch (error) {
+      return responseHandler.responseError(
+        400,
+        `Error Updating Pet Owners ${JSON.stringify(error)}`
+      );
+    }
+  }
   async deletePetOwner(id: string) {
     try {
       // Check if Pet Owner Exists

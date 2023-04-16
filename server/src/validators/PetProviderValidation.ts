@@ -71,11 +71,40 @@ class PetProviderValidation {
     req.params = value;
     return next();
   }
+
   async updatePetProviderValidation(
     req: Request,
-    res: Response,
+    _: Response,
     next: NextFunction
-  ) {}
+  ) {
+    const { body } = req;
+
+    // Create User Schema
+    const updatePetOwnerValidationSchema: Joi.ObjectSchema = Joi.object({
+      first_name: Joi.string().required(),
+      last_name: Joi.string().required(),
+      email: Joi.string().required(),
+      phone_number: Joi.string().required().min(10).max(30),
+      street: Joi.string().required(),
+      city: Joi.string().required(),
+      postal_code: Joi.string().required(),
+      region: Joi.string().required(),
+    });
+
+    const { error, value } = updatePetOwnerValidationSchema.validate(
+      body,
+      schemaOptions
+    );
+
+    // If Error, handle Error
+    if (error) {
+      // Add our Error handler
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
+
+    req.body = value;
+    return next();
+  }
   async addPetProviderImageValidation(
     req: Request,
     res: Response,

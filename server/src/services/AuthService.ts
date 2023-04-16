@@ -19,6 +19,7 @@ import { PetProviderInformationInterface } from "../interfaces/PetProviderInform
 import { UserType } from "../interfaces/UserTypeInterface";
 import { PetOwner } from "../models/PetOwnerModel";
 import { PetProvider } from "../models/PetProviderModel";
+import resetPasswordOTPMail from "../views/ResetPasswordOTPMail";
 
 class AuthService {
   mailingService: MailingService;
@@ -46,7 +47,9 @@ class AuthService {
     // First Check if a user does not exist
     const { email, password } = petOwnerInformation;
     const result = await PetOwner.findAll({ where: { email } });
-    if (result.length) {
+    const result2 = await PetProvider.findAll({ where: { email } });
+
+    if (result.length || result2.length) {
       return responseHandler.responseError(400, "Pet Owner Exists Already");
     }
 
@@ -90,9 +93,10 @@ class AuthService {
 
     // First Check if a user does not exist
     const { email, password } = petProviderInformation;
+    const result2 = await PetOwner.findAll({ where: { email } });
     const result = await PetProvider.findAll({ where: { email } });
 
-    if (result.length) {
+    if (result.length || result2.length) {
       return responseHandler.responseError(400, "Pet Provider Exists Already");
     }
     // Hash the Password
@@ -192,12 +196,17 @@ class AuthService {
    * Sends Verification Mail
    * @param user_id
    */
-  async sendVerificationMailToUserEmail(user_id: string, user_type: UserType) {
+  async sendVerificationMailToUserEmail(
+    user_id: string,
+    user_type: UserType,
+    status: string | null = null
+  ) {
     const { OTP } = models;
     const currentModel: any = getModelToBeUsed(user_type);
     const currentUser = await currentModel.findOne({
       where: { id: user_id },
     });
+    console.log(status);
 
     if (!currentUser)
       return responseHandler.responseError(400, "User not found");
@@ -216,14 +225,26 @@ class AuthService {
     }
 
     // Sends Email
-    const res = await this.mailingService.sendEmail({
-      to: currentUser.dataValues?.email,
-      subject: "Verify Email Code",
-      body: emailVerificationOTPMail({
-        otp,
-        email: currentUser.dataValues?.email,
-      }),
-    });
+    let res;
+    if (status === "reset") {
+      res = await this.mailingService.sendEmail({
+        to: currentUser.dataValues?.email,
+        subject: "Reset Password Code",
+        body: resetPasswordOTPMail({
+          otp,
+          email: currentUser.dataValues?.email,
+        }),
+      });
+    } else {
+      res = await this.mailingService.sendEmail({
+        to: currentUser.dataValues?.email,
+        subject: "Verify Email Code",
+        body: emailVerificationOTPMail({
+          otp,
+          email: currentUser.dataValues?.email,
+        }),
+      });
+    }
 
     return res;
   }
@@ -234,7 +255,12 @@ class AuthService {
    * @param otp
    * @returns
    */
-  async validateOTP(user_id: string, otp: string, user_type: UserType) {
+  async validateOTP(
+    user_id: string,
+    otp: string,
+    user_type: UserType,
+    password: string | null = null
+  ) {
     try {
       const { OTP } = models;
       const currentModel: any = getModelToBeUsed(user_type);
@@ -265,6 +291,24 @@ class AuthService {
 
       if (diff > 30 || !correctOtp) {
         return responseHandler.responseError(400, "Invalid or Expired Otp!");
+      }
+      if (password) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const isPasswordMatch = await bcrypt.compare(
+          password,
+          currentUser.password!
+        );
+
+        if (isPasswordMatch) {
+          return responseHandler.responseError(
+            400,
+            `Former Password cannot be the same as new Password`
+          );
+        }
+        await currentModel.update(
+          { password: hashedPassword },
+          { where: { id: user_id } }
+        );
       }
       const updateUserStatus = await currentModel.update(
         { user_verified: true },

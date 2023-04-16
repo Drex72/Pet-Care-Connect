@@ -24,6 +24,7 @@ import { ISendVerification } from "../../interfaces/VerifyEmailInterface";
 import { userActions } from "../../redux/UserSlice";
 import accessToken from "../../utils/accessToken/AccessToken";
 import VerificationFormModal from "../../components/AuthComponents/AuthModals/VerificationNoticeModal";
+import { passwordValidator } from "../../validators/passwordValidator";
 
 export const Login = () => {
   // Add Login Image
@@ -42,7 +43,7 @@ export const Login = () => {
   // Login Form
   const loginForm = useForm<LoginInput>(
     { email: "", password: "", user_type: null },
-    { email: emailValidator, password: emptyValidator }
+    { email: emailValidator, password: passwordValidator }
   );
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -133,7 +134,10 @@ export const Login = () => {
         modalToggler={unConfirmedAccount.status}
         onClose={handleCloseModal}
       />
-      <div className="login_logo_container">
+      <div
+        className="login_logo_container"
+        onClick={() => navigate(AllRouteConstants.landingRoute.index)}
+      >
         <Logo />
       </div>
 
@@ -209,27 +213,43 @@ export const Login = () => {
 
         <Button
           label={"Login"}
-          loading={loginApiRequest.loading}
+          loading={
+            loginApiRequest.loading || verificationemailApiRequest.loading
+          }
           variant="primary"
           buttonClassName="login_submit_button"
         />
 
         <AuthError error={loginApiRequest.error?.message} />
         <AuthError error={verificationemailApiRequest.error?.message} />
-
-        <p>
-          Getting Started?{" "}
-          <Link
-            to={
-              loginApiRequest.loading
-                ? "#"
-                : AllRouteConstants.auth.register.index
-            }
-            className="tiny_link"
-          >
-            Create an account
-          </Link>
-        </p>
+        <div className="tiny_link_container">
+          <p>
+            Getting Started?{" "}
+            <Link
+              to={
+                loginApiRequest.loading
+                  ? "#"
+                  : AllRouteConstants.auth.register.index
+              }
+              className="tiny_link"
+            >
+              Create an account
+            </Link>
+          </p>
+          <p>
+            <Link
+              className="tiny_link"
+              style={{ fontWeight: 500 }}
+              to={
+                loginApiRequest.loading
+                  ? "#"
+                  : AllRouteConstants.auth.forgotPassword
+              }
+            >
+              Forgot Password?
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );

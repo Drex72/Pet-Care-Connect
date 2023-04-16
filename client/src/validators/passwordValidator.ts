@@ -1,15 +1,17 @@
 export const passwordValidator = (data: string) => {
   if (data.length === 0) {
-    return 'is required'
+    return "is required";
   }
 
-  if (data.length < 8) {
-    return 'must be at least 8 characters long'
+  if (data.length < 10) {
+    return "must be at least 10 characters long";
   }
 
-  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9]).{10,}$/;
 
-  const valid = passwordRegex.test(data)
+  const valid = passwordRegex.test(data);
 
-  return valid ? null : 'is invalid'
-}
+  return valid
+    ? null
+    : "is invalid, must contain atleast One Capital letter and One Number";
+};

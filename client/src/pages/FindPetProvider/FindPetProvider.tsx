@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import Search from "../../components/Search/Search";
-import Map from "../../assets/images/map.svg";
+import Map from "../../assets/images/woman-lifts-dog.jpg";
 import Avatar from "../../assets/images/image1.svg";
 import "./FindPetProviderStyles.scss";
 import { MdStar } from "react-icons/md";
@@ -19,7 +19,9 @@ import {
 } from "../../utils/petProviderSearch";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AllRouteConstants } from "../../routes/routes";
-interface ProviderServiceType extends PetProviderServiceInterface {
+import { removeDuplicates } from "../../utils/removeDuplicatesFromServices";
+import { formatNumber } from "../../utils/formatRatingNumber";
+export interface ProviderServiceType extends PetProviderServiceInterface {
   id: string;
 }
 export const FindPetProvider = () => {
@@ -56,6 +58,7 @@ export const FindPetProvider = () => {
       const providerServiceTypes =
         await getPetProvidersServiceTypeRequest.request();
       setServicesLoading(false);
+      console.log(providers);
       setAllProviderServiceTypes(providerServiceTypes!.data);
       setAllPetProviders({
         all: providers.data?.allPetProviders,
@@ -133,7 +136,7 @@ export const FindPetProvider = () => {
 
               <div className="sortValues">
                 <div className="services_container">
-                  {allProviderServiceTypes.map((service) => {
+                  {removeDuplicates(allProviderServiceTypes).map((service) => {
                     return (
                       <ServiceElement
                         key={service.id}
@@ -244,10 +247,12 @@ export const PetProviderCard = ({
           <div className="pet_provider_card_right_bottom">
             <div className="pet_provider_card_ratings">
               <span>
-                <h2>4.6</h2>
+                <h2>
+                  {formatNumber(petProviderInformation.overall_provider_rating)}
+                </h2>
                 <MdStar className="star" />
               </span>
-              <p>28 Reviews</p>
+              <p>{petProviderInformation.reviews.length} Reviews</p>
             </div>
             <button onClick={handleButtonClick}>
               View Profile <AiOutlineArrowRight />{" "}

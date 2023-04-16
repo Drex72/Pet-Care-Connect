@@ -43,3 +43,4 @@ class MailingService {
 }
 
 export default MailingService;
+// ResetPasswordOTPMail.ts;

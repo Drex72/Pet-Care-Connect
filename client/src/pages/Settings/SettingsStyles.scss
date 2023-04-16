@@ -1,0 +1,246 @@
+.settings_home_intro_text {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 120%;
+  color: #272727;
+  margin-bottom: 0.5rem;
+}
+
+.settings_home_intro_header {
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 120%;
+  color: #1d1d1d;
+  margin: 0;
+}
+.settings_home_info_card_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-block: 2rem;
+}
+
+// Profile
+
+.settings_profile {
+  margin-bottom: 3em;
+  .profile-form {
+    .edit_settings_profile_button {
+      width: 20% !important;
+    }
+  }
+}
+.settings_profile_input_fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-block: 30px;
+}
+.settings_profile_header_text {
+  font-weight: 600;
+  font-size: 18px;
+  color: #157cff;
+  margin-top: 1em;
+}
+.profile_form_avatar {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  &_icon {
+    position: absolute;
+    bottom: -5%;
+    right: 10%;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
+.settings_profile_candidate_information {
+  font-weight: 300;
+  font-size: 15px;
+  margin-block: 1em;
+  span {
+    color: #377e3f;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+.profile_form_avatar_information {
+  h2 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 120%;
+    color: #1d1d1d;
+  }
+  p {
+    font-weight: 300;
+    font-size: 15px;
+    color: #000000;
+  }
+}
+@media screen and (max-width: 768px) {
+  .settings_profile {
+    .profile-form {
+      .edit_settings_profile_button {
+        width: 100% !important;
+      }
+    }
+  }
+  .profile_form_avatar_information {
+    text-align: center;
+    margin-bottom: 1em;
+    h2 {
+      font-weight: 500;
+      font-size: 20px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .settings_profile_submit_cancel_buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 30%;
+  }
+  .settings_profile_cancel {
+    margin-top: 0;
+  }
+  .profile_form_avatar_container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .profile_form_avatar {
+    width: 150px;
+    height: 150px;
+    margin-left: 0;
+    margin-right: 0;
+    &_icon {
+      bottom: 1%;
+      right: 13%;
+    }
+  }
+  .settings_profile_intro {
+    display: none;
+  }
+  .settings_profile_input_fields {
+    width: 90%;
+    display: grid;
+    margin-bottom: 2em;
+
+    justify-content: space-between;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    .profile_form_input_field {
+      max-width: 500px;
+    }
+  }
+}
+// Support
+.support-form {
+  margin-block: 2rem;
+}
+.settings_support_header_text {
+  font-weight: 600;
+  font-size: 20px;
+  color: #295f2f;
+  margin-top: 0.7em;
+}
+.settings_support_input_fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .settings_support_input_fields_personal_info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+.support_form_submit_button {
+  margin-top: 1em;
+}
+@media screen and (min-width: 768px) {
+  .settings_support_input_fields {
+    width: 80%;
+    max-width: 1000px;
+    .settings_support_input_fields_personal_info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: space-between;
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+  .support_form_submit_button {
+    width: 20%;
+    margin-top: 2rem;
+  }
+}
+.settings_2fa_verification_qr_container {
+  height: auto;
+  margin: 0 auto;
+  max-width: 300px;
+  width: 100%;
+  margin-top: 2em;
+
+  h2 {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+@media screen and (min-width: 768px) {
+  .settings_twofa_inner_container {
+    width: 60%;
+    display: flex;
+    gap: 1.5em;
+    flex-direction: column;
+    margin-bottom: 1em;
+    p {
+      margin-top: 30px;
+    }
+  }
+  .settings_2fa_verification_qr_container {
+    // max-width: 200px;
+    margin: 0;
+    // display: flex;
+    // align-items: flex-end;
+    // width: 400px;
+    // border: 3px solid red;
+  }
+}
+.settings_2fa_verification_buttons_container {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 2em;
+
+  .twofa_reset_button {
+    margin: 0;
+  }
+}
+.settings_2fa_verification_qr_input {
+  width: 100%;
+}

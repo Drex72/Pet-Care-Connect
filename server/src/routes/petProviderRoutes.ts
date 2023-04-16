@@ -59,7 +59,7 @@ router
   .put(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.updateBookingForUserValidation,
-    bookingsController.getAllBookingsForAUser
+    bookingsController.updateBookingForUser
   );
 
 router

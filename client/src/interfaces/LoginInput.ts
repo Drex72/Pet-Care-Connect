@@ -14,3 +14,7 @@ export interface LoginResponse {
 }
 
 
+
+export interface ResetPasswordInterface extends LoginInput {
+  otp: string;
+}

@@ -13,3 +13,8 @@ export interface AddressInterface {
   region: string;
 }
 export type UserBaseInformation = UserInterface & AddressInterface;
+export interface UserResponseInformation
+  extends Omit<UserBaseInformation, "password"> {
+  id: string;
+  user_avatar?: string;
+}

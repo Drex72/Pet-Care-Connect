@@ -92,7 +92,7 @@ class AuthController {
   };
 
   sendVerificationEmail = async (req: Request, res: Response) => {
-    const { email, user_type } = req.body;
+    let { email, user_type, status } = req.body;
     const currentModel: any = getModelToBeUsed(user_type);
     try {
       const currentUser = await currentModel.findOne({
@@ -103,14 +103,15 @@ class AuthController {
         return res.status(400).send({ message: "User not Found" });
       }
 
-      if (currentUser?.dataValues.user_verified) {
+      if (currentUser?.dataValues.user_verified && status !== "reset") {
         return res.send({ message: "User Already Verified" });
       }
 
       const responseData =
         await this.authService.sendVerificationMailToUserEmail(
           currentUser?.dataValues.id,
-          user_type
+          user_type,
+          status
         );
 
       return res.status(responseData.statusCode).send(responseData.response);
@@ -122,7 +123,7 @@ class AuthController {
   };
 
   validateSentOtp = async (req: any, res: Response) => {
-    const { otp, email, user_type } = req.body;
+    let { otp, email, user_type, password } = req.body;
     try {
       const currentModel: any = getModelToBeUsed(user_type);
       const currentUser = await currentModel.findOne({
@@ -131,7 +132,8 @@ class AuthController {
       const responseData = await this.authService.validateOTP(
         currentUser.dataValues?.id,
         otp,
-        user_type
+        user_type,
+        password
       );
       res.status(responseData.statusCode).send(responseData.response);
     } catch (e) {

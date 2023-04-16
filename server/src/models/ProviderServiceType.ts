@@ -4,6 +4,7 @@ import { PetProviderServiceInterface } from "../interfaces/ProviderServiceTypeIn
 interface PetProviderServiceAttributes extends PetProviderServiceInterface {
   id?: string;
   pet_provider_id: string;
+  service_rating?: number;
 }
 export class PetProviderService
   extends Model<PetProviderServiceAttributes>
@@ -14,6 +15,7 @@ export class PetProviderService
   public service_description!: string;
   public service_price_per_hour!: number;
   public pet_provider_id!: string;
+  public service_rating?: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -39,6 +41,11 @@ export const ProviderServiceType = (sequelize: Sequelize) => {
       service_price_per_hour: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      service_rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
       },
       pet_provider_id: {
         type: DataTypes.UUID,

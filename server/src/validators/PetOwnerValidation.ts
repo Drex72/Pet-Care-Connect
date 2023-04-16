@@ -8,13 +8,6 @@ import {
 } from "./schemaOptions";
 
 class PetOwnerValidation {
-  /**
-   * Validates the request coming in
-   * @param req Takes in the Request Body
-   * @param _
-   * @param next
-   * @returns
-   */
   async createPetOwnerValidation(
     req: Request,
     _: Response,
@@ -51,17 +44,10 @@ class PetOwnerValidation {
       return next(new ApiErrorException(joiErrorFormatter(error), 400));
     }
 
-    req.body = { ...value, user_type: 'PET-OWNER' };
+    req.body = { ...value, user_type: "PET-OWNER" };
     return next();
   }
 
-  /**
-   * Validates the Request params coming in for getting a pet owner
-   * @param req
-   * @param _
-   * @param next
-   * @returns
-   */
   async getAPetOwnerValidation(req: Request, _: Response, next: NextFunction) {
     const { params } = req;
 
@@ -85,13 +71,6 @@ class PetOwnerValidation {
     return next();
   }
 
-  /**
-   * Validates the Request params coming in for updating a pet owner
-   * @param req
-   * @param _
-   * @param next
-   * @returns
-   */
   async updatePetOwnerValidation(
     req: Request,
     _: Response,
@@ -101,16 +80,14 @@ class PetOwnerValidation {
 
     // Create User Schema
     const updatePetOwnerValidationSchema: Joi.ObjectSchema = Joi.object({
-      first_ame: Joi.string().required(),
+      first_name: Joi.string().required(),
       last_name: Joi.string().required(),
       email: Joi.string().required(),
-      password: Joi.string().required().min(10).max(30),
-      pet_type: Joi.string().required(),
-      pet_name: Joi.string().required(),
-      pet_breed: Joi.string().required(),
-      pet_birthday: Joi.date().required(),
-      pet_gender: Joi.string().required(),
-      pet_special_needs: Joi.string().optional(),
+      phone_number: Joi.string().required().min(10).max(30),
+      street: Joi.string().required(),
+      city: Joi.string().required(),
+      postal_code: Joi.string().required(),
+      region: Joi.string().required(),
     });
 
     const { error, value } = updatePetOwnerValidationSchema.validate(
@@ -128,13 +105,6 @@ class PetOwnerValidation {
     return next();
   }
 
-  /**
-   * Validates the Request params coming in for deleting a pet owner
-   * @param req
-   * @param _
-   * @param next
-   * @returns void
-   */
   async deletePetOwnerValidation(
     req: Request,
     _: Response,
@@ -158,35 +128,69 @@ class PetOwnerValidation {
       return next(new ApiErrorException(joiErrorFormatter(error), 400));
     }
 
-    req.params = value;
+    req.query = value;
+    return next();
+  }
+  async addPetOwnerImageValidation(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const imageSchema = Joi.object({
+      file: Joi.object({
+        mimetype: Joi.string()
+          .valid("image/jpeg", "image/png", "image/gif")
+          .required(),
+        size: Joi.number().max(5000000).required(),
+        originalname: Joi.string().required(),
+      }).required(),
+    });
+
+    const imageInformationSchema: Joi.ObjectSchema = Joi.object({
+      petOwnerId: Joi.string().length(36).required(),
+    });
+
+    const { error, value } = imageSchema.validate(req, schemaOptions);
+    const { error: contentError, value: contentValue } =
+      imageInformationSchema.validate(req.body, schemaOptions);
+
+    // If Error, handle Error
+    if (error) {
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
+    if (contentError) {
+      return next(new ApiErrorException(joiErrorFormatter(contentError), 400));
+    }
+    // req.file = value;
+    req.body = contentValue;
     return next();
   }
 
-  /**
-   * Custom Validation for the pet gender
-   */
-  private petGenderValidation() {
-    Joi.extend((joi) => {
-      return {
-        type: "petGenderValidation",
-        base: joi.string(),
-        messages: {
-          "petGenderValidation.invalid":
-            "{{#label}} must be a either type male or type female",
-        },
+  async addPetValidation(req: Request, res: Response, next: NextFunction) {
+    const { body } = req;
 
-        validate(value, helpers) {
-          const allowedTypes = ["male", "female"];
-          if (!allowedTypes.includes(value)) {
-            return {
-              value,
-              errors: helpers.error("petGenderValidation.invalid"),
-            };
-          }
-          return value;
-        },
-      };
+    // Create User Schema
+    const createPetValidationSchema: Joi.ObjectSchema = Joi.object({
+      pet_name: Joi.string().required(),
+      pet_breed: Joi.string().required(),
+      pet_birthday: Joi.date().required(),
+      pet_gender: Joi.string().required(),
+      pet_special_needs: Joi.string().required(),
     });
+
+    const { error, value } = createPetValidationSchema.validate(
+      body,
+      schemaOptions
+    );
+
+    // If Error, handle Error
+    if (error) {
+      // Add our Error handler
+      return next(new ApiErrorException(joiErrorFormatter(error), 400));
+    }
+
+    req.body = value;
+    return next();
   }
 }
 

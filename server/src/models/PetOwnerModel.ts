@@ -5,9 +5,13 @@ interface PetOwnerAttributes extends UserInterface {
   id?: string;
   user_verified?: boolean;
   user_type?: UserType;
+  user_avatar?: string;
 }
 
-export class PetOwner extends Model<PetOwnerAttributes> implements PetOwnerAttributes {
+export class PetOwner
+  extends Model<PetOwnerAttributes>
+  implements PetOwnerAttributes
+{
   public id?: string;
   public email!: string;
   public password!: string;
@@ -20,6 +24,7 @@ export class PetOwner extends Model<PetOwnerAttributes> implements PetOwnerAttri
   public postal_code!: string;
   public region!: string;
   public user_type!: UserType;
+  public user_avatar?: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -47,6 +52,10 @@ export const PetOwnerModel = (sequelize: Sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+      },
+      user_avatar: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       user_type: {
         type: DataTypes.ENUM("PET-PROVIDER", "PET-OWNER"),

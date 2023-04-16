@@ -4,7 +4,12 @@ import petOwnerController from "../controllers/PetOwnerController";
 import tokenHandler from "../handlers/TokenHandlers";
 import bookingValidation from "../validators/BookingValidation";
 import petOwnerValidation from "../validators/PetOwnerValidation";
+import multer from "multer";
+import reviewsValidation from "../validators/ReviewsValidation";
+import reviewsController from "../controllers/ReviewController";
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 const router = express.Router();
 
 // Pet Owner Auth Routes
@@ -19,10 +24,27 @@ router
     petOwnerValidation.updatePetOwnerValidation,
     petOwnerController.updatePetOwner
   )
+
   .delete(
     tokenHandler.validateAccessTokenMiddleware,
     petOwnerValidation.deletePetOwnerValidation,
     petOwnerController.deletePetOwner
+  );
+
+router
+  .route("/create-pet")
+  .post(
+    tokenHandler.validateAccessTokenMiddleware,
+    petOwnerValidation.addPetValidation,
+    petOwnerController.addPetForPetOwner
+  );
+router
+  .route("/upload-avatar")
+  .post(
+    tokenHandler.validateAccessTokenMiddleware,
+    upload.single("file"),
+    petOwnerValidation.addPetOwnerImageValidation,
+    petOwnerController.addPetOwnerImage
   );
 
 // Booking Routes
@@ -50,28 +72,15 @@ router
   );
 
 router
-  .route("/bookings/book-provider/:id")
-  .get(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.getBookingValidation,
-    bookingsController.getABooking
-  );
-
-router
   .route("/review-pet-provider")
   .post(
     tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.createNewBookingValidation,
-    bookingsController.bookNewPetProvider
+    reviewsValidation.createNewReviewValidation,
+    reviewsController.createNewReview
   )
   .get(
-    tokenHandler.validateAccessTokenMiddleware
-    // bookingsController.getAllBookings
-  )
-
-  .delete(
-    tokenHandler.validateAccessTokenMiddleware,
-    bookingValidation.deleteBookingValidation,
-    bookingsController.deleteABooking
+    reviewsValidation.getAllReviewsForAUserValidation,
+    reviewsController.getAllReviewsForAProvider
   );
+
 export default router;

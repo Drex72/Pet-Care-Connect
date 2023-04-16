@@ -57,6 +57,36 @@ td:nth-of-type(5) {
   cursor: pointer;
   font-size: 20px;
 }
+
+.update_booking_state {
+  padding: 10px;
+  border-radius: 5px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  h4 {
+    margin: 0;
+  }
+  .booking_action_button_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    width: 100%;
+    .custom-button {
+      padding: 10px !important;
+      width: 50% !important;
+    }
+    button {
+      width: 50%;
+      border: 0;
+      cursor: pointer;
+      padding: 10px;
+    }
+  }
+}
 .booking_table_actions_container {
   padding: 10px;
   border-radius: 5px;
@@ -70,7 +100,7 @@ td:nth-of-type(5) {
     border: none;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: -1px 2px 5px rgba(#000, 0.5);
+    box-shadow: -1px 2px 5px rgba(#6b6a6a, 0.5);
     cursor: pointer;
     transition: all 300ms ease-in-out;
 
@@ -81,9 +111,12 @@ td:nth-of-type(5) {
 
     &:disabled {
       pointer-events: none;
+      background-color: rgba(239, 239, 239, 0.3);
+      color: rgba(16, 16, 16, 0.3);
+      border-color: rgba(118, 118, 118, 0.3);
     }
   }
-  .reject_button{
+  .reject_button {
     background: rgb(201, 31, 31);
     color: white;
   }
@@ -115,6 +148,9 @@ tbody button:hover {
   display: block;
 }
 
+.css-3bmhjh-MuiPaper-root-MuiPopover-paper {
+  box-shadow: -1px 2px 5px rgba(#969292, 0.5) !important;
+}
 @media only screen and (max-width: 768px) {
   /* table,
     thead,

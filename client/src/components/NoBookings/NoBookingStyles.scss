@@ -1,0 +1,23 @@
+.no_appointment_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .no_appointment_image_container {
+    max-width: 300px;
+    max-height: 300px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  h2 {
+    font-weight: 400;
+  }
+  span {
+    font-weight: 300;
+    font-size: 15px;
+    text-align: center;
+    color: #6f6f6f;
+  }
+}

@@ -1,10 +1,11 @@
-import { LoginInput } from "../interfaces/LoginInput";
+import { LoginInput, ResetPasswordInterface } from "../interfaces/LoginInput";
 import { ICreatePetOwner } from "../interfaces/PetInformationInterface";
 import { ICreatePetCareProvider } from "../interfaces/ProviderServiceTypeInformation";
 import {
   IConfirmOTP,
   ISendVerification,
 } from "../interfaces/VerifyEmailInterface";
+import { IForgotPassword } from "../pages/verifyEmail/ForgotPassword";
 import axiosInstance from "./axios";
 
 class AuthService {
@@ -25,6 +26,12 @@ class AuthService {
 
   confirmVerificationCode = async (data: IConfirmOTP) => {
     return await axiosInstance.post(`/auth/verify-email/validate`, data);
+  };
+  forgotPasswordRequest = async (data: IForgotPassword) => {
+    return await axiosInstance.post(`/auth/forgot-password`, data);
+  };
+  resetPassword = async (data: ResetPasswordInterface) => {
+    return await axiosInstance.post(`/auth/forgot-password/validate`, data);
   };
 
   logout = async () => {

@@ -10,6 +10,9 @@ export const AllRouteConstants = {
     index: "/auth",
     login: "/auth/login",
     verifyEmail: "/auth/verify-email",
+    forgotPassword: "/auth/forgot-password",
+    resetPassword: "/auth/reset-password",
+
     register: {
       index: "/auth/register",
       address: "/auth/register/address",

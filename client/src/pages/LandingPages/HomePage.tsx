@@ -8,10 +8,14 @@ import CustomerSupportImage from "../../assets/images/support.svg";
 import BookingImage from "../../assets/images/booking.svg";
 import DeliveryImage from "../../assets/images/delivery.svg";
 import PetImage from "../../assets/images/pet.svg";
+import Avatar from "../../assets/images/profile2.svg";
+import Testimonial from "../../components/LandingPageComponents/TestimonialCard/Testimonial";
+import ChatBot from "../../components/LandingPageComponents/ChatBot/ChatBot";
 
 export const HomePage = () => {
   return (
     <div className="home_page">
+      <ChatBot />
       <section className="home_page-hero_section animate__animated animate__fadeIn">
         <div className="home_page-hero_section_container">
           <div className="text_container">
@@ -156,9 +160,14 @@ export const HomePage = () => {
               </div>
             </div>
           </div>
-
           <div className="testimonial_container">
             <h2>What people Say about Us</h2>
+            <div className="all_testimonal_container">
+              <Testimonial avatar={Avatar} />
+              <Testimonial avatar={Avatar} />
+              <Testimonial avatar={Avatar} />
+              <Testimonial avatar={Avatar} />
+            </div>
           </div>
         </div>
       </section>

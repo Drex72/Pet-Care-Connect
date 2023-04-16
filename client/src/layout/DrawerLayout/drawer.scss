@@ -1,0 +1,51 @@
+.drawer_container {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  transition: all 400ms ease-in-out;
+
+  &_show {
+    width: 100vw;
+  }
+  &_hide {
+    width: 0;
+  }
+}
+
+.modal_drawer {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  z-index: 100000;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 0.6rem 1rem;
+  outline: none;
+  overflow-y: scroll;
+  transition: all 350ms ease-in-out;
+  width: 100vw;
+  &_show {
+    right: 0;
+  }
+  &_hide {
+    right: -100vw;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .modal_drawer {
+    width: 450px;
+    &_show {
+      right: 0;
+    }
+    &_hide {
+      right: -450px;
+    }
+  }
+}

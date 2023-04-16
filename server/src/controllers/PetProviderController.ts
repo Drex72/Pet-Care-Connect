@@ -46,7 +46,30 @@ class PetProviderController {
    * @param req
    * @param res
    */
-  updatePetProvider = async (req: Request, res: Response) => {};
+  updatePetProvider = async (req: any, res: Response) => {
+     const { id } = req.user;
+     const petProviderInformation = {
+       first_name: req.body.first_name,
+       last_name: req.body.last_name,
+       phone_number: req.body.phone_number,
+       email: req.body.email,
+       street: req.body.street,
+       city: req.body.city,
+       postal_code: req.body.postal_code,
+       region: req.body.region,
+     };
+     try {
+       const updatedPetProvider = await this.petProviderService.updatePetProvider(
+         id as string,
+         petProviderInformation
+       );
+       res
+         .status(updatedPetProvider.statusCode)
+         .send(updatedPetProvider.response);
+     } catch (e) {
+       res.status(500).send(`Error while Updating Users, ${e}`);
+     }
+  };
 
   addPetProviderImage = async (req: Request, res: Response) => {
     const { providerName, providerId } = req.body;
