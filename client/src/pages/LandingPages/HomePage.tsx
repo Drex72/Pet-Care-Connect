@@ -21,11 +21,11 @@ export const HomePage = () => {
           <div className="text_container">
             <h2>
               Find the best <br /> <span>Pet Care</span> services <br /> in
-              Scotlandsss
+              Scotland
             </h2>
             <p>
               Ensuring happy tails across Scotland - Discover the best Pet Care
-              bervices.
+              services.
             </p>
             <Button variant="primary" label="Find Pet Care Around" />
           </div>
