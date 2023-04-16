@@ -2,10 +2,11 @@ import axios from "axios";
 import accessToken from "../utils/accessToken/AccessToken";
 
 export const baseURL = "http://localhost:8000";
+const prodBaseUrl = "https://pet-care-connect-api.onrender.com";
 
 // Create a new Axios instance
 const axiosInstance = axios.create({
-  baseURL,
+  baseURL: prodBaseUrl,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
