@@ -11,8 +11,15 @@ import PetImage from "../../assets/images/pet.svg";
 import Avatar from "../../assets/images/profile2.svg";
 import Testimonial from "../../components/LandingPageComponents/TestimonialCard/Testimonial";
 import ChatBot from "../../components/LandingPageComponents/ChatBot/ChatBot";
+import { useNavigate } from "react-router-dom";
+import { AllRouteConstants } from "../../routes/routes";
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleMoveToFindPetCare = () => {
+    navigate(AllRouteConstants.landingRoute.findPetProvider);
+  };
   return (
     <div className="home_page">
       <ChatBot />
@@ -27,7 +34,11 @@ export const HomePage = () => {
               Ensuring happy tails across Scotland - Discover the best Pet Care
               services.
             </p>
-            <Button variant="primary" label="Find Pet Care Around" />
+            <Button
+              variant="primary"
+              label="Find Pet Care Around"
+              onClick={handleMoveToFindPetCare}
+            />
           </div>
           <div className="image_container">
             <img loading="lazy" src={LandingPageImage} alt="A Dog and a Cat" />
