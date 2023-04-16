@@ -21,7 +21,7 @@ export const HomePage = () => {
           <div className="text_container">
             <h2>
               Find the best <br /> <span>Pet Care</span> services <br /> in
-              Scotland
+              Scotlandsss
             </h2>
             <p>
               Ensuring happy tails across Scotland - Discover the best Pet Care
