@@ -1,13 +1,18 @@
-import React, { useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import Logo from "../../../components/Logo/Logo";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { AllRouteConstants } from "../../../routes/routes";
 import "./NavbarStyles.scss";
+import Hamburger from "hamburger-react";
 
-const Navbar = () => {
+const Navbar = ({
+  openSideBar,
+  sidebarOpened,
+}: {
+  openSideBar: () => void;
+  sidebarOpened: boolean;
+}) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { data: userData } = useAppSelector((state) => state.userReducer);
@@ -18,9 +23,6 @@ const Navbar = () => {
 
   const goToDashboard = () => {
     navigate(AllRouteConstants.dashboardRoutes.index);
-  };
-  const toggleSidebar = () => {
-    setSidebarOpened(!sidebarOpened);
   };
 
   const checkIfItemActive = (route: string) => {
@@ -33,15 +35,19 @@ const Navbar = () => {
     return false;
   };
 
-  const [sidebarOpened, setSidebarOpened] = useState(false);
   return (
     <div>
       <nav className={`navbar_container animate__animated animate__fadeIn `}>
         <Link to="/" className="navbar_logo_container">
           <Logo />
         </Link>
-        <div className="navbar_hamburger_container" onClick={toggleSidebar}>
-          <RxHamburgerMenu className="navbar_hamburger" />
+        <div className="navbar_hamburger_container" onClick={openSideBar}>
+          <Hamburger
+            toggled={sidebarOpened}
+            size={20}
+            color="#157cff"
+            toggle={openSideBar}
+          />
         </div>
         <ul className="navbar_items_container">
           <li className="navbar_item">

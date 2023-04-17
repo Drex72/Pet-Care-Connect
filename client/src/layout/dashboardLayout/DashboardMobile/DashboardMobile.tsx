@@ -51,6 +51,8 @@ const DashboardMobile = () => {
             </div>
           </div>
         </CSSTransition>
+
+        
         <div className="navigation">
 
         <DashboardNavigation />
