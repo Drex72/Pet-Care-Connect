@@ -27,6 +27,6 @@ export const config = Object.freeze({
   refreshTokenSecret: "Damilola&123",
   postgresUrl: process.env.POSTGRES_URL,
   sendGridKey: process.env.SEND_GRID_API_KEY,
-  awsAccessKey: process.env.AWS_ACCESS_KEY,
+  awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
   awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
 } as configType);

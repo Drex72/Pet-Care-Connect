@@ -20,4 +20,4 @@ const mysqlConnection = new Sequelize(
   }
 );
 
-export const sequelize = postgresConnection;
+export const sequelize = mysqlConnection;

@@ -111,7 +111,7 @@ class TokenHandler {
     const { id, user_type } = userPayload!;
     const currentModel: any = getModelToBeUsed(user_type);
 
-    const user = await currentModel.findOne({ id });
+    const user = await currentModel.findOne({ where: { id } });
 
     if (!user) return res.status(400).json({ message: "No Valid User" });
 

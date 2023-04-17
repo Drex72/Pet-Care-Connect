@@ -1,32 +1,16 @@
-import express, { Router } from "express";
+import express, { request, response, Router } from "express";
+import petProviderController from "../controllers/PetProviderController";
 import authRouter from "./authRoutes";
 import petOwnerRouter from "./petOwnerRoutes";
 import petProviderRoutes from "./petProviderRoutes";
 
 const router = express.Router();
+router.use("/auth", authRouter);
+router.use("/pet-owner", petOwnerRouter);
+router.use("/pet-provider", petProviderRoutes);
 
-type routeObject = {
-  path: string;
-  routes: Router;
-};
-
-const allRoutes: routeObject[] = [
-  {
-    path: "/auth",
-    routes: authRouter,
-  },
-  {
-    path: "/pet-owner",
-    routes: petOwnerRouter,
-  },
-  {
-    path: "/pet-provider",
-    routes: petProviderRoutes,
-  },
-];
-
-allRoutes.map((route) => {
-  router.use(route.path, route.routes);
+router.use("/", (req, res) => {
+  res.status(200).send("The API is Up and Running");
 });
 
 export default router;
