@@ -121,7 +121,11 @@ const ChatBot = () => {
     <div className="animate__animated ">
       {/*-Chat Board Start*/}
       <div className="chat-board chatbot chat new trending" />
-      <div className="frame-content  animate__animated animate__fadeIn">
+      <div
+        className={`frame-content ${
+          isOpen ? "frame-open" : "frame-close"
+        }  animate__animated animate__fadeIn`}
+      >
         <div
           className={`widget-position-right sidebar-position-right onlyBubble animate__animated animate__fadeIn  ${
             isOpen ? "open" : ""
