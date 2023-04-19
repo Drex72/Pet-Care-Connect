@@ -78,6 +78,7 @@ export const Login = () => {
   // Submit Handler
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    // Settings all resets
     loginForm.resetFormErrors();
     loginApiRequest.reset();
     verificationemailApiRequest.reset();
@@ -89,6 +90,7 @@ export const Login = () => {
 
         // Store Access Token
         accessToken.setAccessToken(user?.data.accessToken!);
+        // Stores refresh token in local storage
         localStorage.setItem("refreshToken", user?.data.refreshToken!);
 
         // If the user isn't Verified, Send a mail to them containing an otp and then navigate to the page

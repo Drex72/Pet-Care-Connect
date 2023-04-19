@@ -63,7 +63,7 @@ export const RegisterPetOwner = () => {
     createPetOwnerApiService
   );
 
-  // Submit Handler
+  // Function to Create the Pet Owner
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     dispatch(registrationFormActions.setPetOwnerFields(registrationForm.form));
