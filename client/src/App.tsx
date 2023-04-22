@@ -1,10 +1,9 @@
-import React from "react";
-import logo from "./logo.svg";
 import Router from "./routes/Router";
 
 function App() {
   return (
     <div className="App">
+      {/* This is where all the routes for the application are stored */}
       <Router />
     </div>
   );

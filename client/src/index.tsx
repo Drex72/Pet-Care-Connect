@@ -11,8 +11,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    {/* Redux Persistor */}
     <PersistGate persistor={persistor}>
+      {/* Redux Store */}
       <Provider store={store}>
+        {/* My App */}
         <App />
       </Provider>
     </PersistGate>

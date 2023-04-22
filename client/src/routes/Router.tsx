@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Scroll from "../components/scrollToTop/ScrollToTop";
 import { AllRouteConstants } from "./routes";
@@ -32,7 +31,7 @@ function Router() {
     <BrowserRouter>
       <Scroll />
       <Routes>
-        {/* Landing Page */}
+        {/* These are the routes for my landing Page, home, about us, etc */}
         <Route
           path={AllRouteConstants.landingRoute.index}
           element={<HomeLayout />}
@@ -64,8 +63,11 @@ function Router() {
           />
         </Route>
 
-        {/* Authentication Routes */}
+        {/* These are my Authentication Routes, Login, Logout, etc */}
+
+        {/* There is a layout that wraps all the auth routes */}
         <Route path={AllRouteConstants.auth.index} element={<AuthLayout />}>
+          {/* These are the auth routes that are being wrapped with the layout */}
           <Route index element={<Login />} />
           <Route path={AllRouteConstants.auth.login} element={<Login />} />
           <Route
@@ -99,7 +101,6 @@ function Router() {
         </Route>
 
         {/* Dashboard Routes */}
-
         <Route
           path={AllRouteConstants.dashboardRoutes.index}
           element={<DashboardLayout />}
@@ -115,6 +116,7 @@ function Router() {
           />
 
           {/* Pet Owner Routes */}
+          {/* I created a higher order component that checks if the user type is of type pet owner, if it is, then it opens the page, else, it navigates to the home page */}
           <Route
             path={
               AllRouteConstants.dashboardRoutes.pet_owner_routes
