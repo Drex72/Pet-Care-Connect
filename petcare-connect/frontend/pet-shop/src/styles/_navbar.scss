@@ -1,0 +1,25 @@
+@import "./base";
+
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  padding: 10px 69px 60px 58px !important;
+}
+.navbar-nav .show > .nav-link,
+.navbar-nav .nav-link.active {
+  color: $text-primary;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+  color: $text-primary;
+  font-weight: 500;
+  font-size: 20px;
+}
+.btn {
+  background: $btn-primary !important;
+  border-radius: 8px;
+  color: white !important;
+}

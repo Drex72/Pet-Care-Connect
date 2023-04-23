@@ -1,0 +1,5 @@
+CREATE USER postgres WITH ENCRYPTED PASSWORD 'postgres';
+
+CREATE DATABASE petcare;
+
+GRANT ALL PRIVILEGES ON DATABASE petcare TO postgres;

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 export const allowedOrigins = [
   "https://www.yoursite.com",
-  "http://localhost:3001",
+  "http://localhost:3002",
   "http://localhost:3000",
   "https://pet-care-connect.vercel.app",
 ];

@@ -1,0 +1,246 @@
+.home {
+  .wrapper {
+    .header {
+      padding: 0 80px 0 60px;
+      .text-description {
+        padding: 100px 0 0 0;
+        > h1 {
+          font-weight: 700;
+          font-size: 60px;
+        }
+        > span {
+          font-weight: 700;
+          font-size: 60px;
+        }
+        > p {
+          font-weight: 500;
+          font-size: 20px;
+        }
+      }
+    }
+    .choose-us-section {
+      padding-top: 70px;
+      background: #f6f9fc;
+      > h4 {
+        text-align: center;
+        font-size: 40px;
+        font-weight: 700;
+      }
+      .grid-section {
+        padding: 77px 79px 176px 50px;
+      }
+    }
+    .payment-text {
+      padding-top: 8px;
+    }
+    .pet-process {
+      background: #003272;
+      height: 1000px;
+
+      padding: 55px 80px 75px 80px;
+    }
+    .process-involved {
+      background: #ffffff;
+      padding: 60px 80px 75px 80px;
+      margin-top: 25px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #9d9d9d;
+      border-radius: 10px;
+      width: 360px;
+      height: 390px;
+
+      padding: 49px 35px 51px 35px;
+    }
+    .footer-content {
+      margin-top: 15em;
+      background: #f6f9fc;
+      padding: 96px 0 100px 80px;
+    }
+    .content {
+      > ul {
+        list-style-type: none;
+        padding: 0 !important;
+        font-size: 16px;
+        font-size: 400;
+        line-height: 2.5em;
+      }
+
+      > ul > li > a {
+        text-decoration: none;
+        margin: 0;
+        color: #000000 !important;
+      }
+    }
+    .foot {
+      padding: 0 50px 5px 80px;
+      background: #f6f9fc;
+      // border-top: 1px solid #0000001a;
+    }
+    .foot-items {
+      border-top: 1px solid #0000001a;
+    }
+  }
+}
+.care-provider {
+  .search-wrapper {
+    padding: 0 50px 0 50px;
+  }
+  .custom-field {
+    position: relative;
+    font-size: 14px;
+    border-top: 20px solid transparent;
+    margin-bottom: 5px;
+    display: inline-block;
+    --field-padding: 12px;
+  }
+  .custom-field input {
+    border: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #f2f2f2;
+    padding: var(--field-padding);
+    border-radius: 3px;
+    width: 500px;
+    outline: none;
+    font-size: 14px;
+  }
+
+  .custom-field .placeholder {
+    position: absolute;
+    left: var(--field-padding);
+    width: calc(100% - (var(--field-padding) * 2));
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    top: 22px;
+    line-height: 100%;
+    transform: translateY(-50%);
+    color: #f2f2f2;
+    transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+  }
+  .custom-field.three {
+    --draw-duration: 0.1s;
+
+    --draw-line-width: 2px;
+    --draw-easing: linear;
+  }
+
+  .custom-field.three .border {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: none;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    border-radius: 3px;
+  }
+
+  .custom-field.three .border::after,
+  .custom-field.three .border::before {
+    content: "";
+    width: 0;
+    height: 0;
+    display: inline-block;
+    position: absolute;
+    border-radius: 3px;
+  }
+
+  .custom-field.three .border::before {
+    left: 0;
+    bottom: 0;
+    border-right: 0px solid var(--draw-color);
+    border-bottom: 0px solid var(--draw-color);
+    transition: border 0s linear calc(var(--draw-duration) * 4),
+      height var(--draw-duration) var(--draw-easing)
+        calc(var(--draw-duration) * 2),
+      width var(--draw-duration) var(--draw-easing)
+        calc(var(--draw-duration) * 3);
+  }
+
+  .custom-field.three .border::after {
+    right: 0;
+    top: 0;
+    border-left: 0px solid var(--draw-color);
+    border-top: 0px solid var(--draw-color);
+    transition: border 0s linear calc(var(--draw-duration) * 2),
+      height var(--draw-duration) var(--draw-easing),
+      width var(--draw-duration) var(--draw-easing) var(--draw-duration);
+  }
+
+  .custom-field.three input:focus ~ .border::before,
+  .custom-field.three input:not(:placeholder-shown) ~ .border::before,
+  .custom-field.three input.dirty ~ .border::before,
+  .custom-field.three input:focus ~ .border::after,
+  .custom-field.three input:not(:placeholder-shown) ~ .border::after,
+  .custom-field.three input.dirty ~ .border::after {
+    width: 100%;
+    height: 100%;
+    border-width: var(--draw-line-width);
+  }
+
+  .custom-field.three input:not(:placeholder-shown) ~ .border::before,
+  .custom-field.three input.dirty ~ .border::before,
+  .custom-field.three input:focus ~ .border::before {
+    transition-delay: 0s, var(--draw-duration), 0s;
+  }
+
+  .custom-field.three input:not(:placeholder-shown) ~ .border::after,
+  .custom-field.three input.dirty ~ .border::after,
+  .custom-field.three input:focus ~ .border::after {
+    transition-delay: calc(var(--draw-duration) * 2),
+      calc(var(--draw-duration) * 3), calc(var(--draw-duration) * 2);
+  }
+
+  .search-btn {
+    background: $btn-primary;
+    width: 64px;
+    height: 45px;
+    text-align: center;
+    padding-top: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .pill-1 {
+    border: 1px solid $btn-primary;
+    background: #eaf4ff;
+    text-align: justify;
+    border-radius: 18px;
+    cursor: pointer;
+    color: $btn-primary;
+    width: 93px;
+    height: 35px;
+  }
+  .pill-2 {
+    border: 1px solid #000000;
+    background: transparent;
+    text-align: justify;
+    border-radius: 18px;
+    cursor: pointer;
+    color: #000000;
+    width: 93px;
+    height: 35px;
+  }
+  .child {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-left: 4px;
+  }
+  .card {
+    width: 600px;
+
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 10px;
+  }
+  .map {
+    padding: 0px 0px 0 20px;
+  }
+}

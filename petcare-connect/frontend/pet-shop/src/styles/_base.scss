@@ -1,0 +1,37 @@
+$btn-primary: #157cff;
+$text-primary: #000000;
+$text-secondary: red;
+body {
+  overflow-x: hidden;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 200;
+}
+
+h4 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+#special_needs, 
+#description,
+input[type=text],
+input[type=date],
+input[type=number],
+input[type=email], 
+input[type=tel], 
+input[type=password] {
+  border-radius: 4px;
+  border: 2px solid #ced4da;
+}
+
+.container-body {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding: 0px 12px;
+  margin-right: auto;
+  margin-left: auto;
+}
