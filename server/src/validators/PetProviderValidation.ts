@@ -29,6 +29,7 @@ class PetProviderValidation {
       service_name: Joi.string().required(),
       service_description: Joi.string().optional(),
       service_price_per_hour: Joi.number().required(),
+      business_name: Joi.string().required(),
     });
 
     const { error, value } = createPetProviderValidationSchema.validate(
@@ -89,6 +90,7 @@ class PetProviderValidation {
       city: Joi.string().required(),
       postal_code: Joi.string().required(),
       region: Joi.string().required(),
+      business_name: Joi.string().required(),
     });
 
     const { error, value } = updatePetOwnerValidationSchema.validate(

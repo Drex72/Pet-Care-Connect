@@ -262,6 +262,7 @@ class BookingService {
         "city",
         "postal_code",
         "region",
+        "business_name",
       ],
       providerServiceAttributes: [
         ["id", "service_type_id"],

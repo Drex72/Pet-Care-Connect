@@ -87,7 +87,8 @@ class AuthService {
    */
   async registerPetProvider(
     providerServiceTypeInformation: PetProviderServiceInterface,
-    petProviderInformation: UserInterface
+    petProviderInformation: UserInterface,
+    business_name: string
   ) {
     const { ProviderServiceType, PetProvider } = models;
 
@@ -106,6 +107,7 @@ class AuthService {
       const createdPetProvider = await PetProvider.create({
         ...petProviderInformation,
         password: hashedPassword,
+        business_name,
       });
 
       await ProviderServiceType.create({

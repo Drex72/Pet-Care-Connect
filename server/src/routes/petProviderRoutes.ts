@@ -52,7 +52,7 @@ router
 router
   .route("/bookings")
   .get(
-    tokenHandler.validateProviderAccessTokenMiddleware,
+    tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.getBookingForUserValidation,
     bookingsController.getAllBookingsForAProvider
   )

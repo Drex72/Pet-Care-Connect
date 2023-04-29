@@ -15,6 +15,7 @@ type configType = {
   sendGridKey: string;
   awsAccessKey: string;
   awsSecretKey: string;
+  NODE_ENV: "development" | "production";
 };
 export const config = Object.freeze({
   port: 8000,
@@ -29,4 +30,5 @@ export const config = Object.freeze({
   sendGridKey: process.env.SEND_GRID_API_KEY,
   awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
   awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
+  NODE_ENV: process.env.NODE_ENV,
 } as configType);

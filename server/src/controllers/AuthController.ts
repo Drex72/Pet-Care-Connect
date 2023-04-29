@@ -54,7 +54,8 @@ class AuthController {
     };
     const newPetProvider = await this.authService.registerPetProvider(
       providerServiceTypeInformation,
-      petProviderInformation
+      petProviderInformation,
+      req.body.business_name
     );
     return res.status(newPetProvider.statusCode).send(newPetProvider?.response);
   };

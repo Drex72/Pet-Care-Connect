@@ -8,6 +8,7 @@ interface PetProviderAttributes extends UserInterface {
   user_type?: string;
   user_avatar?: string;
   overall_provider_rating?: number;
+  business_name: string;
 }
 export class PetProvider
   extends Model<PetProviderAttributes>
@@ -27,6 +28,7 @@ export class PetProvider
   public user_type!: string;
   public user_avatar?: string;
   public overall_provider_rating?: number;
+  public business_name!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -76,6 +78,10 @@ export const PetProviderModel = (sequelize: Sequelize) => {
         allowNull: false,
       },
       region: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      business_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },

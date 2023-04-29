@@ -63,6 +63,7 @@ class PetProviderService {
           "region",
           "user_avatar",
           "overall_provider_rating",
+          "business_name",
         ],
       });
       if (!currentPetProvider) {
@@ -125,6 +126,7 @@ class PetProviderService {
           "region",
           "user_avatar",
           "overall_provider_rating",
+          "business_name",
         ],
       });
       return responseHandler.responseSuccess(
