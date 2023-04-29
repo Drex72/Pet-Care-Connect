@@ -1,5 +1,5 @@
+export { DashboardHome } from "./DashboardHome/DashboardHome";
 export { PetCareProviderServices } from "./PetCareProviderServices/PetCareProviderServices";
-
 export { ResetPassword } from "./verifyEmail/ResetPassword";
 export { ForgotPassword } from "./verifyEmail/ForgotPassword";
 export { FindPetProvider } from "./FindPetProvider/FindPetProvider";

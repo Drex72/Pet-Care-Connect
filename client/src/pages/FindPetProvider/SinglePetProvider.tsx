@@ -21,6 +21,7 @@ import Button from "../../components/Button/Button";
 import CreateReviewModal from "../../components/Modals/CreateReviewModal";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
+import CreateBookingDrawer from "../../components/Modals/CreateBookingDrawer";
 
 const SinglePetProvider = () => {
   const location = useLocation();
@@ -39,15 +40,16 @@ const SinglePetProvider = () => {
   const [reviewAdding, setReviewAdding] = useState(false);
   const components: any[] = [];
 
+  const [bookings, setBookings] = useState([]);
+
   const {
-    first_name,
-    last_name,
     user_avatar,
     provider_service_types,
     region,
     street,
     city,
     id: providerId,
+    business_name,
   } = userInformation.data;
 
   const getUserId = () => {
@@ -69,6 +71,11 @@ const SinglePetProvider = () => {
       const reviews = await petOwnerService.getAllReviewsForAProvider(
         getUserId()
       );
+      const allBookings = await (
+        await petProviderService?.getAllBookings(getUserId())
+      )?.data?.data?.allBookings;
+
+      setBookings(allBookings);
       setProviderReviews(reviews.data.data?.allReviews);
       setUserInformation({
         ...userInformation,
@@ -129,13 +136,18 @@ const SinglePetProvider = () => {
             Go Back
           </button>
           <Toaster position="top-right" reverseOrder={false} />
-          <CreateBookingModal
-            pet_owner_id={userData?.id}
-            pet_provider_id={providerId}
-            modalToggler={createBooking}
-            onClose={handleCloseModal}
-            pet_provider_services={provider_service_types}
-          />
+
+          {bookings.length && (
+            <CreateBookingDrawer
+              pet_owner_id={userData?.id}
+              pet_provider_id={providerId}
+              drawerToggler={createBooking}
+              onClose={handleCloseModal}
+              pet_provider_services={provider_service_types}
+              bookings={bookings}
+            />
+          )}
+
           <CreateReviewModal
             pet_owner_id={userData?.id}
             pet_provider_id={providerId}
@@ -149,9 +161,7 @@ const SinglePetProvider = () => {
                 <img src={user_avatar ?? Avatar} alt="avatar" loading="lazy" />
               </div>
               <div className="name_content_container">
-                <h2>
-                  {first_name} {last_name}
-                </h2>
+                <h2>{business_name}</h2>
               </div>
               <button
                 className="book_provider_button"
@@ -305,7 +315,7 @@ const SinglePetProvider = () => {
             <div className="review_ratings_full_content_container">
               {userInformation.data.reviews?.length == 0 ? (
                 <>
-                  <NoBookingCard header={'No Reviews Created'} />
+                  <NoBookingCard header={"No Reviews Created"} />
                 </>
               ) : (
                 <>

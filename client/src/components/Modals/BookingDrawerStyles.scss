@@ -1,0 +1,457 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+// Create Appointment Drawer
+.create_appointment_drawer {
+  padding-block: 1em;
+  &_container {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  // Create Appointment Drawer Heading
+  .create_appointment_drawer_head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 1em;
+    &_container {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    &_icon {
+      font-size: 1.5rem;
+      transition: all 300ms ease-in-out;
+      cursor: pointer;
+    }
+    &_icon:hover {
+      font-size: 1.8rem;
+    }
+  }
+
+  // Create Appointment Drawer Body
+  .create_appointment_drawer_body {
+    &_container {
+      display: flex;
+      flex-direction: column;
+    }
+    &_calendar {
+      border: 1px solid #dfdfdf;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    &_date_information {
+      margin-top: 1em;
+      height: 100%;
+      &_date {
+        font-weight: 500;
+        margin-bottom: 0.5em;
+      }
+      &_unavailable_slot {
+        &_message {
+          font-weight: 300;
+          font-size: 16px;
+          text-align: center;
+          color: #6f6f6f;
+        }
+        &_image_container {
+          width: fit-content;
+          margin: 0 auto;
+          margin-top: 3em;
+
+          &_image {
+            width: 300px;
+            height: 300px;
+          }
+        }
+      }
+      &_time_card_container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2em;
+        gap: 1em;
+      }
+    }
+  }
+}
+
+// Create Appointment Drawer
+.appointment_info_drawer {
+  padding-block: 1em;
+  &_container {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  // Appointment Information Heading
+  .appointment_info_drawer_head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 1em;
+    height: 40px;
+    &_container {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    &_icon {
+      font-size: 1.5rem;
+      transition: all 300ms ease-in-out;
+      cursor: pointer;
+    }
+    &_icon:hover {
+      font-size: 1.8rem;
+    }
+  }
+
+  .appointment_info_drawer_body {
+    &_heading {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      margin-block: 1.5em;
+
+      .heading_color {
+        width: 25px;
+        height: 25px;
+        background: #fd94df;
+        border-radius: 4px;
+      }
+
+      .heading_course_title {
+        font-weight: 600;
+        font-size: 23px;
+        line-height: 120%;
+        color: #272727;
+      }
+    }
+
+    &_time_and_date {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+
+      &_item {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+
+        .appointment_info_drawer_icon {
+          color: #377e3f;
+          font-size: 25px;
+        }
+        span {
+          font-weight: 400;
+          font-size: 16px;
+          color: #272727;
+        }
+      }
+    }
+
+    &_teacher_container {
+      &_heading {
+        font-weight: 600;
+        font-size: 16px;
+        margin: 1.5em 0 1em;
+        color: #272727;
+      }
+
+      &_information {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        margin-bottom: 1.5em;
+
+        .teacher_image {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background: #377e3f;
+        }
+        .teacher_info {
+          color: #272727;
+          h3 {
+            font-weight: 600;
+            font-size: 18px;
+            margin: 0;
+            margin-bottom: 0.3em;
+          }
+          span {
+            font-weight: 300;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    &_action_btns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5em;
+    }
+
+    &_course_description {
+      color: #272727;
+      margin-top: 2em;
+
+      h3 {
+        margin-bottom: 0.7em;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 0;
+        font-weight: 300;
+        font-size: 16px;
+      }
+    }
+    &_make_payment {
+      p {
+        margin: 0;
+        font-weight: 300;
+        font-size: 16px;
+        margin-block: 2em;
+
+        span {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.react-calendar {
+  border: unset;
+  background-color: transparent;
+  font-family: "DM Sans", sans-serif;
+  width: 100%;
+}
+.react-calendar__navigation__prev2-button {
+  display: none;
+}
+.react-calendar__navigation__next2-button {
+  display: none;
+}
+.react-calendar__navigation {
+  align-items: center;
+}
+
+.create_appointment_drawer_body_date_information {
+  .create_appointment_btn_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2em;
+
+    .custom-button-secondary {
+      margin: 0;
+    }
+    .custom-button {
+      width: 45% !important;
+    }
+  }
+
+  .appointment-time-form {
+    margin-top: 2em;
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+
+      .custom-input {
+        display: flex !important;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+
+        label {
+          font-weight: 300;
+        }
+
+        .custom-input__container {
+          width: 70%;
+        }
+      }
+    }
+  }
+
+  .appointment_select_demand_button {
+    margin-top: 1em;
+  }
+}
+
+.appointment_timer_dialog_box_container {
+  margin-top: 1em;
+}
+.appointment_timer_dialog_box {
+  background: #fcfcfc;
+  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.12);
+  padding: 20px 25px;
+  border-radius: 3px;
+  width: 300px;
+  font-size: 15px;
+
+  span {
+    font-size: 14px;
+  }
+
+  &_button_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    margin-top: 1.5em;
+
+    .appointment_timer_dialog_box_button {
+      margin-top: 0;
+      padding: 13px !important;
+      border-radius: 4px;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .appointment_select_demand_button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .custom-button {
+      width: 48% !important;
+    }
+  }
+}
+abbr[title] {
+  border-bottom: none;
+  -webkit-text-decoration: unset;
+  text-decoration: unset;
+  -webkit-text-decoration: unset;
+  -webkit-text-decoration: unset;
+  text-decoration: unset !important;
+}
+
+.react-calendar__navigation__label {
+  font-weight: 700 !important;
+}
+.react-calendar__navigation__label:hover,
+.react-calendar__navigation__label:focus {
+  // background-color: unset !important;
+  border-radius: 10px;
+}
+.react-calendar__tile {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px !important;
+  height: 34px !important;
+  color: #1b2559;
+  margin-bottom: 0.5em !important;
+}
+
+.react-calendar__month-view__weekdays {
+  background-color: #f4f7fe;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+.react-calendar__tile--now,
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background-color: #f4f7fe;
+  border-radius: 10px;
+}
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #b0bbd5;
+}
+.react-calendar__tile--active,
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #c1d7c3;
+  border-radius: 10px;
+  color: white;
+}
+.react-calendar__tile--range,
+.react-calendar__tile--range:enabled:hover,
+.react-calendar__tile--range:enabled:focus {
+  background: #f4f7fe;
+  color: #c1d7c3;
+  border-radius: 0px;
+}
+.react-calendar__tile--rangeStart,
+.react-calendar__tile--rangeStart:enabled:hover,
+.react-calendar__tile--rangeStart:enabled:focus {
+  background: #c1d7c3;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  color: black;
+}
+.react-calendar__tile--rangeEnd,
+.react-calendar__tile--rangeEnd:enabled:hover,
+.react-calendar__tile--rangeEnd:enabled:focus {
+  background: #c1d7c3;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+/* DARK MODE */
+.react-calendar__tile--tileDisabled {
+  color: #999;
+}
+
+.react-calendar__tile:disabled {
+  background: transparent !important;
+  color: #999;
+}
+
+.react-calendar__month-view__weekdays {
+  background: transparent;
+}
+
+.react-calendar button {
+  height: 52px !important;
+  border-radius: 50%;
+}
+.react-calendar__month-view__weekdays__weekday {
+  font-size: 14px;
+  font-weight: 700;
+}
+.react-calendar__navigation__label {
+  font-size: 20px !important;
+}
+.react_calendar_tile_disabled {
+  color: #ccc;
+}
+.react-calendar__tile--active {
+  border-radius: 50% !important;
+  width: calc(100% - 1em) !important;
+  height: calc(100% - 1em) !important;
+}
+.weekend {
+  color: red !important;
+  &_past {
+    opacity: 0.3;
+  }
+}
+
+.disable-calendar {
+  pointer-events: none;
+}
+
+.disable-calendar * {
+  pointer-events: none;
+}
+
+.booking_input_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 1em;
+}

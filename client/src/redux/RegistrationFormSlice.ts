@@ -43,6 +43,7 @@ const initialState: IRegistrationForm = {
     service_name: "",
     service_price_per_hour: "",
     service_description: "",
+    business_name: "",
   },
   baseUserInformation: {
     first_name: "",
@@ -108,6 +109,7 @@ export const registrationFormSlice = createSlice({
         service_name: "",
         service_price_per_hour: "",
         service_description: "",
+        business_name: "",
       };
       state.baseUserInformation = {
         first_name: "",

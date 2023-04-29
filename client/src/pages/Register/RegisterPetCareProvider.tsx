@@ -30,13 +30,13 @@ export const RegisterPetCareProvider = () => {
   useEffect(() => {
     dispatch(authScreenActions.addImage(RegisterPetCareProviderImage));
   }, []);
-//   const location = useLocation();
-//   let userType: UserType = location?.state?.userType;
-//   useEffect(() => {
-//     if (!userType) {
-//       navigate(AllRouteConstants.auth.register.index);
-//     }
-//   }, []);
+  //   const location = useLocation();
+  //   let userType: UserType = location?.state?.userType;
+  //   useEffect(() => {
+  //     if (!userType) {
+  //       navigate(AllRouteConstants.auth.register.index);
+  //     }
+  //   }, []);
 
   // SignUp Form
   const {
@@ -112,6 +112,18 @@ export const RegisterPetCareProvider = () => {
       <AuthHeader message="2/2 Let's know more about your Services" />
       <form className="signup-form" onSubmit={handleSubmit}>
         <div className="inputs">
+          <Input
+            id="Pet Care Provider Business Name"
+            label="Pet Care Provider Business Name"
+            error={registrationForm.formErrors.business_name}
+            inputProps={{
+              placeholder: "Enter your Business Name",
+              value: registrationForm.form.business_name,
+              onChange: handleInputChange,
+              name: "business_name",
+              required: true,
+            }}
+          />
           <Input
             id="Service Name"
             label="Service Name"

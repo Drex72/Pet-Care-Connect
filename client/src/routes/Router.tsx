@@ -15,6 +15,7 @@ import {
   VerifyEmail,
   ResetPassword,
   PetCareProviderServices,
+  DashboardHome,
 } from "../pages";
 import AuthLayout from "../layout/authLayout/AuthLayout";
 import DashboardLayout from "../layout/dashboardLayout/DashboardLayout";
@@ -105,6 +106,11 @@ function Router() {
           path={AllRouteConstants.dashboardRoutes.index}
           element={<DashboardLayout />}
         >
+          <Route
+            index
+            path={AllRouteConstants.dashboardRoutes.index}
+            element={<DashboardHome />}
+          />
           <Route
             path={AllRouteConstants.dashboardRoutes.booking}
             element={<Bookings />}

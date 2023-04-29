@@ -1,0 +1,26 @@
+.dashboard_motivation_container {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+  // background: linear-gradient(180deg, #377e3f 0%, #0e3b54 100%);
+  border: 1px solid #157cff;
+
+  color: #157cff;
+  opacity: 0.95;
+  padding-left: 16px;
+  padding-top: 48px;
+  padding-bottom: 16px;
+  margin-top: 1em;
+}
+
+.dashboard_motivation_content {
+  padding-bottom: 4px;
+  font-weight: 500;
+  line-height: 19.2px;
+}
+.dashboard_motivation_author {
+  font-weight: 500;
+}
+.dashboard_motivation_image_container {
+  padding-right: 60px;
+}

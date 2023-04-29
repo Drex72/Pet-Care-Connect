@@ -5,6 +5,7 @@ export interface PetProviderServiceInterface {
   service_name: string;
   service_description: string;
   service_price_per_hour: string;
+  business_name: string;
 }
 
 export type ICreatePetCareProvider = UserBaseInformation &
@@ -31,6 +32,7 @@ export interface IFormattedPetProvider extends UserBaseInformation {
   user_avatar: string;
   reviews: any[];
   overall_provider_rating: number;
+  business_name: string;
 }
 
 export interface IFormattedPetOwner extends UserBaseInformation {
@@ -39,5 +41,4 @@ export interface IFormattedPetOwner extends UserBaseInformation {
   user_verified: boolean;
   provider_service_types: ProviderServiceType[];
   user_avatar: string;
-
 }

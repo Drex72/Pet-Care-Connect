@@ -232,10 +232,7 @@ export const PetProviderCard = ({
             </p>
           </div>
 
-          <h5>
-            {petProviderInformation.first_name}{" "}
-            {petProviderInformation.last_name}
-          </h5>
+          <h5>{petProviderInformation.business_name} </h5>
           <ul className="pet_provider_card_services">
             {petProviderInformation.provider_service_types.map(
               (serviceType) => {
