@@ -124,11 +124,11 @@ const CreateBookingDrawer = (props: ICreateBookingDrawerProps) => {
       const createdBooking = await bookingApiRequest.request(
         bookingRequestForm
       );
-      console.log(createdBooking);
-        if (createdBooking?.code === 200) {
-          onDrawerClose();
-          toast.success("Booking Successfully Created!");
-        }
+      if (createdBooking?.code === 200) {
+        onDrawerClose();
+        toast.success("Booking Successfully Created!");
+        window.location.reload();
+      }
     } catch (error) {
       console.error(error);
     }

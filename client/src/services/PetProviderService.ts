@@ -18,14 +18,18 @@ class PetProviderService {
         "Content-Type": "multipart/form-data",
       },
     };
-    return await axiosInstance.post(`/pet-provider/upload-avatar`, data, config);
+    return await axiosInstance.post(
+      `/pet-provider/upload-avatar`,
+      data,
+      config
+    );
   };
 
   getAllPetProviders = async () => {
     return await axiosInstance.get(`/pet-provider`);
   };
-  getAllPetProviderServices = async () => {
-    return await axiosInstance.get(`/pet-provider/service`);
+  getAllPetProviderServices = async (id?: String) => {
+    return await axiosInstance.get(`/pet-provider/service?id${id}`);
   };
   getAllBookings = async (id: string) => {
     return await axiosInstance.get(`/pet-provider/bookings?id=${id}`);

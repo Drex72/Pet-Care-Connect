@@ -137,7 +137,6 @@ const SinglePetProvider = () => {
           </button>
           <Toaster position="top-right" reverseOrder={false} />
 
-          {bookings.length && (
             <CreateBookingDrawer
               pet_owner_id={userData?.id}
               pet_provider_id={providerId}
@@ -146,7 +145,7 @@ const SinglePetProvider = () => {
               pet_provider_services={provider_service_types}
               bookings={bookings}
             />
-          )}
+          
 
           <CreateReviewModal
             pet_owner_id={userData?.id}
