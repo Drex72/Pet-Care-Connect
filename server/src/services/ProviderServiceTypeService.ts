@@ -42,22 +42,42 @@ class ProviderServiceTypeService {
     }
   }
 
-  async getAllPetProviderServiceType() {
+  async getAllPetProviderServiceType(id: string | null = null) {
     try {
-      const allProviderServices = await this.petProvideServiceModel.findAll({
-        attributes: [
-          "id",
-          "service_name",
-          "service_description",
-          "service_price_per_hour",
-        ],
-        group: ["service_name", "id"],
-      });
-      return responseHandler.responseSuccess(
-        200,
-        "All Provider Fetched Successfully",
-        allProviderServices
-      );
+      if (id) {
+        const allProviderServices = await this.petProvideServiceModel.findAll({
+          where: { pet_provider_id: id },
+          attributes: [
+            "id",
+            "service_name",
+            "service_description",
+            "service_price_per_hour",
+          ],
+          group: ["service_name", "id"],
+        });
+
+        return responseHandler.responseSuccess(
+          200,
+          "All Provider Fetched Successfully",
+          allProviderServices
+        );
+      } else {
+        const allProviderServices = await this.petProvideServiceModel.findAll({
+          attributes: [
+            "id",
+            "service_name",
+            "service_description",
+            "service_price_per_hour",
+          ],
+          group: ["service_name", "id"],
+        });
+
+        return responseHandler.responseSuccess(
+          200,
+          "All Provider Fetched Successfully",
+          allProviderServices
+        );
+      }
     } catch (error) {
       return responseHandler.responseError(
         400,

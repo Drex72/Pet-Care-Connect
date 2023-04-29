@@ -20,6 +20,7 @@ const mysqlConnection = new Sequelize(
   }
 );
 
+console.log(config);
 
 export const sequelize =
   config.NODE_ENV === "development" ? mysqlConnection : postgresConnection;

@@ -56,9 +56,12 @@ class PetProviderServiceController {
    * @param res
    */
   getAllPetProviderservices = async (req: Request, res: Response) => {
+    const { id } = req.query;
     try {
       const allProviderServices =
-        await this.petProviderServiceTypeService.getAllPetProviderServiceType();
+        await this.petProviderServiceTypeService.getAllPetProviderServiceType(
+          id as string
+        );
       return res
         .status(allProviderServices.statusCode)
         .send(allProviderServices.response);
