@@ -76,6 +76,7 @@
     ]
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/react-credit-cards": "^0.8.1",
     "@types/react-select": "^5.0.1"
   }
