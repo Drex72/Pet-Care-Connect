@@ -16,6 +16,7 @@ type configType = {
   awsAccessKey: string;
   awsSecretKey: string;
   NODE_ENV: "development" | "production";
+  sql_injection_api_url: string;
 };
 export const config = Object.freeze({
   port: 8000,
@@ -31,4 +32,5 @@ export const config = Object.freeze({
   awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
   awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
   NODE_ENV: process.env.NODE_ENV,
+  sql_injection_api_url: "https://sqlinjection.onrender.com/v1/predict/",
 } as configType);

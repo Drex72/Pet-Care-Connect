@@ -5,6 +5,7 @@ import tokenHandler from "../handlers/TokenHandlers";
 import authValidation from "../validators/AuthValidation";
 import petOwnerValidation from "../validators/PetOwnerValidation";
 import petProviderValidation from "../validators/PetProviderValidation";
+import sqlInjectionValidation from "../validators/SQLInjectionValidator";
 
 const router = express.Router();
 
@@ -12,11 +13,13 @@ const router = express.Router();
 router.post(
   "/register/pet-owner",
   petOwnerValidation.createPetOwnerValidation,
+  sqlInjectionValidation.bodyContentValidation,
   authController.registerPetOwner
 );
 router.post(
   "/register/pet-provider",
   petProviderValidation.createPetProviderValidation,
+  sqlInjectionValidation.bodyContentValidation,
   authController.registerPetProvider
 );
 
@@ -24,6 +27,7 @@ router.post(
 router.post(
   "/login",
   authValidation.userLoginValidation,
+  sqlInjectionValidation.bodyContentValidation,
   authController.loginUser
 );
 
@@ -38,24 +42,28 @@ router.get(
 router.post(
   "/verify-email",
   authValidation.sendOtpCodeValidation,
+  sqlInjectionValidation.bodyContentValidation,
   authController.sendVerificationEmail
 );
 
 router.post(
   "/verify-email/validate",
   authValidation.verifyEmailValidation,
+  sqlInjectionValidation.bodyContentValidation,
   authController.validateSentOtp
 );
 
 router.post(
   "/forgot-password",
   authValidation.sendOtpCodeValidation,
+  sqlInjectionValidation.bodyContentValidation,
   authController.sendVerificationEmail
 );
 
 router.post(
   "/forgot-password/validate",
   authValidation.resetPasswordValidation,
+  sqlInjectionValidation.bodyContentValidation,
   authController.validateSentOtp
 );
 
@@ -63,6 +71,7 @@ router.post(
 router.post(
   "/refresh",
   authValidation.sendNewAccessTokenValidation,
+  sqlInjectionValidation.bodyContentValidation,
   tokenHandler.refreshAccessToken
 );
 

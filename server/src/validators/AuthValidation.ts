@@ -6,9 +6,16 @@ import {
   schemaOptions,
   userTypeValidationSchema,
 } from "./schemaOptions";
+import SQLInjectionService from "../services/SQLInjectionService";
+import { config } from "../config";
+import { detectSQLInjection } from "../utils/detectSQLInjection";
 
 class AuthValidation {
   // Validation for creating a pet provider
+  // sqlInjectionService: SQLInjectionService;
+
+  constructor() {}
+
   async createPetProviderValidation(
     req: Request,
     res: Response,
@@ -90,7 +97,7 @@ class AuthValidation {
     const verifyEmailValidationSchema: Joi.ObjectSchema = Joi.object({
       email: Joi.string().required(),
       user_type: userTypeValidationSchema.userTypeValidation().required(),
-      status:Joi.string().optional()
+      status: Joi.string().optional(),
     });
 
     const { error, value } = verifyEmailValidationSchema.validate(

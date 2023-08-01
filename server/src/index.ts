@@ -38,6 +38,7 @@ app.use(errorHandler.errorHandler);
 // Synchronize your models with the database
 const syncModels = async () => {
   try {
+
     await sequelize.sync();
     console.log("Database synced");
   } catch (error) {
