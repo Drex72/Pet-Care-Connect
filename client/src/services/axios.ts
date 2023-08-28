@@ -9,7 +9,7 @@ const prodBaseUrl = "https://pet-care-connect-api.onrender.com";
 // Create a new Axios instance
 const axiosInstance = axios.create({
   // baseURL: process.env.NODE_ENV === "development" ? baseURL : prodBaseUrl,
-  baseURL,
+  baseURL:prodBaseUrl,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
