@@ -20,8 +20,6 @@ import {
 } from "react-icons/ai";
 import { BsPersonGear } from "react-icons/bs";
 import { MdOutlinePets } from "react-icons/md";
-import { getRouteToBeUsed } from "../../../utils/getRouteToBeUsed";
-import { UserType } from "../../../interfaces/User";
 import Logo from "../../../components/Logo/Logo";
 const DashboardSidebar = () => {
   const navigate = useNavigate();

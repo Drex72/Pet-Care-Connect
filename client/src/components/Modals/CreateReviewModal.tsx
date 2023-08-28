@@ -18,6 +18,7 @@ import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import { ReviewRequestInterface } from "../../interfaces/ReviewInterface";
 import { toast } from "react-hot-toast";
+import AuthError from "../AuthComponents/AuthError/AuthError";
 
 interface CreateReviewModalProps {
   onClose: () => void;
@@ -79,7 +80,7 @@ const CreateReviewModal = (props: CreateReviewModalProps) => {
         handleModalClose();
         toast.success("Review Successfully Created!");
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -138,12 +139,15 @@ const CreateReviewModal = (props: CreateReviewModalProps) => {
                 required: true,
               }}
             />
+            <AuthError error={reviewApiRequest.error?.message} />
 
             <Button
               label={"Review Pet Care Provider"}
               variant="primary"
               loading={reviewApiRequest.loading}
             />
+
+
           </form>
         </div>
       </div>
