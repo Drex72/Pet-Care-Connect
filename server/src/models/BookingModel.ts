@@ -3,6 +3,7 @@ import {
   BookingRequestInterface,
   BookingStatus,
 } from "../interfaces/BookingRequestInterface";
+
 interface BookingAttributes extends BookingRequestInterface {
   id?: string;
 }

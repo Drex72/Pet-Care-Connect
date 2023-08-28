@@ -10,6 +10,7 @@ class SQLInjectionService {
   }
 
   async isSqlInjectionQuery(sentence: string) {
+    console.log(sentence, 'sentency')
     const response = await axios.post<{ result: string }>(this.baseURL, {
       sentence,
     });
@@ -23,3 +24,19 @@ class SQLInjectionService {
 }
 
 export default SQLInjectionService;
+
+async function fetchSqlInjection(sentence: string) {
+
+  try {
+    const response = await axios.post(
+      "https://sqlinjection.onrender.com/v1/predict/",
+      { sentence: sentence }
+    );
+    if (response.data.result === "SQL Injection") {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    throw error;
+  }
+}

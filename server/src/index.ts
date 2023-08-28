@@ -8,6 +8,7 @@ import { sequelize } from "./config/database";
 import cors from "cors";
 import { credentials } from "./utils/corsCredentials";
 import { corsOptions } from "./utils/corsOptions";
+import { detectSQLInjectionMiddleware } from "./utils/detectSQLInjection";
 
 // App Entry Point
 
@@ -22,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(credentials);
 app.use(cors(corsOptions));
+
+// app.use(detectSQLInjectionMiddleware)
 
 // Routes for our application
 app.use("/", allRoutes);
