@@ -27,7 +27,7 @@ router.post(
 router.post(
   "/login",
   authValidation.userLoginValidation,
-  sqlInjectionValidation.bodyContentValidation,
+  // sqlInjectionValidation.bodyContentValidation,
   authController.loginUser
 );
 

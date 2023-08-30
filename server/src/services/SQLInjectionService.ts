@@ -14,6 +14,7 @@ class SQLInjectionService {
     const response = await axios.post<{ result: string }>(this.baseURL, {
       sentence,
     });
+    console.log(response.data, sentence)
 
     if (response.data.result === this.isSQLInjected) {
       return true;

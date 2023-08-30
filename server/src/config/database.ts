@@ -1,7 +1,7 @@
 import { Dialect, Sequelize } from "sequelize";
 import { config } from "./";
 
-const postgresConnection = new Sequelize(config.postgresUrl, {
+const postgresConnection = new Sequelize('postgres://drex:k8qdBSkQkLntyAy3ANAcxi1cV7UINslf@dpg-cj49o1aip7vuasjvoog0-a.oregon-postgres.render.com/petcaredb_qcv8', {
   dialect: "postgres",
   dialectOptions: {
     ssl: {

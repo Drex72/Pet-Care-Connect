@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import SQLInjectionService from "../services/SQLInjectionService";
 import { config } from "../config";
 import ApiError from "../exceptions/ApiErrorException";
+import { object } from "joi";
 
 export const detectSQLInjection = async (content: any, next: NextFunction) => {
   const sqlInjectionService = new SQLInjectionService(
@@ -27,12 +28,11 @@ export const detectSQLInjectionMiddleware = async (
   next: NextFunction
 ) => {
   const { query, params, body } = req;
-  console.log(params, query, body);
   const sqlInjectionService = new SQLInjectionService(
     config.sql_injection_api_url
   );
 
-  if (Object.keys(query).length === 0) {
+  if (Object.keys(query).length !== 0) {
     for (let key in query) {
       if (typeof query[key] === "string") {
         const response = await sqlInjectionService.isSqlInjectionQuery(
@@ -46,7 +46,7 @@ export const detectSQLInjectionMiddleware = async (
     }
   }
 
-  if (Object.keys(params).length === 0) {
+  if (Object.keys(params).length !== 0) {
     for (let key in params) {
       if (typeof params[key] === "string") {
         const response = await sqlInjectionService.isSqlInjectionQuery(
@@ -59,7 +59,7 @@ export const detectSQLInjectionMiddleware = async (
       }
     }
   }
-  if (Object.keys(body).length === 0) {
+  if (Object.keys(body).length !== 0) {
     for (let key in body) {
       if (typeof body[key] === "string") {
         const response = await sqlInjectionService.isSqlInjectionQuery(

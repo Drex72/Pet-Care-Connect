@@ -24,7 +24,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(credentials);
 app.use(cors(corsOptions));
 
-// app.use(detectSQLInjectionMiddleware)
+// This is the middle ware that is doing all the checking
+app.use(detectSQLInjectionMiddleware)
 
 // Routes for our application
 app.use("/", allRoutes);

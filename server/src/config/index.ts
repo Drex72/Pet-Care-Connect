@@ -19,7 +19,7 @@ type configType = {
   sql_injection_api_url: string;
 };
 export const config = Object.freeze({
-  port: 8000,
+  port: 9000,
   dbName: process.env.DB_NAME,
   dbUserName: process.env.DB_USERNAME,
   dbHost: process.env.DB_HOST,
