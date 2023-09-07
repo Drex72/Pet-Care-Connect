@@ -72,5 +72,6 @@ export const detectSQLInjectionMiddleware = async (
       }
     }
   }
+  
   return next();
 };

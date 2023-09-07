@@ -10,7 +10,8 @@
     "dev": "npx nodemon",
     "start": "node ./build/index.js",
     "setup:yarn": "npm i -g yarn",
-    "install:typescript": "yarn add typescript --dev"
+    "install:typescript": "yarn add typescript --dev",
+    "start:dev":"npm install --legacy-peer-deps && npm run dev"
   },
   "keywords": [],
   "author": "",

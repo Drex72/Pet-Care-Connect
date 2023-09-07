@@ -7,7 +7,6 @@ import bookingValidation from "../validators/BookingValidation";
 import petProviderServiceValidation from "../validators/PetProviderServiceValidation";
 import petProviderValidation from "../validators/PetProviderValidation";
 import multer from "multer";
-import sqlInjectionValidation from "../validators/SQLInjectionValidator";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -20,13 +19,11 @@ router
   .put(
     tokenHandler.validateAccessTokenMiddleware,
     petProviderValidation.updatePetProviderValidation,
-    sqlInjectionValidation.bodyContentValidation,
     petProviderController.updatePetProvider
   )
   .delete(
     tokenHandler.validateAccessTokenMiddleware,
     petProviderValidation.deletePetProviderValidation,
-    sqlInjectionValidation.queryContentValidation,
     petProviderController.deletePetProvider
   );
 
@@ -36,7 +33,6 @@ router
     tokenHandler.validateAccessTokenMiddleware,
     upload.single("file"),
     petProviderValidation.addPetProviderImageValidation,
-    sqlInjectionValidation.bodyContentValidation,
     petProviderController.addPetProviderImage
   );
 
@@ -46,13 +42,11 @@ router
   .post(
     tokenHandler.validateAccessTokenMiddleware,
     petProviderServiceValidation.createPetProviderServiceValidation,
-    sqlInjectionValidation.bodyContentValidation,
     petProviderServiceController.createPetProviderService
   )
   .delete(
     tokenHandler.validateAccessTokenMiddleware,
     petProviderServiceValidation.deletePetProviderValidation,
-    sqlInjectionValidation.queryContentValidation,
     petProviderServiceController.deletePetProvider
   );
 router
@@ -60,13 +54,11 @@ router
   .get(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.getBookingForUserValidation,
-    sqlInjectionValidation.queryContentValidation,
     bookingsController.getAllBookingsForAProvider
   )
   .put(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.updateBookingForUserValidation,
-    sqlInjectionValidation.bodyContentValidation,
     bookingsController.updateBookingForUser
   );
 
@@ -75,7 +67,6 @@ router
   .get(
     tokenHandler.validateAccessTokenMiddleware,
     bookingValidation.getBookingValidation,
-    sqlInjectionValidation.paramsContentValidation,
     bookingsController.getABooking
   );
 

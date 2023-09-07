@@ -25,7 +25,12 @@ app.use(credentials);
 app.use(cors(corsOptions));
 
 // This is the middle ware that is doing all the checking
-app.use(detectSQLInjectionMiddleware)
+app.use(detectSQLInjectionMiddleware);
+
+app.use((req, res, next) => {
+  console.log(req.url, req.method);
+  next();
+});
 
 // Routes for our application
 app.use("/", allRoutes);
@@ -42,7 +47,6 @@ app.use(errorHandler.errorHandler);
 // Synchronize your models with the database
 const syncModels = async () => {
   try {
-
     await sequelize.sync();
     console.log("Database synced");
   } catch (error) {
@@ -62,7 +66,7 @@ const authenticateDbAndStartServer = async () => {
     });
   } catch (error) {
     console.error("Unable to connect to the database:", error);
-    throw error
+    throw error;
   }
 };
 

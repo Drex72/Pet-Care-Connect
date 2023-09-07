@@ -10,7 +10,6 @@ class SQLInjectionService {
   }
 
   async isSqlInjectionQuery(sentence: string) {
-    console.log(sentence, 'sentency')
     const response = await axios.post<{ result: string }>(this.baseURL, {
       sentence,
     });

@@ -96,6 +96,7 @@ class AuthController {
     let { email, user_type, status } = req.body;
     const currentModel: any = getModelToBeUsed(user_type);
     try {
+      console.log('beginning')
       const currentUser = await currentModel.findOne({
         where: { email },
       });
@@ -107,6 +108,7 @@ class AuthController {
       if (currentUser?.dataValues.user_verified && status !== "reset") {
         return res.send({ message: "User Already Verified" });
       }
+      console.log('hey')
 
       const responseData =
         await this.authService.sendVerificationMailToUserEmail(
@@ -114,6 +116,7 @@ class AuthController {
           user_type,
           status
         );
+        console.log(responseData, 'sent')
 
       return res.status(responseData.statusCode).send(responseData.response);
     } catch (e) {
