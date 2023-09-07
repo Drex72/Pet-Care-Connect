@@ -3,13 +3,13 @@ import accessToken from "../utils/accessToken/AccessToken";
 import { AxiosRequestConfig } from "axios";
 
 export const AWSBaseUrl = "http://3.253.24.242:8000";
-export const baseURL = "http://localhost:8000";
+export const baseURL = "http://localhost:9000";
 const prodBaseUrl = "https://pet-care-connect-api.onrender.com";
 
 // Create a new Axios instance
 const axiosInstance = axios.create({
-  // baseURL: process.env.NODE_ENV === "development" ? baseURL : prodBaseUrl,
-  baseURL:prodBaseUrl,
+  baseURL: process.env.NODE_ENV === "development" ? baseURL : prodBaseUrl,
+  // baseURL:prodBaseUrl,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
