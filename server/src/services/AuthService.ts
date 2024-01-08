@@ -208,7 +208,7 @@ class AuthService {
     const currentUser = await currentModel.findOne({
       where: { id: user_id },
     });
-    console.log(status);
+    // console.log(status);
 
     if (!currentUser)
       return responseHandler.responseError(400, "User not found");
